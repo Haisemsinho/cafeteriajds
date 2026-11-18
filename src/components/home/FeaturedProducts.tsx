@@ -37,7 +37,7 @@ export function FeaturedProducts() {
                     product={product}
                     categoryName={product.categoryName}
                     action={
-                      <Link href={`/cardapio?item=${product.slug}`} className={cardActionClass}>
+                      <Link href={`/cardapio/${product.slug}`} className={cardActionClass}>
                         Ver detalhes
                         <span className="sr-only"> de {product.name}</span>
                       </Link>

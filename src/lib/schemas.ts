@@ -112,6 +112,7 @@ export const menuCategorySchema = z.object({
 export const productVariantSchema = z.object({
   id: z.string(),
   label: z.string(),
+  volume: z.string().optional(),
   priceCents: z.number().int().positive().optional(),
 });
 
@@ -143,6 +144,7 @@ export const menuProductSchema = z.object({
   description: z.string(),
   categoryId: slug,
   image: photoSchema.optional(),
+  images: z.array(photoSchema).optional(),
   illustration: illustrationSchema.optional(),
   priceCents: z.number().int().positive().optional(),
   variants: z.array(productVariantSchema).optional(),

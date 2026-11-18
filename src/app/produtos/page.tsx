@@ -106,7 +106,7 @@ export default function ProdutosPage() {
                             <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-mocha">{item.description}</p>
                             <div className="mt-auto pt-4">
                               {product ? (
-                                <TextLink href={`/cardapio?item=${product.slug}`}>Ver no cardápio</TextLink>
+                                <TextLink href={`/cardapio/${product.slug}`}>Ver no cardápio</TextLink>
                               ) : (
                                 <TextLink href="/contato">Falar com a JDS</TextLink>
                               )}

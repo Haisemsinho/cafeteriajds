@@ -106,6 +106,28 @@ export function getFeaturedProducts(limit = 4): (MenuProduct & { categoryName: s
     .map((p) => ({ ...p, categoryName: names.get(p.categoryId) ?? "" }));
 }
 
+export function getProduct(slug: string) {
+  const { categories: cats, products: items } = getMenu();
+  const product = items.find((p) => p.slug === slug);
+  if (!product) return undefined;
+  const category = cats.find((c) => c.id === product.categoryId);
+  return { ...product, categoryName: category?.name ?? "" };
+}
+
+export function getRelatedProducts(product: MenuProduct, limit = 4) {
+  const { categories: cats, products: items } = getMenu();
+  const names = new Map(cats.map((c) => [c.id, c.name]));
+  const others = items.filter((p) => p.id !== product.id && p.availability !== "unavailable");
+  const picked: MenuProduct[] = [];
+  const add = (list: MenuProduct[]) => {
+    for (const p of list) if (picked.length < limit && !picked.includes(p)) picked.push(p);
+  };
+  add(others.filter((p) => p.categoryId === product.categoryId));
+  add(others.filter((p) => p.featured));
+  add(others);
+  return picked.map((p) => ({ ...p, categoryName: names.get(p.categoryId) ?? "" }));
+}
+
 export function getGallery(area?: GalleryImage["area"]) {
   return gallery.filter((g) => isVisible(g.status) && (!area || g.area === area));
 }

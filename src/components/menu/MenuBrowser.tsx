@@ -1,6 +1,8 @@
 "use client";
 
-import { useDeferredValue, useMemo, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useDeferredValue, useEffect, useMemo } from "react";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/Feedback";
 import { Icon } from "@/components/ui/Icon";
@@ -10,9 +12,10 @@ import { cn } from "@/lib/cn";
 import { normalize, plural } from "@/lib/format";
 import type { MenuCategory, MenuProduct } from "@/types/content";
 import { cardActionClass, ProductCard } from "./ProductCard";
-import { ProductDialog } from "./ProductDialog";
 
 type FilterId = "destaques" | "quentes" | "gelados" | "disponiveis" | "salvos";
+
+const filterIds = new Set<string>(["destaques", "quentes", "gelados", "disponiveis", "salvos"]);
 
 const filterDefs: { id: FilterId; label: string; test: (p: MenuProduct, saved: string[]) => boolean }[] = [
   { id: "destaques", label: "Destaques", test: (p) => Boolean(p.featured || p.tags?.includes("destaque")) },
@@ -29,13 +32,22 @@ type Props = {
 };
 
 export function MenuBrowser({ categories, products, instagramUrl }: Props) {
+  const router = useRouter();
   const [categoryParam, setCategory] = useUrlParam("categoria");
   const [itemParam] = useUrlParam("item");
-  const [lastItem, setLastItem] = useState<string | null>(null);
-  const [query, setQuery] = useState("");
-  const [filters, setFilters] = useState<FilterId[]>([]);
+  const [queryParam, setQueryParam] = useUrlParam("busca");
+  const [filtersParam, setFiltersParam] = useUrlParam("filtros");
   const { ids: saved, toggle } = useSavedItems();
+  const query = queryParam ?? "";
   const deferredQuery = useDeferredValue(query);
+  const filters = useMemo(
+    () => (filtersParam ?? "").split(",").filter((f): f is FilterId => filterIds.has(f)),
+    [filtersParam],
+  );
+
+  useEffect(() => {
+    if (itemParam && products.some((p) => p.slug === itemParam)) router.replace(`/cardapio/${itemParam}`);
+  }, [itemParam, products, router]);
 
   const category = categories.some((c) => c.id === categoryParam) ? categoryParam : null;
   const names = useMemo(() => new Map(categories.map((c) => [c.id, c.name])), [categories]);
@@ -58,22 +70,21 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
         .filter((s) => s.items.length)
     : [];
 
-  const shownSlug = itemParam ?? lastItem;
-  const shown = shownSlug ? products.find((p) => p.slug === shownSlug) : undefined;
+  const setQuery = (value: string) => setQueryParam(value || null);
 
-  const openItem = (slug: string) => {
-    setLastItem(slug);
-    setUrlParams({ item: slug });
+  const toggleFilter = (id: FilterId) => {
+    const next = filters.includes(id) ? filters.filter((f) => f !== id) : [...filters, id];
+    setFiltersParam(next.length ? next.join(",") : null);
   };
 
-  const toggleFilter = (id: FilterId) =>
-    setFilters((current) => (current.includes(id) ? current.filter((f) => f !== id) : [...current, id]));
+  const resetAll = () => setUrlParams({ busca: null, filtros: null, categoria: null });
 
-  const resetAll = () => {
-    setQuery("");
-    setFilters([]);
-    setCategory(null);
-  };
+  const context = new URLSearchParams();
+  if (category) context.set("categoria", category);
+  if (query) context.set("busca", query);
+  if (filtersParam) context.set("filtros", filtersParam);
+  const from = context.toString();
+  const detailHref = (slug: string) => (from ? `/cardapio/${slug}?de=${encodeURIComponent(from)}` : `/cardapio/${slug}`);
 
   if (products.length === 0) {
     return (
@@ -116,10 +127,10 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
             </button>
           }
           action={
-            <button type="button" onClick={() => openItem(product.slug)} aria-haspopup="dialog" className={cardActionClass}>
+            <Link href={detailHref(product.slug)} className={cardActionClass}>
               Ver detalhes
               <span className="sr-only"> de {product.name}</span>
-            </button>
+            </Link>
           }
         />
       </li>
@@ -251,15 +262,6 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
           )}
         </div>
       </div>
-
-      <ProductDialog
-        product={shown}
-        categoryName={shown ? names.get(shown.categoryId) : undefined}
-        open={Boolean(itemParam && shown)}
-        saved={shown ? saved.includes(shown.id) : false}
-        onToggleSave={toggle}
-        onClose={() => setUrlParams({ item: null })}
-      />
     </>
   );
 }

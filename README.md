@@ -72,8 +72,8 @@ Em `src/content/menu.ts`:
   illustration: "latte",       // desenho usado enquanto nao houver foto
   priceCents: 900,             // R$ 9,00. sem preço aparece "Preço a confirmar"
   variants: [
-    { id: "p", label: "Pequeno", priceCents: 900 },
-    { id: "m", label: "Médio", priceCents: 1200 },
+    { id: "p", label: "Pequeno", volume: "180 ml", priceCents: 900 },
+    { id: "m", label: "Médio", volume: "300 ml", priceCents: 1200 },
   ],
   temperature: "hot",          // hot, iced ou both
   availability: "available",   // available, unavailable ou coming-soon
@@ -91,6 +91,19 @@ Coisas que vale saber:
 - `allergens` só deve ser preenchido com informação conferida pela cozinha: `{ contains: ["leite", "glúten"], checkedAt: "2026-11-20" }`. Sem isso, o detalhe do produto pede para o cliente falar com a equipe.
 - Preço de item `draft` aparece com "preço de exemplo" do lado.
 - Foto do produto: importe em `photos.ts` e use `image: photos.nomeDaFoto`.
+
+## Página de cada produto
+
+Cada item do cardápio tem uma página própria em `/cardapio/[slug]`, gerada a partir de `src/content/menu.ts`. Nada é duplicado: a página lê o mesmo item do cardápio.
+
+- Slug que não existe cai na tela "Produto não encontrado", com link de volta ao cardápio.
+- "Voltar ao cardápio" devolve a pessoa para a mesma categoria, busca e filtros que ela usava. Esse contexto fica na própria URL (`?categoria=`, `?busca=`, `?filtros=`).
+- O seletor de tamanho só aparece quando o item tem `variants`, e o preço muda conforme a escolha. Quente e gelado só aparecem quando `temperature` é `"both"`.
+- `volume` em cada variante (ex.: `"300 ml"`) aparece nas informações do produto.
+- `images` aceita várias fotos e vira uma galeria com miniaturas.
+- O botão "Consultar pelo WhatsApp" só aparece com `contact.whatsapp` preenchido e verificado. Ele abre a conversa com o nome do produto e a escolha já escritos, sem enviar nada.
+- "Você também pode gostar" mostra até quatro itens: primeiro da mesma categoria, depois destaques, depois o resto disponível.
+- Links antigos no formato `/cardapio?item=slug` redirecionam para a página nova.
 
 ## Horários e "Aberto agora"
 
@@ -185,8 +198,9 @@ O que foi feito no lugar:
 - CSS compilado com o Tailwind 4.3 de verdade a partir do `globals.css`. Todas as classes usadas geram CSS.
 - Páginas renderizadas com React 19 (`renderToString`) e hidratadas no Chrome, com `next/link`, `next/image` e `next/font` substituídos por versões simples. Sem erro de hidratação nem de console.
 - Inspeção visual por captura de tela em 320, 375, 390, 430, 768, 1024, 1440 e 1920 px, com as capturas analisadas e os problemas corrigidos.
-- 93 testes automatizados no Chrome (Playwright), todos passando:
-  - cardápio: busca com e sem acento, estado vazio, categorias na URL, filtros, item indisponível, modal (abre, foco, Escape, URL, foco de volta), link direto para item, seleção salva sobrevivendo a reload;
+- 117 testes automatizados no Chrome (Playwright), todos passando:
+  - cardápio: busca com e sem acento, estado vazio, categorias, busca e filtros na URL, item indisponível, seleção salva sobrevivendo a reload;
+  - página de produto: abertura pelo card, volta ao cardápio com a busca, preço mudando com o tamanho, quente e gelado, WhatsApp só com número oficial e com a mensagem certa, relacionados, navegação entre produtos, slug inexistente e link antigo `?item=`;
   - menu mobile: abre, `aria-expanded`, Escape, navegação;
   - galeria: abre, setas do teclado, botões, volta circular, Escape;
   - formulário: erros no blur e no envio, foco no primeiro erro, link `wa.me` com assunto e mensagem;
