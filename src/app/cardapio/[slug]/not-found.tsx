@@ -6,6 +6,7 @@ export default function ProductNotFound() {
     <div className="page-x py-20 sm:py-24">
       <EmptyState
         icon="search"
+        headingLevel={1}
         title="Produto não encontrado"
         action={
           <ButtonLink href="/cardapio" icon="arrowRight">

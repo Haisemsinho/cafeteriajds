@@ -18,11 +18,13 @@ export function SiteFooter() {
 
   return (
     <footer className="on-dark grain bg-night text-sand">
-      <div className="page-x border-b border-line-dark pt-20 pb-14 sm:pt-24">
-        <p className="max-w-3xl font-display text-h1 text-white">
-          {business.tagline}
-          <span className="text-caramel">.</span>
-        </p>
+      <div className="border-b border-line-dark">
+        <div className="page-x pt-20 pb-14 sm:pt-24">
+          <p className="max-w-3xl font-display text-h1 text-white">
+            {business.tagline}
+            <span className="text-caramel">.</span>
+          </p>
+        </div>
       </div>
       <div className="page-x grid gap-12 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] lg:py-16">
         <div>

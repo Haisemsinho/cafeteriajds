@@ -8,19 +8,27 @@ export function EmptyState({
   children,
   action,
   className,
+  headingLevel = 2,
 }: {
   icon?: IconName;
   title: string;
+  headingLevel?: 1 | 2;
   children?: ReactNode;
   action?: ReactNode;
   className?: string;
 }) {
+  const Heading = headingLevel === 1 ? "h1" : "h2";
   return (
-    <div className={cn("flex flex-col items-center rounded-2xl border border-line bg-white px-6 py-14 text-center", className)}>
+    <div
+      className={cn(
+        "flex flex-col items-center rounded-2xl border border-line bg-white px-6 py-14 text-center",
+        className,
+      )}
+    >
       <span className="mb-4 grid size-12 place-items-center rounded-full bg-cream-soft text-caramel-deep">
         <Icon name={icon} size={22} />
       </span>
-      <h2 className="text-h3 text-espresso">{title}</h2>
+      <Heading className="font-sans text-lg leading-snug font-semibold text-espresso">{title}</Heading>
       {children ? <div className="mt-3 max-w-md text-mocha">{children}</div> : null}
       {action ? <div className="mt-8">{action}</div> : null}
     </div>
@@ -48,7 +56,13 @@ export function Notice({
   className?: string;
 }) {
   return (
-    <div className={cn("flex gap-3 rounded-lg border px-4 py-3.5 text-sm leading-relaxed text-espresso", noticeTones[tone], className)}>
+    <div
+      className={cn(
+        "flex gap-3 rounded-lg border px-4 py-3.5 text-sm leading-relaxed text-espresso",
+        noticeTones[tone],
+        className,
+      )}
+    >
       <Icon name={tone === "special" ? "sparkle" : "info"} size={17} className="mt-0.5 shrink-0 text-caramel-deep" />
       <div>
         {title ? <p className="font-semibold">{title}</p> : null}

@@ -169,6 +169,15 @@
     text-wrap: pretty;
   }
 
+  html {
+    scrollbar-color: var(--color-latte) var(--color-porcelain);
+  }
+
+  input,
+  textarea {
+    caret-color: var(--color-caramel-deep);
+  }
+
   ::selection {
     background-color: #f1dcc4;
     color: var(--color-espresso);

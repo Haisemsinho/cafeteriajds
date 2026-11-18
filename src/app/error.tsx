@@ -13,6 +13,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
     <div className="page-x py-20 sm:py-24">
       <EmptyState
         icon="info"
+        headingLevel={1}
         title="Algo não saiu como esperado"
         action={
           <div className="flex flex-col gap-3 xs:flex-row">
