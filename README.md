@@ -99,6 +99,8 @@ description: "Texto curto usado no rodapé e no Google.",
 logo: undefined,
 ```
 
+Títulos, descrições do Google, textos das páginas e a mensagem do WhatsApp usam `name` e `shortName`. Trocar aqui muda o site inteiro. Só os textos alternativos das fotos citam a JDS por escrito, porque descrevem o letreiro e a xícara.
+
 Sem logo, o site mostra o nome em texto. Para usar o logo oficial, coloque o arquivo em `src/assets/brand/`, importe e preencha:
 
 ```ts
@@ -107,7 +109,7 @@ import logo from "@/assets/brand/logo.png";
 logo: { src: logo, alt: "JDS Cafeteria" },
 ```
 
-Os textos da página inicial ficam em `src/content/home.ts`. A história fica em `src/content/story.ts`. Os textos curtos das outras páginas ficam no próprio arquivo da página, em `src/app/`.
+Os textos da página inicial ficam em `src/content/home.ts`. A história fica em `src/content/story.ts`, incluindo o topo e a descrição da página Nossa História. Os textos curtos das outras páginas ficam no próprio arquivo da página, em `src/app/`.
 
 ## Editando o cardápio
 

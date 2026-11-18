@@ -10,10 +10,11 @@ import { photos } from "@/content/photos";
 import { getHighlights, getInstagram, getMenu } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
 import type { Highlight } from "@/types/content";
+import { business } from "@/content/business";
 
 export const metadata = pageMetadata({
   title: "Produtos e novidades",
-  description: "Destaques, novidades e itens sazonais da JDS Cafeteria.",
+  description: `Destaques, novidades e itens sazonais da ${business.name}.`,
   path: "/produtos",
 });
 
@@ -28,7 +29,7 @@ const kindLabels: Record<Highlight["kind"], string> = {
 
 const groups: { id: string; eyebrow: string; title: string; kinds: Highlight["kind"][] }[] = [
   { id: "novidades", eyebrow: "Destaques e novidades", title: "O que está em alta", kinds: ["destaque", "novidade", "sazonal"] },
-  { id: "levar", eyebrow: "Para levar e presentear", title: "Um pouco da JDS para casa", kinds: ["embalado", "presente", "kit"] },
+  { id: "levar", eyebrow: "Para levar e presentear", title: `Um pouco da ${business.shortName} para casa`, kinds: ["embalado", "presente", "kit"] },
 ];
 
 export default function ProdutosPage() {
@@ -62,7 +63,7 @@ export default function ProdutosPage() {
               )
             }
           >
-            Assim que a JDS lançar algo novo, você encontra nesta página.
+            Assim que a {business.shortName} lançar algo novo, você encontra nesta página.
           </EmptyState>
         </div>
       ) : (
@@ -108,7 +109,7 @@ export default function ProdutosPage() {
                               {product ? (
                                 <TextLink href={`/cardapio/${product.slug}`}>Ver no cardápio</TextLink>
                               ) : (
-                                <TextLink href="/contato">Falar com a JDS</TextLink>
+                                <TextLink href="/contato">Falar com a {business.shortName}</TextLink>
                               )}
                             </div>
                           </div>
@@ -125,7 +126,7 @@ export default function ProdutosPage() {
 
       <CtaBand
         title="Quer saber o que saiu hoje?"
-        text="Siga a JDS para acompanhar lançamentos e itens da estação."
+        text={`Siga a ${business.shortName} para acompanhar lançamentos e itens da estação.`}
         primary={
           instagram
             ? { href: instagram.url, label: "Ver o Instagram", external: true }

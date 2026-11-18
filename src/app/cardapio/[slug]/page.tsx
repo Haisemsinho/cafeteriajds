@@ -123,8 +123,8 @@ export default async function ProductPage({ params }: Props) {
                   <p className="mt-5 text-lede text-mocha">{product.description}</p>
                   {product.dataStatus === "draft" ? (
                     <Notice tone="setup" title="Produto de exemplo" className="mt-5">
-                      Nome, descrição, imagem e preço servem só para apresentação. O cardápio oficial será confirmado pela
-                      JDS.
+                      Nome, descrição, imagem e preço servem só para apresentação. O cardápio oficial será confirmado pela{" "}
+                      {getBusiness().shortName}.
                     </Notice>
                   ) : null}
                 </>

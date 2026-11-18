@@ -2,10 +2,11 @@ import { PageHero } from "@/components/layout/PageHero";
 import { MenuBrowser } from "@/components/menu/MenuBrowser";
 import { getInstagram, getMenu } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
+import { business } from "@/content/business";
 
 export const metadata = pageMetadata({
   title: "Cardápio",
-  description: "Cafés, bebidas geladas, salgados e doces da JDS Cafeteria. Busque por nome e filtre por categoria.",
+  description: `Cafés, bebidas geladas, salgados e doces da ${business.name}. Busque por nome e filtre por categoria.`,
   path: "/cardapio",
 });
 
@@ -16,12 +17,12 @@ export default function CardapioPage() {
   return (
     <>
       <PageHero
-        eyebrow="JDS Cafeteria"
+        eyebrow={business.name}
         title="Cardápio"
         intro="Feito para acompanhar seus melhores momentos. Busque pelo nome, filtre por categoria e toque em um item para ver os detalhes."
         draftNote={
           hasDrafts
-            ? "Itens, ilustrações e preços de exemplo. O cardápio oficial entra quando a JDS confirmar produtos e preços."
+            ? `Itens, ilustrações e preços de exemplo. O cardápio oficial entra quando a ${business.shortName} confirmar produtos e preços.`
             : undefined
         }
       />

@@ -4,12 +4,13 @@ import { PhotoFrame } from "@/components/ui/PhotoFrame";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { DraftTag } from "@/components/ui/Tag";
 import { photos } from "@/content/photos";
+import { storyPage } from "@/content/story";
 import { getStory } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
   title: "Nossa História",
-  description: "Conheça a JDS Cafeteria: o espaço, o jeito de receber e o que faz da casa um lugar para o café e o encontro.",
+  description: storyPage.description,
   path: "/nossa-historia",
 });
 
@@ -19,9 +20,9 @@ export default function NossaHistoriaPage() {
   return (
     <>
       <PageHero
-        eyebrow="Nossa história"
-        title="Cada lugar tem uma história"
-        intro="Madeira, tijolo, plantas e uma xícara com o nome da casa. A JDS é feita desses detalhes."
+        eyebrow={storyPage.hero.eyebrow}
+        title={storyPage.hero.title}
+        intro={storyPage.hero.intro}
         photo={photos.letreiro}
       />
 
@@ -37,9 +38,7 @@ export default function NossaHistoriaPage() {
                 ))}
               </>
             ) : (
-              <p>
-                A JDS Cafeteria é um lugar de madeira, tijolo e luz natural, pensado para o café, a pausa e o encontro.
-              </p>
+              <p>{storyPage.about}</p>
             )}
           </div>
         </div>
@@ -48,7 +47,7 @@ export default function NossaHistoriaPage() {
       {blocks.length || pending.length ? (
         <section aria-labelledby="capitulos-title" className="bg-cream-soft py-20 sm:py-24">
           <div className="page-x">
-            <SectionHeading id="capitulos-title" eyebrow="Capítulos" title="Como a JDS chegou aqui" />
+            <SectionHeading id="capitulos-title" eyebrow="Capítulos" title={storyPage.chaptersTitle} />
             <ol className="mt-10 grid gap-5 md:grid-cols-2">
               {blocks.map((block) => (
                 <li key={block.id} className="overflow-hidden rounded-2xl border border-line bg-white">

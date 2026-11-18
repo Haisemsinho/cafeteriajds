@@ -7,10 +7,11 @@ import { photos } from "@/content/photos";
 import { cn } from "@/lib/cn";
 import { getGallery } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
+import { business } from "@/content/business";
 
 export const metadata = pageMetadata({
   title: "Experiência",
-  description: "A fachada de ripas, a varanda, o salão e os detalhes da JDS Cafeteria em fotos.",
+  description: `A fachada de ripas, a varanda, o salão e os detalhes da ${business.name} em fotos.`,
   path: "/experiencia",
 });
 
@@ -38,7 +39,7 @@ export default function ExperienciaPage() {
   return (
     <>
       <PageHero
-        eyebrow="Experiência JDS"
+        eyebrow={`Experiência ${business.shortName}`}
         title="Entre a madeira e a luz"
         intro="Um passeio pelos cantos da casa: a fachada de ripas, a varanda de entrada, o salão e os detalhes do balcão."
         photo={photos.interior}

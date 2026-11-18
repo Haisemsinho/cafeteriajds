@@ -12,6 +12,7 @@ import { cn } from "@/lib/cn";
 import { normalize, plural } from "@/lib/format";
 import type { MenuCategory, MenuProduct } from "@/types/content";
 import { cardActionClass, ProductCard } from "./ProductCard";
+import { business } from "@/content/business";
 
 type FilterId = "destaques" | "quentes" | "gelados" | "disponiveis" | "salvos";
 
@@ -99,7 +100,7 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
             ) : undefined
           }
         >
-          Estamos preparando o cardápio para o site. Passe na JDS ou acompanhe as novidades pelo Instagram.
+          Estamos preparando o cardápio para o site. Passe na {business.shortName} ou acompanhe as novidades pelo Instagram.
         </EmptyState>
       </div>
     );

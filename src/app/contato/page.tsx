@@ -8,10 +8,11 @@ import { getAnnouncements, getBusiness } from "@/lib/content";
 import { directionsUrl, formatAddress, formatPhone, whatsappUrl } from "@/lib/links";
 import { pageMetadata } from "@/lib/metadata";
 import { showDrafts } from "@/lib/site";
+import { business } from "@/content/business";
 
 export const metadata = pageMetadata({
   title: "Contato e localização",
-  description: "Endereço, horários, WhatsApp e Instagram da JDS Cafeteria.",
+  description: `Endereço, horários, WhatsApp e Instagram da ${business.name}.`,
   path: "/contato",
 });
 
@@ -54,7 +55,7 @@ export default function ContatoPage() {
   return (
     <>
       <PageHero
-        eyebrow="Visite a JDS"
+        eyebrow={`Visite a ${business.shortName}`}
         title="Contato e localização"
         intro="Onde estamos, quando abrimos e os canais para falar com a casa."
       />
@@ -159,7 +160,7 @@ export default function ContatoPage() {
           {contact.whatsapp ? (
             <div className="mt-14">
               <h2 className="text-h3">Mande uma mensagem</h2>
-              <p className="mt-2 mb-7 text-sm text-mocha">Preencha e a conversa abre direto no WhatsApp da JDS.</p>
+              <p className="mt-2 mb-7 text-sm text-mocha">Preencha e a conversa abre direto no WhatsApp da {business.shortName}.</p>
               <WhatsAppForm number={contact.whatsapp} greeting={`Olá, ${business.shortName}!`} />
             </div>
           ) : showDrafts ? (
