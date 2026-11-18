@@ -8,23 +8,21 @@ export function DraftNotice() {
   if (!visible) return null;
 
   return (
-    <div
-      role="note"
-      className="fixed bottom-3 left-3 z-40 flex items-center gap-2.5 rounded-full border border-line bg-paper py-1 pr-1 pl-3.5 text-xs text-espresso shadow-[0_10px_30px_-14px_rgb(38_26_21/0.45)] sm:bottom-4 sm:left-4 sm:max-w-sm"
-    >
-      <span className="size-1.5 shrink-0 rounded-full bg-caramel-deep" aria-hidden />
-      <span>
-        <strong className="font-semibold">Versão de apresentação</strong>
-        <span className="hidden sm:inline">. Itens de exemplo ainda não são oficiais.</span>
-      </span>
-      <button
-        type="button"
-        onClick={() => setVisible(false)}
-        className="grid size-9 shrink-0 place-items-center rounded-full hover:bg-cream-soft"
-        aria-label="Fechar aviso de demonstração"
-      >
-        <Icon name="close" size={16} />
-      </button>
+    <div role="note" className="relative z-[60] border-b border-line-dark bg-roast text-sand">
+      <div className="page-x flex min-h-9 items-center justify-between gap-3 text-xs">
+        <p>
+          <strong className="font-semibold text-caramel-light">Versão de apresentação.</strong>{" "}
+          <span>Itens, preços e fotos de exemplo ainda não são oficiais.</span>
+        </p>
+        <button
+          type="button"
+          onClick={() => setVisible(false)}
+          className="-mr-2 grid size-9 shrink-0 place-items-center rounded-full text-sand hover:bg-white/10 hover:text-white"
+          aria-label="Fechar aviso de demonstração"
+        >
+          <Icon name="close" size={14} />
+        </button>
+      </div>
     </div>
   );
 }

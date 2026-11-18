@@ -17,10 +17,10 @@ export function HomeGallery() {
   if (!images.length) return null;
 
   return (
-    <section aria-labelledby="galeria-title" className="bg-cream-soft py-20 sm:py-24">
+    <section aria-labelledby="galeria-title" className="bg-cream-soft py-24 lg:py-32">
       <div className="page-x">
         <SectionHeading id="galeria-title" title={home.gallery.title} intro={home.gallery.intro} align="center" />
-        <div className="mt-10">
+        <div className="mt-12">
           <Gallery images={images} layout={images.length === 5 ? "feature" : "grid"} />
         </div>
       </div>

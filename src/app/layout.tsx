@@ -55,6 +55,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <a href="#conteudo" className="skip-link">
           Pular para o conteúdo
         </a>
+        {showDrafts ? <DraftNotice /> : null}
         <SiteHeader
           brand={getBrand()}
           instagram={instagram ? { url: instagram.url, handle: instagram.handle } : undefined}
@@ -63,7 +64,6 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           {children}
         </main>
         <SiteFooter />
-        {showDrafts ? <DraftNotice /> : null}
         <BusinessJsonLd />
       </body>
     </html>

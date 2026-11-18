@@ -19,7 +19,7 @@ export function VisitInvite() {
   return (
     <section
       aria-labelledby="convite-title"
-      className="on-dark grain relative isolate flex min-h-svh items-center overflow-hidden bg-roast py-24 text-white"
+      className="on-dark grain relative isolate flex min-h-[75svh] items-center overflow-hidden bg-roast py-24 text-white"
     >
       {invite ? (
         <div aria-hidden data-moment="unveil" className="absolute inset-0 -z-20 overflow-hidden">

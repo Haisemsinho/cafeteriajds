@@ -265,7 +265,7 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
 
   return (
     <div className="page-x pb-28">
-      <div className="sticky top-16 z-30 -mx-5 border-b border-line bg-porcelain/95 px-5 py-3 backdrop-blur-sm sm:-mx-8 sm:px-8 lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:px-0 lg:pt-10 lg:pb-0 lg:backdrop-blur-none">
+      <div className="pt-5 lg:pt-10">
         <MenuSearch
           value={query}
           onChange={setQuery}
@@ -277,50 +277,50 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
           onShowAll={showResults}
           className="lg:ml-[calc(15rem+3rem)] lg:max-w-2xl xl:ml-[calc(16rem+3rem)]"
         />
-        <div className="mt-3 flex items-center gap-2 lg:hidden">
-          <div
-            role="group"
-            aria-label="Categorias do cardápio"
-            className="min-w-0 flex-1 [mask-image:linear-gradient(to_right,black_85%,transparent)]"
-          >
-            {categoryList(true)}
-          </div>
-          <button
-            type="button"
-            onClick={() => toggleFilter("salvos")}
-            aria-pressed={filters.includes("salvos")}
-            aria-label={`Minha seleção (${saved.length})`}
-            className={cn(
-              "press relative grid size-11 shrink-0 place-items-center rounded-full border transition-colors duration-200",
-              filters.includes("salvos")
-                ? "border-caramel-deep bg-caramel-deep text-paper"
-                : "border-line-strong bg-paper text-espresso",
-            )}
-          >
-            <Icon name="heart" size={18} fill={filters.includes("salvos") ? "currentColor" : "none"} />
-            {saved.length ? (
-              <span className="absolute -top-1 -right-1 grid size-5 place-items-center rounded-full bg-night text-[0.6875rem] font-semibold text-white tabular-nums">
-                {saved.length}
-              </span>
-            ) : null}
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setFiltersOpen(true);
-              filterDialog.current?.showModal();
-            }}
-            aria-haspopup="dialog"
-            className="press inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-line-strong bg-paper px-4 text-sm font-semibold text-espresso"
-          >
-            Filtros
-            {activeFilters ? (
-              <span className="grid size-5 place-items-center rounded-full bg-caramel-deep text-xs text-white tabular-nums">
-                {activeFilters}
-              </span>
-            ) : null}
-          </button>
+      </div>
+      <div className="sticky top-16 z-30 -mx-5 mt-3 flex items-center gap-2 border-b border-line bg-porcelain/95 px-5 py-2.5 backdrop-blur-sm sm:-mx-8 sm:px-8 lg:hidden">
+        <div
+          role="group"
+          aria-label="Categorias do cardápio"
+          className="min-w-0 flex-1 [mask-image:linear-gradient(to_right,black_85%,transparent)]"
+        >
+          {categoryList(true)}
         </div>
+        <button
+          type="button"
+          onClick={() => toggleFilter("salvos")}
+          aria-pressed={filters.includes("salvos")}
+          aria-label={`Minha seleção (${saved.length})`}
+          className={cn(
+            "press relative grid size-11 shrink-0 place-items-center rounded-full border transition-colors duration-200",
+            filters.includes("salvos")
+              ? "border-caramel-deep bg-caramel-deep text-paper"
+              : "border-line-strong bg-paper text-espresso",
+          )}
+        >
+          <Icon name="heart" size={18} fill={filters.includes("salvos") ? "currentColor" : "none"} />
+          {saved.length ? (
+            <span className="absolute -top-1 -right-1 grid size-5 place-items-center rounded-full bg-night text-[0.6875rem] font-semibold text-white tabular-nums">
+              {saved.length}
+            </span>
+          ) : null}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setFiltersOpen(true);
+            filterDialog.current?.showModal();
+          }}
+          aria-haspopup="dialog"
+          className="press inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-line-strong bg-paper px-4 text-sm font-semibold text-espresso"
+        >
+          Filtros
+          {activeFilters ? (
+            <span className="grid size-5 place-items-center rounded-full bg-caramel-deep text-xs text-white tabular-nums">
+              {activeFilters}
+            </span>
+          ) : null}
+        </button>
       </div>
 
       <dialog

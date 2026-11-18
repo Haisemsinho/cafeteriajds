@@ -11,6 +11,7 @@ import { getHighlights, getInstagram, getMenu } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
 import type { Highlight } from "@/types/content";
 import { business } from "@/content/business";
+import { cn } from "@/lib/cn";
 
 export const metadata = pageMetadata({
   title: "Produtos e novidades",
@@ -81,11 +82,16 @@ export default function ProdutosPage() {
             <section
               key={group.id}
               aria-labelledby={`${group.id}-title`}
-              className={gi % 2 ? "bg-cream-soft py-20 sm:py-24" : "py-20 sm:py-24"}
+              className={gi % 2 ? "bg-cream-soft py-24 lg:py-32" : "py-24 lg:py-32"}
             >
               <div className="page-x">
                 <SectionHeading id={`${group.id}-title`} title={group.title} />
-                <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+                <ul
+                  className={cn(
+                    "mt-12 grid gap-5 sm:grid-cols-2 lg:gap-6",
+                    items.length > 2 ? "lg:grid-cols-3" : "lg:max-w-4xl",
+                  )}
+                >
                   {items.map((item) => {
                     const product = item.productSlug ? products.find((p) => p.slug === item.productSlug) : undefined;
                     return (

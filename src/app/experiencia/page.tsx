@@ -71,7 +71,7 @@ export default function ExperienciaPage() {
           title="Arquitetura e ambiente"
           intro="Madeira, tijolo e vidro: o que se vê de fora e o que se encontra lá dentro."
         />
-        <div className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+        <div className="mt-12 grid gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           {spaces.map((space, i) => (
             <article key={space.title} className={cn(space.span, i === 0 && "sm:col-span-2")}>
               <h3 className="font-display text-[2rem] leading-none font-normal tracking-[-0.01em] text-espresso">

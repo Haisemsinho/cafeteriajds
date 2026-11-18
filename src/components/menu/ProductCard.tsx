@@ -68,7 +68,7 @@ export function ProductCard({ product, categoryName, action, corner, variant = "
 
       <div
         className={cn(
-          "flex flex-1 flex-col",
+          variant === "feature" ? "flex flex-none flex-col" : "flex flex-1 flex-col",
           row ? "py-4 pr-5 pl-3" : auto ? "py-4 pr-4 pl-2 sm:px-6 sm:pt-5 sm:pb-6" : "px-5 pt-5 pb-5 sm:px-6 sm:pb-6",
         )}
       >

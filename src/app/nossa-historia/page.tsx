@@ -21,7 +21,7 @@ export default function NossaHistoriaPage() {
     <>
       <PageHero title={storyPage.hero.title} intro={storyPage.hero.intro} photo={photos.letreiro} />
 
-      <section aria-labelledby="marca-title" className="page-x py-20 sm:py-24">
+      <section aria-labelledby="marca-title" className="page-x py-24 lg:py-32">
         <div className="grid gap-8 md:grid-cols-[1fr_1.4fr] lg:gap-16">
           <SectionHeading id="marca-title" title="Um lugar para ficar" />
           <div className="space-y-4 text-lede text-mocha">
@@ -40,16 +40,16 @@ export default function NossaHistoriaPage() {
       </section>
 
       {blocks.length || pending.length ? (
-        <section aria-labelledby="capitulos-title" className="bg-cream-soft py-20 sm:py-24">
-          <div className="page-x">
+        <section aria-labelledby="capitulos-title" className="bg-cream-soft py-24 lg:py-32">
+          <div className="page-x grid gap-10 md:grid-cols-[1fr_1.4fr] lg:gap-16">
             <SectionHeading id="capitulos-title" title={storyPage.chaptersTitle} />
-            <ol className="mt-10 grid gap-5 md:grid-cols-2">
+            <ol className="divide-y divide-line border-y border-line">
               {blocks.map((block) => (
-                <li key={block.id} className="overflow-hidden rounded-2xl border border-line bg-white">
+                <li key={block.id} className="py-7">
                   {block.image ? (
                     <PhotoFrame photo={block.image} ratio="16/9" sizes="(min-width: 768px) 45vw, 100vw" />
                   ) : null}
-                  <div className="p-6">
+                  <div className={block.image ? "mt-5" : undefined}>
                     <h3 className="text-h3">{block.title}</h3>
                     {block.status === "draft" ? <DraftTag className="mt-2" label="Texto provisório" /> : null}
                     <div className="mt-3 space-y-3 text-mocha">
@@ -61,7 +61,7 @@ export default function NossaHistoriaPage() {
                 </li>
               ))}
               {pending.map((block) => (
-                <li key={block.id} className="rounded-2xl border border-dashed border-caramel-deep/40 bg-white p-6">
+                <li key={block.id} className="py-7">
                   <p className="text-xs font-semibold text-caramel-deep">A preencher</p>
                   <h3 className="mt-1.5 text-h3">{block.title}</h3>
                   <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-mocha">{block.hint}</p>
@@ -73,7 +73,7 @@ export default function NossaHistoriaPage() {
       ) : null}
 
       {philosophy ? (
-        <section aria-labelledby="filosofia-title" className="page-x py-20 sm:py-24">
+        <section aria-labelledby="filosofia-title" className="page-x py-24 lg:py-32">
           <div className="grid gap-8 md:grid-cols-[1fr_1.4fr] lg:gap-16">
             <div>
               <SectionHeading id="filosofia-title" title={philosophy.title} />
@@ -91,10 +91,10 @@ export default function NossaHistoriaPage() {
         </section>
       ) : null}
 
-      <section aria-labelledby="casa-fotos-title" className="bg-cream-soft py-20 sm:py-24">
+      <section aria-labelledby="casa-fotos-title" className="bg-cream-soft py-24 lg:py-32">
         <div className="page-x">
           <SectionHeading id="casa-fotos-title" title="O que as fotos já contam" />
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             <PhotoFrame photo={photos.fachada} ratio="4/5" sizes="(min-width: 1024px) 24rem, 50vw" caption />
             <PhotoFrame photo={photos.prateleiras} ratio="4/5" sizes="(min-width: 1024px) 24rem, 50vw" caption />
             <PhotoFrame

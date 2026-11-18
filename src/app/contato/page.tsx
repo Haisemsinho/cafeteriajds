@@ -71,7 +71,7 @@ export default function ContatoPage() {
         </div>
       ) : null}
 
-      <div className="page-x grid gap-12 py-20 sm:py-24 lg:grid-cols-12 lg:gap-10">
+      <div className="page-x grid gap-12 py-24 lg:grid-cols-12 lg:gap-10 lg:py-32">
         <section aria-labelledby="onde-title" className="lg:col-span-6">
           <h2 id="onde-title" className="flex items-center gap-2 font-sans text-h3 font-semibold">
             <Icon name="pin" size={20} className="text-caramel-deep" />

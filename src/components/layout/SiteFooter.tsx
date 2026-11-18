@@ -57,7 +57,7 @@ export function SiteFooter() {
         </div>
 
         <nav aria-label="Rodapé">
-          <p className="eyebrow mb-4 text-caramel-light">Navegação</p>
+          <p className="mb-3 text-sm font-semibold text-white">Navegação</p>
           <ul className="grid grid-cols-2 gap-x-6 sm:grid-cols-1">
             {footerNav.map((item) => (
               <li key={item.href}>
@@ -70,7 +70,7 @@ export function SiteFooter() {
         </nav>
 
         <div className="sm:col-span-2 lg:col-span-1">
-          <p className="eyebrow mb-4 text-caramel-light">Visite</p>
+          <p className="mb-3 text-sm font-semibold text-white">Visite</p>
           {address ? (
             <address className="not-italic">
               {address.line1}
@@ -102,9 +102,16 @@ export function SiteFooter() {
 
       {credits.length ? (
         <div className="border-t border-line-dark">
-          <div className="page-x py-6 text-sm leading-relaxed text-latte">
-            <h2 className="font-sans text-sm font-semibold text-sand">Fotos ilustrativas</h2>
-            <p className="mt-1.5 max-w-[68ch]">
+          <details className="group/credits page-x py-3 text-sm leading-relaxed text-latte">
+            <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 font-semibold text-sand hover:text-white [&::-webkit-details-marker]:hidden">
+              Fotos ilustrativas e créditos
+              <Icon
+                name="chevronRight"
+                size={14}
+                className="rotate-90 transition-transform duration-200 group-open/credits:-rotate-90"
+              />
+            </summary>
+            <p className="mt-1 mb-3 max-w-[68ch]">
               As fotos marcadas como ilustrativas são de bancos de imagens e não retratam a {business.shortName}.
               Créditos:{" "}
               {credits.map((credit, i) => (
@@ -121,7 +128,7 @@ export function SiteFooter() {
                 </span>
               ))}
             </p>
-          </div>
+          </details>
         </div>
       ) : null}
 
