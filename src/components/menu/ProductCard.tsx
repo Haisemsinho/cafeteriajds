@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { PhotoBadge } from "@/components/ui/PhotoCredit";
 import { Tag } from "@/components/ui/Tag";
 import { cn } from "@/lib/cn";
 import type { MenuProduct } from "@/types/content";
@@ -19,33 +20,42 @@ export function ProductCard({ product, categoryName, action, corner, className }
   return (
     <article
       className={cn(
-        "lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-[0_1px_2px_rgb(0_0_0/0.04)]",
-        "hover:border-line-strong hover:shadow-[0_22px_44px_-24px_rgb(0_0_0/0.3)]",
+        "lift group relative flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white shadow-[0_1px_2px_rgb(0_0_0/0.04)]",
+        "hover:border-transparent hover:shadow-[0_30px_60px_-30px_rgb(36_24_16/0.45)]",
         className,
       )}
     >
-      <div className={cn("relative aspect-[16/10] overflow-hidden bg-oat sm:aspect-[4/3]", unavailable && "opacity-70 grayscale-[0.5]")}>
-        <div className="absolute inset-0 transition-transform duration-500 ease-soft motion-safe:group-hover:scale-[1.04]">
-          <ProductVisual product={product} sizes="(min-width: 1024px) 24rem, (min-width: 640px) 50vw, 100vw" />
-        </div>
+      <div
+        className={cn(
+          "zoom-frame relative m-2 mb-0 aspect-[5/4] rounded-[1.1rem] bg-oat",
+          unavailable && "opacity-70 grayscale-[0.5]",
+        )}
+      >
+        <ProductVisual
+          product={product}
+          sizes="(min-width: 1280px) 26rem, (min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw"
+        />
+        {product.image ? <PhotoBadge photo={product.image} className="right-3 bottom-3" /> : null}
         {tag ? (
           <Tag tone={tag === "destaque" || tag === "novidade" ? "accent" : "dark"} className="absolute top-3 left-3">
             {tagLabels[tag]}
           </Tag>
         ) : null}
         {unavailable ? (
-          <span className="absolute right-3 bottom-3 rounded-full bg-night px-2.5 py-1 text-xs font-semibold text-white">
+          <span className="absolute bottom-3 left-3 rounded-full bg-night px-2.5 py-1 text-xs font-semibold text-white">
             {unavailable}
           </span>
         ) : null}
       </div>
 
-      {corner ? <div className="absolute top-2 right-2 z-10">{corner}</div> : null}
+      {corner ? <div className="absolute top-4 right-4 z-10">{corner}</div> : null}
 
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
-        {categoryName ? <p className="mb-1 text-[0.8125rem] font-medium text-mocha">{categoryName}</p> : null}
-        <h3 className="text-lg leading-snug font-semibold tracking-[-0.01em] text-espresso">{product.name}</h3>
-        <p className="mt-1.5 mb-5 line-clamp-2 text-[0.9375rem] leading-relaxed text-mocha">{product.description}</p>
+      <div className="flex flex-1 flex-col px-5 pt-5 pb-5 sm:px-6 sm:pb-6">
+        {categoryName ? <p className="eyebrow mb-2 text-[0.6875rem] text-mocha">{categoryName}</p> : null}
+        <h3 className="font-display text-[1.75rem] leading-[1.05] font-normal tracking-[-0.01em] text-espresso">
+          {product.name}
+        </h3>
+        <p className="mt-2 mb-5 line-clamp-2 text-[0.9375rem] leading-relaxed text-mocha">{product.description}</p>
         <div className="mt-auto flex items-end justify-between gap-3 border-t border-line pt-4">
           <ProductPrice product={product} />
           {action}
@@ -56,4 +66,4 @@ export function ProductCard({ product, categoryName, action, corner, className }
 }
 
 export const cardActionClass =
-  "inline-flex min-h-10 shrink-0 items-center gap-1 rounded-md bg-night px-3.5 text-sm font-semibold text-white transition-colors duration-200 group-hover:bg-caramel-deep after:absolute after:inset-0 after:rounded-2xl after:content-[''] focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-caramel-deep focus-visible:after:outline";
+  "inline-flex min-h-10 shrink-0 items-center gap-1 rounded-full bg-night px-4 text-sm font-semibold text-white transition-colors duration-300 group-hover:bg-caramel-deep after:absolute after:inset-0 after:rounded-3xl after:content-[''] focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-caramel-deep focus-visible:after:outline";

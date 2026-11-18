@@ -6,6 +6,7 @@ import { Icon } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { home } from "@/content/home";
 import { getFeaturedProducts, getInstagram } from "@/lib/content";
+import { stagger } from "@/lib/cn";
 
 export function FeaturedProducts() {
   const featured = getFeaturedProducts(6);
@@ -13,17 +14,28 @@ export function FeaturedProducts() {
   const hasDrafts = featured.some((p) => p.dataStatus === "draft");
 
   return (
-    <section aria-labelledby="destaques-title" className="bg-cream-soft py-20 sm:py-24">
+    <section aria-labelledby="destaques-title" className="bg-cream-soft py-24 sm:py-32">
       <div className="page-x">
         <SectionHeading
           id="destaques-title"
           eyebrow={home.featured.eyebrow}
           title={home.featured.title}
           intro={home.featured.subtitle}
-          align="center"
+          action={
+            featured.length ? (
+              <ButtonLink
+                href={home.featured.cta.href}
+                variant="outline"
+                icon="arrowRight"
+                className="hidden sm:inline-flex"
+              >
+                {home.featured.cta.label}
+              </ButtonLink>
+            ) : undefined
+          }
         />
         {hasDrafts ? (
-          <p className="mx-auto mt-6 flex w-fit max-w-full items-start gap-2 rounded-xl border border-caramel/30 bg-white px-4 py-2.5 text-left text-sm text-mocha sm:items-center sm:rounded-full">
+          <p className="mt-8 flex w-fit max-w-full items-start gap-2 rounded-2xl border border-caramel/30 bg-white px-4 py-2.5 text-sm text-mocha sm:items-center sm:rounded-full">
             <Icon name="info" size={16} className="shrink-0 text-caramel-deep" />
             {home.featured.demoNotice}
           </p>
@@ -32,8 +44,8 @@ export function FeaturedProducts() {
         {featured.length ? (
           <>
             <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-              {featured.map((product) => (
-                <li key={product.id}>
+              {featured.map((product, i) => (
+                <li key={product.id} data-reveal style={stagger(i % 3)}>
                   <ProductCard
                     product={product}
                     categoryName={product.categoryName}
@@ -47,7 +59,7 @@ export function FeaturedProducts() {
                 </li>
               ))}
             </ul>
-            <div className="mt-12 text-center">
+            <div className="mt-12 text-center sm:hidden">
               <ButtonLink href={home.featured.cta.href} variant="dark" icon="arrowRight">
                 {home.featured.cta.label}
               </ButtonLink>

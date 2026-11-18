@@ -6,20 +6,23 @@ import { Icon, type IconName } from "./Icon";
 type Variant = "primary" | "dark" | "light" | "outline" | "outline-light";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-caramel-deep text-white shadow-[0_8px_20px_-10px_rgb(156_95_34/0.7)] hover:bg-caramel-dark",
+  primary:
+    "bg-caramel-deep text-white shadow-[0_10px_24px_-12px_rgb(156_95_34/0.8)] hover:bg-caramel-dark hover:shadow-[0_14px_30px_-12px_rgb(156_95_34/0.9)]",
   dark: "bg-night text-white hover:bg-walnut",
   light: "bg-white text-night hover:bg-cream-soft",
-  outline: "border border-line-strong bg-white text-espresso hover:border-espresso",
-  "outline-light": "border border-white/70 text-white hover:bg-white hover:text-night",
+  outline:
+    "border border-line-strong bg-transparent text-espresso hover:border-espresso hover:bg-espresso hover:text-white",
+  "outline-light":
+    "border border-white/60 text-white backdrop-blur-[2px] hover:border-white hover:bg-white hover:text-night",
 };
 
 const sizes = {
-  md: "min-h-12 px-6 text-[0.9375rem]",
-  sm: "min-h-11 px-4 text-sm",
+  md: "min-h-12 px-7 text-[0.9375rem]",
+  sm: "min-h-11 px-5 text-sm",
 };
 
 const base =
-  "group/btn inline-flex items-center justify-center gap-2 rounded-md font-semibold transition-[background-color,color,border-color] duration-200 ease-soft disabled:pointer-events-none disabled:opacity-50";
+  "press group/btn inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-[background-color,color,border-color,box-shadow] duration-300 ease-soft disabled:pointer-events-none disabled:opacity-50";
 
 type Own = { variant?: Variant; size?: keyof typeof sizes; icon?: IconName; children: ReactNode; className?: string };
 
@@ -31,7 +34,7 @@ function Inner({ icon, children }: { icon?: IconName; children: ReactNode }) {
         <Icon
           name={icon}
           size={18}
-          className="-mr-1 transition-transform duration-200 ease-soft group-hover/btn:translate-x-0.5"
+          className="-mr-1 transition-transform duration-500 ease-out-expo group-hover/btn:translate-x-1"
         />
       ) : null}
     </>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
-import { cn } from "@/lib/cn";
+import { cn, stagger } from "@/lib/cn";
 import type { GalleryImage } from "@/types/content";
 
 type Props = { images: GalleryImage[]; layout?: "grid" | "feature" };
@@ -40,22 +40,31 @@ export function Gallery({ images, layout = "grid" }: Props) {
       <ul
         className={cn(
           "grid grid-cols-2 gap-3 sm:gap-4",
-          layout === "feature" ? "md:grid-cols-3 md:grid-rows-2" : images.length === 4 ? "md:grid-cols-4" : "md:grid-cols-3",
+          layout === "feature"
+            ? "md:grid-cols-3 md:grid-rows-2"
+            : images.length === 4
+              ? "md:grid-cols-4"
+              : "md:grid-cols-3",
         )}
       >
         {images.map((image, i) => {
           const feature = layout === "feature" && i === 0;
           return (
-            <li key={image.id} className={cn(feature && "col-span-2 md:col-span-1 md:row-span-2")}>
+            <li
+              key={image.id}
+              data-reveal
+              style={stagger(i % 3)}
+              className={cn(feature && "col-span-2 md:col-span-1 md:row-span-2")}
+            >
               <button
                 type="button"
                 onClick={() => open(i)}
                 className={cn(
-                  "group relative block w-full overflow-hidden rounded-xl bg-cream",
+                  "group zoom-frame press relative block w-full rounded-2xl bg-cream",
                   feature ? "aspect-[4/3] md:aspect-auto md:h-full" : "aspect-[4/3]",
                 )}
               >
-                <span className="absolute inset-0 transition-transform duration-500 ease-soft motion-safe:group-hover:scale-[1.03]">
+                <span className="absolute inset-0">
                   <Image
                     src={image.src}
                     alt=""
@@ -66,8 +75,15 @@ export function Gallery({ images, layout = "grid" }: Props) {
                     style={image.position ? { objectPosition: image.position } : undefined}
                   />
                 </span>
-                <span className="absolute inset-x-0 bottom-0 bg-linear-to-t from-espresso/70 to-transparent p-3 pt-8 text-left text-sm font-medium text-paper sm:p-4 sm:pt-10">
-                  {image.caption}
+                <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 bg-linear-to-t from-night/80 to-transparent p-3 pt-10 text-left text-sm font-medium text-paper sm:p-4 sm:pt-14">
+                  <span className="transition-transform duration-500 ease-out-expo motion-safe:group-hover:-translate-y-0.5">
+                    {image.caption}
+                  </span>
+                  <Icon
+                    name="arrowUpRight"
+                    size={16}
+                    className="hidden shrink-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:block"
+                  />
                 </span>
                 <span className="sr-only">Ampliar foto: {image.alt}</span>
               </button>
@@ -113,13 +129,7 @@ export function Gallery({ images, layout = "grid" }: Props) {
             >
               <figure key={current.id} className="absolute inset-0 flex flex-col motion-safe:animate-fade-in">
                 <div className="relative mx-4 flex-1 sm:mx-20">
-                  <Image
-                    src={current.src}
-                    alt={current.alt}
-                    fill
-                    sizes="100vw"
-                    className="object-contain"
-                  />
+                  <Image src={current.src} alt={current.alt} fill sizes="100vw" className="object-contain" />
                 </div>
                 <figcaption className="px-6 py-4 text-center">
                   <span className="block text-lg font-semibold text-paper">{current.caption}</span>

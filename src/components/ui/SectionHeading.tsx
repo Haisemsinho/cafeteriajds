@@ -26,12 +26,12 @@ export function SectionHeading({
 }: Props) {
   const dark = tone === "dark";
   const text = (
-    <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center")}>
-      {eyebrow ? <p className={cn("eyebrow mb-3", dark && "text-sand")}>{eyebrow}</p> : null}
+    <div data-reveal className={cn("max-w-2xl", align === "center" && "mx-auto text-center")}>
+      {eyebrow ? <p className={cn("eyebrow mb-4", dark && "text-caramel-light")}>{eyebrow}</p> : null}
       <Tag id={id} className={cn(Tag === "h1" ? "text-h1" : "text-h2", dark ? "text-paper" : "text-espresso")}>
         {title}
       </Tag>
-      {intro ? <div className={cn("mt-4 text-lede", dark ? "text-sand" : "text-mocha")}>{intro}</div> : null}
+      {intro ? <div className={cn("mt-5 text-lede", dark ? "text-sand" : "text-mocha")}>{intro}</div> : null}
     </div>
   );
 

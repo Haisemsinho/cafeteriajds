@@ -4,7 +4,9 @@ export const home = {
   hero: {
     eyebrow: business.tagline,
     title: `Bem-vindo à ${business.name}`,
+    titleLines: ["Bem-vindo à", business.name],
     subtitle: "Seu lugar para apreciar um bom café e viver bons momentos.",
+    scrollHint: "Role para descobrir",
     primary: { label: "Explorar cardápio", href: "/cardapio" },
     secondary: { label: "Conheça nosso espaço", href: "/experiencia" },
   },
@@ -36,6 +38,7 @@ export const home = {
     intro: "Um pouco da casa. Toque em uma foto para ampliar.",
   },
   visit: {
+    eyebrow: "Sua próxima pausa",
     title: "Venha nos visitar",
     fallback: `Seu próximo café tem endereço. Acompanhe as novidades da ${business.shortName} enquanto isso.`,
   },

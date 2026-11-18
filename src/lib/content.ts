@@ -4,6 +4,8 @@ import { gallery as rawGallery } from "@/content/gallery";
 import { highlights as rawHighlights } from "@/content/highlights";
 import { categories as rawCategories, products as rawProducts } from "@/content/menu";
 import { philosophy, storyBlocks as rawStory, storyIntro } from "@/content/story";
+import { ambience } from "@/content/illustrative";
+import { photos } from "@/content/photos";
 import {
   announcementSchema,
   businessProfileSchema,
@@ -15,7 +17,7 @@ import {
 } from "@/lib/schemas";
 import { showDrafts } from "@/lib/site";
 import { zonedNow } from "@/lib/hours";
-import type { ContactInformation, DataStatus, GalleryImage, Highlight, MenuProduct } from "@/types/content";
+import type { ContactInformation, DataStatus, GalleryImage, Highlight, MenuProduct, Photo } from "@/types/content";
 
 function check<T>(schema: z.ZodType<T>, data: unknown, label: string): T {
   const result = schema.safeParse(data);
@@ -88,8 +90,29 @@ export function getAnnouncements(today = zonedNow(business.hours?.timezone ?? "A
   );
 }
 
+const allowPhoto = (photo?: Photo) => (photo && (showDrafts || !photo.illustrative) ? photo : undefined);
+
+const withAllowedPhotos = (p: MenuProduct): MenuProduct => ({
+  ...p,
+  image: allowPhoto(p.image),
+  images: p.images?.filter((i) => allowPhoto(i)),
+});
+
+export function getScenes() {
+  const pick = (demo: Photo, real: Photo) => (showDrafts ? demo : real);
+  return {
+    hero: { desktop: pick(ambience.janela, photos.xicara), mobile: pick(ambience.janela, photos.fachada) },
+    intro: pick(ambience.lattes, photos.interior),
+    invite: showDrafts ? ambience.brinde : undefined,
+    menu: showDrafts ? ambience.lattes : undefined,
+  };
+}
+
 export function getMenu() {
-  const visibleProducts = products.filter((p) => isVisible(p.dataStatus)).sort(byOrder);
+  const visibleProducts = products
+    .filter((p) => isVisible(p.dataStatus))
+    .map(withAllowedPhotos)
+    .sort(byOrder);
   const visibleCategories = categories
     .filter((c) => isVisible(c.status) && visibleProducts.some((p) => p.categoryId === c.id))
     .sort(byOrder);

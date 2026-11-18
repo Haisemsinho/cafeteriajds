@@ -1,4 +1,5 @@
 import type { MenuCategory, MenuProduct } from "@/types/content";
+import { productPhotos } from "./illustrative";
 
 export const categories: MenuCategory[] = [
   { id: "cafes-tradicionais", name: "Cafés tradicionais", order: 1, status: "draft" },
@@ -17,7 +18,7 @@ const sizes = (p: number, m: number) => [
   { id: "m", label: "Médio", priceCents: m },
 ];
 
-export const products: MenuProduct[] = [
+const items: MenuProduct[] = [
   {
     id: "p-001",
     slug: "espresso",
@@ -207,3 +208,7 @@ export const products: MenuProduct[] = [
     dataStatus: "draft",
   },
 ];
+
+export const products: MenuProduct[] = items.map((p) =>
+  p.image || !productPhotos[p.slug] ? p : { ...p, image: productPhotos[p.slug] },
+);

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
-import { cn } from "@/lib/cn";
+import { cn, stagger } from "@/lib/cn";
 import { isActive, mainNav } from "@/lib/navigation";
 import { Logo, type Brand } from "./Logo";
 
@@ -20,11 +20,13 @@ export function SiteHeader({ brand, instagram }: Props) {
   const pathname = usePathname();
   const scrolled = useSyncExternalStore(
     subscribeScroll,
-    () => window.scrollY > 8,
+    () => window.scrollY > 24,
     () => false,
   );
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [intro] = useState(() => pathname === "/");
+  const overlay = pathname === "/" && !scrolled;
 
   useEffect(() => {
     dialogRef.current?.close();
@@ -39,11 +41,16 @@ export function SiteHeader({ brand, instagram }: Props) {
   return (
     <header
       className={cn(
-        "on-dark sticky top-0 z-50 border-b bg-night text-white transition-[border-color,box-shadow] duration-200",
-        scrolled ? "border-line-dark shadow-[0_8px_24px_-12px_rgb(0_0_0/0.5)]" : "border-transparent",
+        "on-dark sticky top-0 z-50 border-b text-white transition-[background-color,border-color,box-shadow] duration-500 ease-out-expo",
+        overlay
+          ? "border-white/10 bg-transparent"
+          : cn(
+              "bg-night",
+              scrolled ? "border-line-dark shadow-[0_10px_30px_-14px_rgb(0_0_0/0.6)]" : "border-transparent",
+            ),
       )}
     >
-      <div className="page-x flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">
+      <div className={cn("page-x flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]", intro && "header-intro")}>
         <Link href="/" className="-my-2 py-2 text-white" aria-label={`${brand.name}, página inicial`}>
           <Logo brand={brand} />
         </Link>
@@ -58,14 +65,18 @@ export function SiteHeader({ brand, instagram }: Props) {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "relative block rounded-md px-3 py-2 text-[0.9375rem] transition-colors duration-200 lg:px-4",
-                      active ? "font-semibold text-white" : "text-white/70 hover:bg-white/8 hover:text-white",
+                      "group/nav relative block rounded-md px-3 py-2 text-[0.9375rem] transition-colors duration-300 lg:px-4",
+                      active ? "font-semibold text-white" : "text-white/75 hover:text-white",
                     )}
                   >
                     {item.label}
-                    {active ? (
-                      <span aria-hidden className="absolute inset-x-3 bottom-0.5 h-0.5 rounded-full bg-caramel lg:inset-x-4" />
-                    ) : null}
+                    <span
+                      aria-hidden
+                      className={cn(
+                        "absolute inset-x-3 bottom-0.5 h-0.5 origin-left rounded-full bg-caramel transition-transform duration-500 ease-out-expo lg:inset-x-4",
+                        active ? "scale-x-100" : "scale-x-0 group-hover/nav:scale-x-100",
+                      )}
+                    />
                   </Link>
                 </li>
               );
@@ -108,17 +119,17 @@ export function SiteHeader({ brand, instagram }: Props) {
 
           <nav aria-label="Principal" className="mt-4 flex-1">
             <ul className="divide-y divide-line-dark border-y border-line-dark">
-              {mainNav.map((item) => {
+              {mainNav.map((item, i) => {
                 const active = isActive(pathname, item.href);
                 return (
-                  <li key={item.href}>
+                  <li key={item.href} className="sheet-item" style={stagger(i, 8)}>
                     <Link
                       href={item.href}
                       onClick={closeMenu}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "flex min-h-14 items-center justify-between text-lg",
-                        active ? "font-semibold text-caramel" : "font-medium text-white",
+                        "flex min-h-16 items-center justify-between font-display text-[1.75rem] leading-none",
+                        active ? "text-caramel-light" : "text-white",
                       )}
                     >
                       {item.label}
@@ -130,7 +141,7 @@ export function SiteHeader({ brand, instagram }: Props) {
             </ul>
           </nav>
 
-          <div className="mt-8 flex flex-col gap-3">
+          <div className="sheet-item mt-8 flex flex-col gap-3" style={stagger(mainNav.length, 8)}>
             <ButtonLink href="/cardapio" onClick={closeMenu} icon="arrowRight">
               Explorar cardápio
             </ButtonLink>

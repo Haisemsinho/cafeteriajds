@@ -11,6 +11,7 @@ import { getHighlights, getInstagram, getMenu } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
 import type { Highlight } from "@/types/content";
 import { business } from "@/content/business";
+import { stagger } from "@/lib/cn";
 
 export const metadata = pageMetadata({
   title: "Produtos e novidades",
@@ -28,8 +29,18 @@ const kindLabels: Record<Highlight["kind"], string> = {
 };
 
 const groups: { id: string; eyebrow: string; title: string; kinds: Highlight["kind"][] }[] = [
-  { id: "novidades", eyebrow: "Destaques e novidades", title: "O que está em alta", kinds: ["destaque", "novidade", "sazonal"] },
-  { id: "levar", eyebrow: "Para levar e presentear", title: `Um pouco da ${business.shortName} para casa`, kinds: ["embalado", "presente", "kit"] },
+  {
+    id: "novidades",
+    eyebrow: "Destaques e novidades",
+    title: "O que está em alta",
+    kinds: ["destaque", "novidade", "sazonal"],
+  },
+  {
+    id: "levar",
+    eyebrow: "Para levar e presentear",
+    title: `Um pouco da ${business.shortName} para casa`,
+    kinds: ["embalado", "presente", "kit"],
+  },
 ];
 
 export default function ProdutosPage() {
@@ -79,12 +90,12 @@ export default function ProdutosPage() {
               <div className="page-x">
                 <SectionHeading id={`${group.id}-title`} eyebrow={group.eyebrow} title={group.title} />
                 <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-                  {items.map((item) => {
+                  {items.map((item, ii) => {
                     const product = item.productSlug ? products.find((p) => p.slug === item.productSlug) : undefined;
                     return (
-                      <li key={item.id}>
-                        <article className="lift flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white hover:shadow-[0_22px_44px_-24px_rgb(0_0_0/0.3)]">
-                          <div className="relative aspect-[4/3] bg-oat">
+                      <li key={item.id} data-reveal style={stagger(ii % 3)}>
+                        <article className="lift group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white hover:border-transparent hover:shadow-[0_30px_60px_-30px_rgb(36_24_16/0.45)]">
+                          <div className="zoom-frame relative m-2 mb-0 aspect-[5/4] rounded-[1.1rem] bg-oat">
                             {item.image ? (
                               <Image
                                 src={item.image.src}
@@ -102,9 +113,9 @@ export default function ProdutosPage() {
                               {item.status === "draft" ? <DraftTag /> : null}
                             </span>
                           </div>
-                          <div className="flex flex-1 flex-col p-5">
-                            <h3 className="text-h3">{item.title}</h3>
-                            <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-mocha">{item.description}</p>
+                          <div className="flex flex-1 flex-col p-5 sm:p-6">
+                            <h3 className="font-display text-[1.75rem] leading-[1.05] font-normal">{item.title}</h3>
+                            <p className="mt-2 text-[0.9375rem] leading-relaxed text-mocha">{item.description}</p>
                             <div className="mt-auto pt-4">
                               {product ? (
                                 <TextLink href={`/cardapio/${product.slug}`}>Ver no cardápio</TextLink>

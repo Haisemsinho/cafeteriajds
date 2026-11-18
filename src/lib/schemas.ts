@@ -12,11 +12,20 @@ const staticImage = z.custom<StaticImageData>(
   "imagem precisa ser importada estaticamente",
 );
 
+export const photoCreditSchema = z.object({
+  author: z.string().optional(),
+  license: z.string(),
+  url: z.url().refine((u) => u.startsWith("https://"), "link precisa ser https"),
+});
+
 export const photoSchema = z.object({
   src: staticImage,
   alt: z.string().min(3),
   caption: z.string().optional(),
   position: z.string().optional(),
+  positionMobile: z.string().optional(),
+  illustrative: z.boolean().optional(),
+  credit: photoCreditSchema.optional(),
 });
 
 export const openingPeriodSchema = z

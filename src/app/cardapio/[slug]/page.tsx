@@ -8,6 +8,8 @@ import { ProductGallery } from "@/components/product/ProductGallery";
 import { JsonLd } from "@/components/layout/BusinessJsonLd";
 import { ProductOptions } from "@/components/product/ProductOptions";
 import { Notice } from "@/components/ui/Feedback";
+import { PhotoCredit } from "@/components/ui/PhotoCredit";
+import { delay, stagger } from "@/lib/cn";
 import { Tag } from "@/components/ui/Tag";
 import { getBusiness, getMenu, getProduct, getRelatedProducts } from "@/lib/content";
 import { siteUrl } from "@/lib/site";
@@ -92,17 +94,18 @@ export default async function ProductPage({ params }: Props) {
         <BackToMenu />
 
         <div className="mt-4 grid gap-8 md:mt-6 md:grid-cols-2 md:gap-10 lg:gap-16">
-          <div className="md:sticky md:top-28 md:self-start">
+          <div className="hero-in md:sticky md:top-28 md:self-start">
             {photos.length ? (
               <ProductGallery images={photos} name={product.name} />
             ) : (
-              <div className="relative aspect-square overflow-hidden rounded-2xl bg-oat">
+              <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-oat md:aspect-[4/5]">
                 <ProductVisual product={product} sizes="(min-width: 768px) 45vw, 100vw" label />
               </div>
             )}
+            {photos[0] ? <PhotoCredit photo={photos[0]} className="mt-3" /> : null}
           </div>
 
-          <div className="md:pt-2">
+          <div className="hero-in md:pt-6" style={delay(1)}>
             <div className="flex flex-wrap items-center gap-2">
               <Link
                 href={`/cardapio?categoria=${product.categoryId}`}
@@ -110,9 +113,11 @@ export default async function ProductPage({ params }: Props) {
               >
                 {product.categoryName}
               </Link>
-              {tag ? <Tag tone={tag === "destaque" || tag === "novidade" ? "accent" : "dark"}>{tagLabels[tag]}</Tag> : null}
+              {tag ? (
+                <Tag tone={tag === "destaque" || tag === "novidade" ? "accent" : "dark"}>{tagLabels[tag]}</Tag>
+              ) : null}
             </div>
-            <h1 className="mt-2 text-h1 text-espresso">{product.name}</h1>
+            <h1 className="mt-3 text-h1 text-espresso">{product.name}</h1>
 
             <ProductOptions
               product={product}
@@ -123,8 +128,8 @@ export default async function ProductPage({ params }: Props) {
                   <p className="mt-5 text-lede text-mocha">{product.description}</p>
                   {product.dataStatus === "draft" ? (
                     <Notice tone="setup" title="Produto de exemplo" className="mt-5">
-                      Nome, descrição, imagem e preço servem só para apresentação. O cardápio oficial será confirmado pela{" "}
-                      {getBusiness().shortName}.
+                      Nome, descrição, imagem e preço servem só para apresentação. O cardápio oficial será confirmado
+                      pela {getBusiness().shortName}.
                     </Notice>
                   ) : null}
                 </>
@@ -147,14 +152,22 @@ export default async function ProductPage({ params }: Props) {
       </div>
 
       {related.length ? (
-        <section aria-labelledby="relacionados-title" className="bg-cream-soft py-20 sm:py-24">
+        <section aria-labelledby="relacionados-title" className="bg-cream-soft py-24 sm:py-32">
           <div className="page-x">
-            <h2 id="relacionados-title" className="text-h2">
+            <p data-reveal className="eyebrow mb-4">
+              Para acompanhar
+            </p>
+            <h2 id="relacionados-title" data-reveal style={stagger(1)} className="text-h2">
               Você também pode gostar
             </h2>
             <ul className="scrollbar-none -mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
-              {related.map((item) => (
-                <li key={item.id} className="w-[80%] shrink-0 snap-start xs:w-[70%] sm:w-auto">
+              {related.map((item, i) => (
+                <li
+                  key={item.id}
+                  data-reveal
+                  style={stagger(i)}
+                  className="w-[80%] shrink-0 snap-start xs:w-[70%] sm:w-auto"
+                >
                   <ProductCard
                     product={item}
                     categoryName={item.categoryName}

@@ -49,16 +49,27 @@ export default function ExperienciaPage() {
         <SectionHeading id="ambientes-title" eyebrow="Ambientes" title="Cada canto tem seu clima" />
         <div className="mt-12 space-y-16 sm:space-y-20">
           {spaces.map((space, i) => (
-            <article key={space.title} className="grid items-center gap-8 md:grid-cols-2 lg:gap-16">
+            <article key={space.title} className="grid items-center gap-8 md:grid-cols-12 lg:gap-10">
               <PhotoFrame
                 photo={space.photo}
-                ratio="4/3"
-                sizes="(min-width: 768px) 45vw, 100vw"
-                className={cn(i % 2 === 1 && "md:order-2")}
+                ratio={i === 0 ? "4/3" : "4/5"}
+                rounded="rounded-[1.75rem]"
+                sizes="(min-width: 768px) 28rem, 80vw"
+                className={cn(
+                  "mx-auto w-full",
+                  i === 0
+                    ? "max-w-md md:col-span-6 md:max-w-none lg:col-span-5"
+                    : "max-w-xs md:col-span-4 md:max-w-none lg:col-span-3",
+                  i % 2 === 1 ? "md:order-2 md:col-start-8 lg:col-start-9" : "lg:col-start-2",
+                )}
               />
-              <div className={cn(i % 2 === 1 && "md:order-1")}>
-                <h3 className="text-2xl tracking-[-0.02em]">{space.title}</h3>
-                <p className="mt-4 max-w-md text-lede text-mocha">{space.text}</p>
+              <div
+                data-reveal
+                className={cn("md:col-span-5", i % 2 === 1 ? "md:order-1 md:col-start-2" : "md:col-start-8")}
+              >
+                <p className="eyebrow mb-3">{String(i + 1).padStart(2, "0")}</p>
+                <h3 className="font-display text-[2.5rem] leading-none font-normal">{space.title}</h3>
+                <p className="mt-5 max-w-md text-lede text-mocha">{space.text}</p>
               </div>
             </article>
           ))}

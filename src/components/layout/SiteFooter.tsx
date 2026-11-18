@@ -16,8 +16,14 @@ export function SiteFooter() {
   const address = business.address ? formatAddress(business.address) : undefined;
 
   return (
-    <footer className="on-dark bg-night text-sand">
-      <div className="page-x grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] lg:py-16">
+    <footer className="on-dark grain bg-night text-sand">
+      <div className="page-x border-b border-line-dark pt-20 pb-14 sm:pt-24">
+        <p data-reveal className="max-w-3xl font-display text-h1 text-white">
+          {business.tagline}
+          <span className="text-caramel">.</span>
+        </p>
+      </div>
+      <div className="page-x grid gap-12 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] lg:py-16">
         <div>
           <Logo brand={getBrand()} large className="text-white" />
           <p className="mt-4 max-w-xs">{business.description}</p>
@@ -50,7 +56,7 @@ export function SiteFooter() {
         </div>
 
         <nav aria-label="Rodapé">
-          <p className="mb-3 text-sm font-semibold text-white">Navegação</p>
+          <p className="eyebrow mb-4 text-caramel-light">Navegação</p>
           <ul className="grid grid-cols-2 gap-x-6 sm:grid-cols-1">
             {footerNav.map((item) => (
               <li key={item.href}>
@@ -63,7 +69,7 @@ export function SiteFooter() {
         </nav>
 
         <div className="sm:col-span-2 lg:col-span-1">
-          <p className="mb-3 text-sm font-semibold text-white">Visite</p>
+          <p className="eyebrow mb-4 text-caramel-light">Visite</p>
           {address ? (
             <address className="not-italic">
               {address.line1}
@@ -83,7 +89,10 @@ export function SiteFooter() {
               ))}
             </dl>
           ) : null}
-          <Link href="/contato" className="mt-4 inline-flex min-h-11 items-center gap-1.5 font-medium text-white hover:text-caramel">
+          <Link
+            href="/contato"
+            className="mt-4 inline-flex min-h-11 items-center gap-1.5 font-medium text-white hover:text-caramel"
+          >
             Contato e localização
             <Icon name="arrowRight" size={16} />
           </Link>

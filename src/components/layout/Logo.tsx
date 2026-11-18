@@ -20,9 +20,17 @@ export function Logo({ brand, className, large }: { brand: Brand; className?: st
   const rest = brand.name.startsWith(brand.shortName) ? brand.name.slice(brand.shortName.length).trim() : "";
 
   return (
-    <span className={cn("inline-flex items-baseline gap-1.5 leading-none tracking-[-0.02em]", large ? "text-2xl" : "text-lg", className)}>
-      <span className="font-extrabold">{brand.shortName}</span>
-      {rest ? <span className="font-medium opacity-75">{rest}</span> : null}
+    <span className={cn("inline-flex items-baseline gap-2 leading-none", className)}>
+      <span className={cn("font-display tracking-[-0.01em]", large ? "text-[2.5rem]" : "text-[2rem]")}>
+        {brand.shortName}
+      </span>
+      {rest ? (
+        <span
+          className={cn("font-semibold tracking-[0.24em] uppercase opacity-80", large ? "text-xs" : "text-[0.6875rem]")}
+        >
+          {rest}
+        </span>
+      ) : null}
       <span aria-hidden className="size-1.5 self-center rounded-full bg-caramel" />
     </span>
   );

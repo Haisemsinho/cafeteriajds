@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/cn";
+import { PhotoBadge } from "@/components/ui/PhotoCredit";
 import type { Photo } from "@/types/content";
 
 export function ProductGallery({ images, name }: { images: Photo[]; name: string }) {
@@ -12,7 +13,7 @@ export function ProductGallery({ images, name }: { images: Photo[]; name: string
 
   return (
     <div>
-      <div className="relative aspect-square overflow-hidden rounded-2xl bg-oat">
+      <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-oat md:aspect-[4/5]">
         <Image
           key={current.alt}
           src={current.src}
@@ -24,6 +25,7 @@ export function ProductGallery({ images, name }: { images: Photo[]; name: string
           className="object-cover motion-safe:animate-fade-in"
           style={current.position ? { objectPosition: current.position } : undefined}
         />
+        <PhotoBadge photo={current} className="bottom-4 left-4" />
       </div>
       {images.length > 1 ? (
         <ul className="mt-3 flex gap-3">

@@ -22,7 +22,7 @@ const temperatures = [
 ];
 
 const optionClass = cn(
-  "relative inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-line-strong bg-white px-4 text-[0.9375rem] font-medium text-espresso transition-colors duration-200",
+  "relative inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line-strong bg-white px-5 text-[0.9375rem] font-medium text-espresso transition-colors duration-300 press",
   "hover:border-espresso has-checked:border-night has-checked:bg-night has-checked:text-white",
   "has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-caramel-deep",
 );
@@ -36,7 +36,10 @@ export function ProductOptions({ product, whatsapp, greeting, intro, details }: 
   const price = variant?.priceCents ?? product.priceCents;
   const choosesTemperature = product.temperature === "both";
 
-  const choices = [variant?.label, choosesTemperature ? temperatures.find((t) => t.id === temperature)?.label : undefined]
+  const choices = [
+    variant?.label,
+    choosesTemperature ? temperatures.find((t) => t.id === temperature)?.label : undefined,
+  ]
     .filter(Boolean)
     .map((c) => c?.toLowerCase());
   const message = `${greeting} Gostaria de saber mais sobre ${product.name}${choices.length ? ` (${choices.join(", ")})` : ""}.`;
@@ -81,7 +84,9 @@ export function ProductOptions({ product, whatsapp, greeting, intro, details }: 
                     />
                     {v.label}
                     {v.volume ? <span className="text-xs opacity-75">{v.volume}</span> : null}
-                    {v.priceCents ? <span className="text-xs opacity-75 tabular-nums">{formatPrice(v.priceCents)}</span> : null}
+                    {v.priceCents ? (
+                      <span className="text-xs opacity-75 tabular-nums">{formatPrice(v.priceCents)}</span>
+                    ) : null}
                   </label>
                 ))}
               </div>
@@ -118,7 +123,7 @@ export function ProductOptions({ product, whatsapp, greeting, intro, details }: 
             href={whatsappUrl(whatsapp, message)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-13 flex-1 items-center justify-center gap-2 rounded-md bg-caramel-deep px-6 text-[0.9375rem] font-semibold text-white shadow-[0_8px_20px_-10px_rgb(156_95_34/0.7)] transition-colors hover:bg-caramel-dark"
+            className="inline-flex min-h-13 flex-1 items-center justify-center gap-2 rounded-full bg-caramel-deep press px-6 text-[0.9375rem] font-semibold text-white shadow-[0_8px_20px_-10px_rgb(156_95_34/0.7)] transition-colors hover:bg-caramel-dark"
           >
             <Icon name="chat" size={20} />
             Consultar pelo WhatsApp
@@ -128,7 +133,7 @@ export function ProductOptions({ product, whatsapp, greeting, intro, details }: 
         <Link
           href="/cardapio"
           className={cn(
-            "inline-flex min-h-13 items-center justify-center gap-2 rounded-md px-6 text-[0.9375rem] font-semibold transition-colors",
+            "inline-flex min-h-13 items-center justify-center gap-2 rounded-full px-6 press text-[0.9375rem] font-semibold transition-colors",
             whatsapp
               ? "border border-line-strong bg-white text-espresso hover:border-espresso sm:flex-none"
               : "flex-1 bg-night text-white hover:bg-walnut",

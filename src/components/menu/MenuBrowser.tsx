@@ -8,7 +8,7 @@ import { EmptyState } from "@/components/ui/Feedback";
 import { Icon } from "@/components/ui/Icon";
 import { useSavedItems } from "@/hooks/useSavedItems";
 import { setUrlParams, useUrlParam } from "@/hooks/useUrlParam";
-import { cn } from "@/lib/cn";
+import { cn, stagger } from "@/lib/cn";
 import { normalize, plural } from "@/lib/format";
 import type { MenuCategory, MenuProduct } from "@/types/content";
 import { cardActionClass, ProductCard } from "./ProductCard";
@@ -112,7 +112,8 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
   if (query) context.set("busca", query);
   if (filtersParam) context.set("filtros", filtersParam);
   const from = context.toString();
-  const detailHref = (slug: string) => (from ? `/cardapio/${slug}?de=${encodeURIComponent(from)}` : `/cardapio/${slug}`);
+  const detailHref = (slug: string) =>
+    from ? `/cardapio/${slug}?de=${encodeURIComponent(from)}` : `/cardapio/${slug}`;
 
   if (products.length === 0) {
     return (
@@ -127,16 +128,17 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
             ) : undefined
           }
         >
-          Estamos preparando o cardápio para o site. Passe na {business.shortName} ou acompanhe as novidades pelo Instagram.
+          Estamos preparando o cardápio para o site. Passe na {business.shortName} ou acompanhe as novidades pelo
+          Instagram.
         </EmptyState>
       </div>
     );
   }
 
-  const renderCard = (product: MenuProduct) => {
+  const renderCard = (product: MenuProduct, index: number) => {
     const isSaved = saved.includes(product.id);
     return (
-      <li key={product.id}>
+      <li key={product.id} data-reveal style={stagger(index % 3)}>
         <ProductCard
           product={product}
           categoryName={grouped ? undefined : names.get(product.categoryId)}
@@ -147,7 +149,7 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
               aria-pressed={isSaved}
               aria-label={`Salvar ${product.name} na minha seleção`}
               className={cn(
-                "grid size-11 place-items-center rounded-full bg-white/95 shadow-sm transition-colors duration-200",
+                "press grid size-11 place-items-center rounded-full bg-white/95 shadow-sm backdrop-blur-sm transition-colors duration-300",
                 isSaved ? "text-caramel-deep" : "text-mocha hover:text-espresso",
               )}
             >
@@ -215,7 +217,7 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
                   aria-pressed={active}
                   onClick={() => toggleFilter(f.id)}
                   className={cn(
-                    "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-sm whitespace-nowrap transition-colors duration-200",
+                    "press inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-sm whitespace-nowrap transition-colors duration-300",
                     active
                       ? "border-caramel-deep bg-caramel-deep text-paper"
                       : "border-line-strong bg-paper text-mocha hover:border-espresso hover:text-espresso",
@@ -255,7 +257,7 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
             sections.map((section) => (
               <section key={section.id} aria-labelledby={`cat-${section.id}`} className="mt-12 sm:mt-14">
                 <header className="flex items-baseline justify-between gap-6">
-                  <h2 id={`cat-${section.id}`} className="text-h3 sm:text-xl">
+                  <h2 id={`cat-${section.id}`} className="text-[2rem] leading-none sm:text-[2.5rem]">
                     {section.name}
                   </h2>
                   <span className="shrink-0 text-sm text-mocha">{plural(section.items.length, "item", "itens")}</span>
@@ -283,7 +285,7 @@ function CategoryTab({ active, onClick, children }: { active: boolean; onClick: 
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        "inline-flex min-h-10 items-center rounded-md px-3.5 text-[0.9375rem] whitespace-nowrap transition-colors duration-200",
+        "press inline-flex min-h-10 items-center rounded-full px-4 text-[0.9375rem] whitespace-nowrap transition-colors duration-300",
         active ? "bg-night font-semibold text-white" : "text-mocha hover:bg-cream-soft hover:text-espresso",
       )}
     >
