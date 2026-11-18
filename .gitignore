@@ -11,6 +11,5 @@ next-env.d.ts
 npm-debug.log*
 .vercel
 
-.impeccable/
 AGENTS.md
 .taste-skill/
