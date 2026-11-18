@@ -110,7 +110,9 @@ export default function ProdutosPage() {
                             </span>
                           </div>
                           <div className="flex flex-1 flex-col p-5 sm:p-6">
-                            <h3 className="font-display text-[1.75rem] leading-[1.05] font-normal">{item.title}</h3>
+                            <h3 className="font-display text-[1.75rem] leading-[1.05] font-normal tracking-[-0.01em]">
+                              {item.title}
+                            </h3>
                             <p className="mt-2 text-[0.9375rem] leading-relaxed text-mocha">{item.description}</p>
                             <div className="mt-auto pt-4">
                               {product ? (

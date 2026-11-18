@@ -10,7 +10,7 @@ type Props = {
   categoryName?: string;
   action: ReactNode;
   corner?: ReactNode;
-  variant?: "stack" | "feature" | "row";
+  variant?: "stack" | "feature" | "row" | "auto";
   className?: string;
 };
 
@@ -18,26 +18,33 @@ const visualSizes = {
   stack: "(min-width: 1280px) 26rem, (min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw",
   feature: "(min-width: 1024px) 44rem, 100vw",
   row: "(min-width: 1024px) 14rem, 40vw",
+  auto: "(min-width: 1280px) 26rem, (min-width: 640px) 48vw, 36vw",
 };
 
 export function ProductCard({ product, categoryName, action, corner, variant = "stack", className }: Props) {
   const unavailable = availabilityLabel(product);
   const tag = product.tags?.[0];
   const row = variant === "row";
+  const auto = variant === "auto";
 
   return (
     <article
       className={cn(
         "lift group relative flex h-full overflow-hidden rounded-3xl border border-line bg-white shadow-[0_1px_2px_rgb(0_0_0/0.04)]",
-        row ? "flex-row" : "flex-col",
+        row ? "flex-row" : auto ? "flex-row sm:flex-col" : "flex-col",
         className,
       )}
     >
       <div
         className={cn(
           "zoom-frame relative shrink-0 rounded-[1.1rem] bg-oat",
-          row ? "m-2 w-[38%] self-stretch" : "m-2 mb-0",
+          row
+            ? "m-2 w-[38%] self-stretch"
+            : auto
+              ? "m-2 w-[36%] self-stretch sm:mb-0 sm:w-auto sm:self-auto"
+              : "m-2 mb-0",
           variant === "stack" && "aspect-[5/4]",
+          auto && "min-h-36 sm:aspect-[5/4] sm:min-h-0",
           variant === "feature" && "aspect-[4/3] lg:aspect-auto lg:flex-1",
           row && "min-h-36",
           unavailable && "opacity-70 grayscale-[0.5]",
@@ -59,11 +66,22 @@ export function ProductCard({ product, categoryName, action, corner, variant = "
 
       {corner ? <div className="absolute top-4 right-4 z-10">{corner}</div> : null}
 
-      <div className={cn("flex flex-1 flex-col", row ? "py-4 pr-5 pl-3" : "px-5 pt-5 pb-5 sm:px-6 sm:pb-6")}>
+      <div
+        className={cn(
+          "flex flex-1 flex-col",
+          row ? "py-4 pr-5 pl-3" : auto ? "py-4 pr-4 pl-2 sm:px-6 sm:pt-5 sm:pb-6" : "px-5 pt-5 pb-5 sm:px-6 sm:pb-6",
+        )}
+      >
         <h3
           className={cn(
-            "font-display leading-[1.05] font-normal tracking-[-0.01em] text-espresso",
-            variant === "feature" ? "text-[2.25rem] sm:text-[2.75rem]" : row ? "text-[1.5rem]" : "text-[1.75rem]",
+            "font-display leading-[1.05] font-normal tracking-[-0.01em] break-words hyphens-auto text-espresso",
+            variant === "feature"
+              ? "text-[2rem] sm:text-[2.75rem]"
+              : row
+                ? "text-[1.5rem]"
+                : auto
+                  ? "pr-10 text-[1.5rem] sm:pr-0 sm:text-[1.75rem]"
+                  : "text-[1.75rem]",
           )}
         >
           {product.name}
@@ -72,7 +90,11 @@ export function ProductCard({ product, categoryName, action, corner, variant = "
         <p
           className={cn(
             "mt-2 text-[0.9375rem] leading-relaxed text-mocha",
-            row ? "mb-4 line-clamp-2 max-sm:hidden" : "mb-5 line-clamp-2",
+            row
+              ? "mb-4 line-clamp-2 max-sm:hidden"
+              : auto
+                ? "mb-4 line-clamp-2 max-sm:hidden sm:mb-5"
+                : "mb-5 line-clamp-2",
           )}
         >
           {product.description}
@@ -81,6 +103,7 @@ export function ProductCard({ product, categoryName, action, corner, variant = "
           className={cn(
             "mt-auto flex items-end justify-between gap-3 border-t border-line pt-4",
             row && "flex-wrap gap-y-3",
+            auto && "max-sm:flex-wrap max-sm:gap-y-3",
           )}
         >
           <ProductPrice product={product} />

@@ -50,6 +50,13 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
   const deferredQuery = useDeferredValue(query);
 
   useEffect(() => () => clearTimeout(syncTimer.current), []);
+
+  const strip = useRef<HTMLUListElement>(null);
+  useEffect(() => {
+    strip.current
+      ?.querySelector<HTMLElement>("[aria-pressed='true']")
+      ?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+  }, [categoryParam]);
   const filters = useMemo(
     () => (filtersParam ?? "").split(",").filter((f): f is FilterId => filterIds.has(f)),
     [filtersParam],
@@ -152,6 +159,7 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
     return (
       <li key={product.id}>
         <ProductCard
+          variant="auto"
           product={product}
           categoryName={grouped ? undefined : names.get(product.categoryId)}
           corner={
@@ -179,11 +187,22 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
     );
   };
 
+  const showResults = () => {
+    const target = document.getElementById("produtos");
+    if (!target) return;
+    const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
+    target.focus({ preventScroll: true });
+  };
+
   const savedEmpty = filters.includes("salvos") && saved.length === 0;
   const activeFilters = filters.length;
 
   const categoryList = (compact: boolean) => (
-    <ul className={compact ? "scrollbar-none flex gap-1.5 overflow-x-auto pr-8" : "mt-3 space-y-0.5"}>
+    <ul
+      ref={compact ? strip : undefined}
+      className={compact ? "scrollbar-none flex gap-1.5 overflow-x-auto pr-8" : "mt-3 space-y-0.5"}
+    >
       {[{ id: null as string | null, name: "Todas" }, ...categories].map((c) => {
         const active = category === c.id;
         const count = c.id ? (counts.get(c.id) ?? 0) : baseResults.length;
@@ -203,8 +222,10 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
             >
               {c.name}
               {compact ? null : (
-                <span aria-hidden className={cn("text-xs tabular-nums", active ? "text-white/70" : "text-latte")}>
+                <span className={cn("text-xs tabular-nums", active ? "text-white/80" : "text-mocha")}>
+                  <span className="sr-only">, </span>
                   {count}
+                  <span className="sr-only">{count === 1 ? " item" : " itens"}</span>
                 </span>
               )}
             </button>
@@ -252,15 +273,37 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
           products={products}
           hrefFor={detailHref}
           onNavigate={flushQuery}
+          total={results.length}
+          onShowAll={showResults}
           className="lg:ml-[calc(15rem+3rem)] lg:max-w-2xl xl:ml-[calc(16rem+3rem)]"
         />
         <div className="mt-3 flex items-center gap-2 lg:hidden">
-          <nav
+          <div
+            role="group"
             aria-label="Categorias do cardápio"
             className="min-w-0 flex-1 [mask-image:linear-gradient(to_right,black_85%,transparent)]"
           >
             {categoryList(true)}
-          </nav>
+          </div>
+          <button
+            type="button"
+            onClick={() => toggleFilter("salvos")}
+            aria-pressed={filters.includes("salvos")}
+            aria-label={`Minha seleção (${saved.length})`}
+            className={cn(
+              "press relative grid size-11 shrink-0 place-items-center rounded-full border transition-colors duration-200",
+              filters.includes("salvos")
+                ? "border-caramel-deep bg-caramel-deep text-paper"
+                : "border-line-strong bg-paper text-espresso",
+            )}
+          >
+            <Icon name="heart" size={18} fill={filters.includes("salvos") ? "currentColor" : "none"} />
+            {saved.length ? (
+              <span className="absolute -top-1 -right-1 grid size-5 place-items-center rounded-full bg-night text-[0.6875rem] font-semibold text-white tabular-nums">
+                {saved.length}
+              </span>
+            ) : null}
+          </button>
           <button
             type="button"
             onClick={() => {
@@ -306,17 +349,26 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
         </div>
       </dialog>
 
+      <a
+        href="#produtos"
+        className="sr-only focus:not-sr-only focus:mt-4 focus:inline-flex focus:min-h-11 focus:items-center focus:rounded-full focus:bg-night focus:px-4 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        Pular para os produtos
+      </a>
+
       <div className="mt-8 lg:mt-10 lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[16rem_minmax(0,1fr)]">
         <aside className="hidden lg:block">
           <div className="scrollbar-none sticky top-[6.5rem] max-h-[calc(100svh-8rem)] overflow-y-auto pb-6">
             <h2 className="font-sans text-sm font-semibold text-espresso">Categorias</h2>
-            <nav aria-label="Categorias do cardápio">{categoryList(false)}</nav>
+            <div role="group" aria-label="Categorias do cardápio">
+              {categoryList(false)}
+            </div>
             <h2 className="mt-9 font-sans text-sm font-semibold text-espresso">Filtros</h2>
             <div className="mt-3">{filterList}</div>
           </div>
         </aside>
 
-        <div className="min-w-0">
+        <div id="produtos" tabIndex={-1} className="min-w-0 scroll-mt-40 outline-none lg:scroll-mt-28">
           <div className="flex min-h-11 flex-wrap items-center justify-between gap-x-6 gap-y-2">
             <p aria-live="polite" className="text-sm text-mocha">
               {plural(results.length, "item", "itens")}
@@ -355,7 +407,10 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
               sections.map((section, i) => (
                 <section key={section.id} aria-labelledby={`cat-${section.id}`} className={i ? "mt-16" : "mt-6"}>
                   <header className="flex items-baseline justify-between gap-6 border-b border-line pb-4">
-                    <h2 id={`cat-${section.id}`} className="text-[2rem] leading-none sm:text-[2.5rem]">
+                    <h2
+                      id={`cat-${section.id}`}
+                      className="text-[2rem] leading-none tracking-[-0.01em] sm:text-[2.5rem]"
+                    >
                       {section.name}
                     </h2>
                     <span className="shrink-0 text-sm text-mocha tabular-nums">

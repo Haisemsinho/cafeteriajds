@@ -22,27 +22,59 @@ colors:
 typography:
   display:
     fontFamily: "Instrument Serif, Iowan Old Style, Palatino Linotype, Georgia, serif"
-    fontSize: "clamp(3rem, 1.7rem + 5.2vw, 6rem)"
+    fontSize: "clamp(3rem, 1.9rem + 5.6vw, 6rem)"
     fontWeight: 400
     lineHeight: 0.95
     letterSpacing: "-0.02em"
   headline:
     fontFamily: "Instrument Serif, Iowan Old Style, Palatino Linotype, Georgia, serif"
-    fontSize: "clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem)"
+    fontSize: "clamp(2.75rem, 1.8rem + 3.6vw, 4.5rem)"
     fontWeight: 400
     lineHeight: 1
     letterSpacing: "-0.015em"
   title:
     fontFamily: "Instrument Serif, Iowan Old Style, Palatino Linotype, Georgia, serif"
-    fontSize: "clamp(2.125rem, 1.5rem + 2.5vw, 3.5rem)"
+    fontSize: "clamp(2.25rem, 1.6rem + 2.5vw, 3.5rem)"
     fontWeight: 400
     lineHeight: 1.04
+    letterSpacing: "-0.01em"
+  section-title:
+    fontFamily: "Instrument Serif, Iowan Old Style, Palatino Linotype, Georgia, serif"
+    fontSize: "2rem"
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: "-0.01em"
+  section-title-lg:
+    fontFamily: "Instrument Serif, Iowan Old Style, Palatino Linotype, Georgia, serif"
+    fontSize: "2.5rem"
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: "-0.01em"
+  card-title-feature:
+    fontFamily: "Instrument Serif, Iowan Old Style, Palatino Linotype, Georgia, serif"
+    fontSize: "2.75rem"
+    fontWeight: 400
+    lineHeight: 1.05
     letterSpacing: "-0.01em"
   card-title:
     fontFamily: "Instrument Serif, Iowan Old Style, Palatino Linotype, Georgia, serif"
     fontSize: "1.75rem"
     fontWeight: 400
     lineHeight: 1.05
+    letterSpacing: "-0.01em"
+  card-title-sm:
+    fontFamily: "Instrument Serif, Iowan Old Style, Palatino Linotype, Georgia, serif"
+    fontSize: "1.5rem"
+    fontWeight: 400
+    lineHeight: 1.05
+    letterSpacing: "-0.01em"
+  price-lg:
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "2rem"
+    fontWeight: 600
+    lineHeight: 1
+    letterSpacing: "-0.02em"
+    fontFeature: "tnum"
   body:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1rem"
@@ -53,11 +85,26 @@ typography:
     fontSize: "1.125rem"
     fontWeight: 400
     lineHeight: 1.65
+  ui:
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "0.9375rem"
+    fontWeight: 400
+    lineHeight: 1.625
   label:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.875rem"
     fontWeight: 600
     lineHeight: 1.4
+  caption:
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "0.75rem"
+    fontWeight: 600
+    lineHeight: 1.4
+  micro:
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "0.6875rem"
+    fontWeight: 500
+    lineHeight: 1.3
 rounded:
   sm: "12px"
   md: "18px"
@@ -203,18 +250,26 @@ Paleta de cafeteria: neutros mornos de porcelana e creme, escuro de torra como m
 **Character:** Uma serifa condensada e elegante, sempre no peso 400, para os títulos com voz de revista, ao lado de uma sans neutra e muito legível para tudo que é interface e leitura.
 
 ### Hierarchy
-- **Display** (400, clamp de 3rem a 6rem, 0.95): títulos do hero da home, da Experiência e do convite final.
-- **Headline** (400, clamp de 2.5rem a 4.5rem, 1.0): título principal das seções e das páginas internas.
-- **Title** (400, clamp de 2.125rem a 3.5rem, 1.04): títulos de seção com intro, categorias do cardápio.
-- **Card Title** (400, 1.75rem, 1.05): nome do produto e dos ambientes, em serifa.
+- **Display** (400, clamp de 3rem a 6rem, 0.95): títulos do hero da home, da Experiência e do convite final. Cerca de 52px no celular.
+- **Headline** (400, clamp de 2.75rem a 4.5rem, 1.0): título principal das seções e das páginas internas. 44px no celular.
+- **Title** (400, clamp de 2.25rem a 3.5rem, 1.04): títulos de seção com intro. 36px no celular.
+- **Section Title** (400, 2rem, e 2.5rem a partir de 640px): categorias do cardápio, ambientes da Experiência, título da gaveta.
+- **Card Title Feature** (400, 2rem no celular e 2.75rem a partir de 640px): o card grande dos destaques. Nunca maior que o título da seção onde está.
+- **Card Title** (400, 1.75rem, 1.05): nome do produto e dos ambientes, em serifa. **Card Title Small** (1.5rem) no card horizontal.
+- **Price Large** (Inter 600, 2rem, algarismos tabulares): preço na página do produto.
 - **Lede** (400, 1.125rem, 1.65): parágrafos de abertura, até cerca de 65 caracteres por linha.
-- **Body** (400, 1rem, 1.6): texto corrido e descrições.
-- **Label** (600, 0.875rem): títulos da barra lateral, botões, chips, cabeçalhos de colunas do rodapé.
+- **Body** (400, 1rem, 1.6): texto corrido.
+- **UI** (400 ou 600, 0.9375rem, 1.625): botões, links do menu, opções da busca e descrições curtas de cards e blocos.
+- **Label** (600, 0.875rem): títulos da barra lateral, chips, cabeçalhos de colunas do rodapé.
+- **Caption** (600, 0.75rem): selos de produto e notas como "preço de exemplo".
+- **Micro** (500, 0.6875rem): selo "Foto ilustrativa", contadores e o "Cafeteria" do logo.
 
 ### Named Rules
 **A Regra do Título que Fala Sozinho.** Nenhum rótulo pequeno em caixa alta acima de um título. O título carrega o peso dele.
 
-**A Regra do Peso Único da Serifa.** A Instrument Serif é usada só no peso 400 e sem itálico. Ênfase vem de tamanho ou da cor caramelo, nunca de negrito falso.
+**A Regra do Peso Único da Serifa.** A Instrument Serif é usada só no peso 400 e sem itálico, com `font-synthesis: none` para o navegador nunca inventar negrito ou itálico. Ênfase vem de tamanho ou da cor caramelo. Abaixo de 24px a serifa não aparece: títulos pequenos são Inter 600.
+
+**A Regra da Palavra que Cabe.** Títulos em serifa usam `overflow-wrap: break-word` e hifenização, para nomes longos de produto nunca empurrarem a página para os lados.
 
 ## Layout
 

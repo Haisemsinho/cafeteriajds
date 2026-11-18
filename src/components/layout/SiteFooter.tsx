@@ -104,7 +104,7 @@ export function SiteFooter() {
         <div className="border-t border-line-dark">
           <div className="page-x py-6 text-sm leading-relaxed text-latte">
             <h2 className="font-sans text-sm font-semibold text-sand">Fotos ilustrativas</h2>
-            <p className="mt-1.5 max-w-4xl">
+            <p className="mt-1.5 max-w-[68ch]">
               As fotos marcadas como ilustrativas são de bancos de imagens e não retratam a {business.shortName}.
               Créditos:{" "}
               {credits.map((credit, i) => (

@@ -49,7 +49,7 @@ export function ProductOptions({ product, whatsapp, greeting, intro, details }: 
       <div className="mt-5" aria-live="polite">
         {price ? (
           <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <span className="text-[2rem] leading-none font-bold tracking-[-0.02em] text-caramel-deep tabular-nums">
+            <span className="text-[2rem] leading-none font-semibold tracking-[-0.02em] text-caramel-deep tabular-nums">
               {formatPrice(price)}
             </span>
             {variant ? <span className="text-sm text-mocha">{variant.label}</span> : null}
@@ -129,15 +129,18 @@ export function ProductOptions({ product, whatsapp, greeting, intro, details }: 
             Consultar pelo WhatsApp
             <span className="sr-only"> (abre em nova aba)</span>
           </a>
-        ) : null}
+        ) : (
+          <Link
+            href="/contato"
+            className="inline-flex min-h-13 flex-1 items-center justify-center gap-2 rounded-full bg-caramel-deep press px-6 text-[0.9375rem] font-semibold text-white shadow-[0_8px_20px_-10px_rgb(156_95_34/0.7)] transition-colors hover:bg-caramel-dark"
+          >
+            Como visitar
+            <Icon name="arrowRight" size={18} />
+          </Link>
+        )}
         <Link
           href="/cardapio"
-          className={cn(
-            "inline-flex min-h-13 items-center justify-center gap-2 rounded-full px-6 press text-[0.9375rem] font-semibold transition-colors",
-            whatsapp
-              ? "border border-line-strong bg-white text-espresso hover:border-espresso sm:flex-none"
-              : "flex-1 bg-night text-white hover:bg-walnut",
-          )}
+          className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-line-strong bg-white px-6 press text-[0.9375rem] font-semibold text-espresso transition-colors hover:border-espresso sm:flex-none"
         >
           Ver outros produtos
           <Icon name="arrowRight" size={18} />

@@ -74,8 +74,10 @@ export default function ExperienciaPage() {
         <div className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           {spaces.map((space, i) => (
             <article key={space.title} className={cn(space.span, i === 0 && "sm:col-span-2")}>
-              <h3 className="font-display text-[2rem] leading-none font-normal text-espresso">{space.title}</h3>
-              <p className="mt-3 mb-6 max-w-sm text-mocha">{space.text}</p>
+              <h3 className="font-display text-[2rem] leading-none font-normal tracking-[-0.01em] text-espresso">
+                {space.title}
+              </h3>
+              <p className="mt-3 mb-6 max-w-sm text-[0.9375rem] leading-relaxed text-mocha">{space.text}</p>
               <PhotoFrame
                 photo={space.photo}
                 ratio={space.ratio}

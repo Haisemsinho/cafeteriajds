@@ -12,11 +12,12 @@ type Props = {
   photo?: Photo;
   photoRatio?: string;
   backdrop?: Photo;
+  compact?: boolean;
   draftNote?: string;
   children?: ReactNode;
 };
 
-export function PageHero({ title, intro, photo, photoRatio = "4/3", backdrop, draftNote, children }: Props) {
+export function PageHero({ title, intro, photo, photoRatio = "4/3", backdrop, compact, draftNote, children }: Props) {
   const dark = Boolean(backdrop);
   const text = (
     <div className="max-w-2xl">
@@ -71,7 +72,14 @@ export function PageHero({ title, intro, photo, photoRatio = "4/3", backdrop, dr
         />
         <div aria-hidden className="hero-curtain -z-10" />
         <PhotoBadge photo={backdrop} className="right-5 bottom-5 sm:right-8 xl:right-10" />
-        <div className="page-x flex min-h-[24rem] flex-col justify-end pt-24 pb-12 sm:min-h-[28rem] sm:pb-16">
+        <div
+          className={cn(
+            "page-x flex flex-col justify-end",
+            compact
+              ? "min-h-[13rem] pt-20 pb-7 sm:min-h-[15rem] sm:pb-9"
+              : "min-h-[24rem] pt-24 pb-12 sm:min-h-[28rem] sm:pb-16",
+          )}
+        >
           {text}
         </div>
       </section>

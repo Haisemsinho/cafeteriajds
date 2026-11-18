@@ -1,50 +1,242 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-18T05:30:00Z",
+  "generatedAt": "2026-11-18T22:35:31.411Z",
   "title": "Design System: JDS Cafeteria",
   "extensions": {
     "colorMeta": {
-      "caramelo-tostado": { "role": "primary", "displayName": "Caramelo Tostado", "canonical": "#b97735", "tonalRamp": ["#3d240c", "#5e3713", "#7e4b19", "#9c5f22", "#b97735", "#cf9558", "#e3b07a", "#f4dcc0"] },
-      "caramelo-profundo": { "role": "primary", "displayName": "Caramelo Profundo", "canonical": "#9c5f22" },
-      "vinho-da-xicara": { "role": "secondary", "displayName": "Vinho da Xícara", "canonical": "#7b2d26", "tonalRamp": ["#2a0f0d", "#461914", "#5f221c", "#7b2d26", "#9a4740", "#b96d66", "#d6a19c", "#efd8d5"] },
-      "torra-escura": { "role": "neutral", "displayName": "Torra Escura", "canonical": "#14110f", "tonalRamp": ["#14110f", "#1e1815", "#24201d", "#3a332e", "#573628", "#6b625b", "#a39a92", "#d6cec6"] },
-      "porcelana-morna": { "role": "neutral", "displayName": "Porcelana Morna", "canonical": "#fcfaf7", "tonalRamp": ["#6b625b", "#a39a92", "#d6cec6", "#e9e2da", "#efe8df", "#f6f2ec", "#fcfaf7", "#ffffff"] },
-      "mocha": { "role": "neutral", "displayName": "Mocha", "canonical": "#6b625b" }
+      "caramelo-tostado": {
+        "role": "primary",
+        "displayName": "Caramelo Tostado",
+        "canonical": "#b97735",
+        "tonalRamp": [
+          "#3d240c",
+          "#5e3713",
+          "#7e4b19",
+          "#9c5f22",
+          "#b97735",
+          "#cf9558",
+          "#e3b07a",
+          "#f4dcc0"
+        ]
+      },
+      "caramelo-profundo": {
+        "role": "primary",
+        "displayName": "Caramelo Profundo",
+        "canonical": "#9c5f22"
+      },
+      "vinho-da-xicara": {
+        "role": "secondary",
+        "displayName": "Vinho da Xícara",
+        "canonical": "#7b2d26",
+        "tonalRamp": [
+          "#2a0f0d",
+          "#461914",
+          "#5f221c",
+          "#7b2d26",
+          "#9a4740",
+          "#b96d66",
+          "#d6a19c",
+          "#efd8d5"
+        ]
+      },
+      "torra-escura": {
+        "role": "neutral",
+        "displayName": "Torra Escura",
+        "canonical": "#14110f",
+        "tonalRamp": [
+          "#14110f",
+          "#1e1815",
+          "#24201d",
+          "#3a332e",
+          "#573628",
+          "#6b625b",
+          "#a39a92",
+          "#d6cec6"
+        ]
+      },
+      "porcelana-morna": {
+        "role": "neutral",
+        "displayName": "Porcelana Morna",
+        "canonical": "#fcfaf7",
+        "tonalRamp": [
+          "#6b625b",
+          "#a39a92",
+          "#d6cec6",
+          "#e9e2da",
+          "#efe8df",
+          "#f6f2ec",
+          "#fcfaf7",
+          "#ffffff"
+        ]
+      },
+      "mocha": {
+        "role": "neutral",
+        "displayName": "Mocha",
+        "canonical": "#6b625b"
+      }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Títulos do hero da home, da Experiência e do convite final." },
-      "headline": { "displayName": "Headline", "purpose": "Título principal das seções e páginas internas." },
-      "title": { "displayName": "Title", "purpose": "Títulos de seção e categorias do cardápio." },
-      "card-title": { "displayName": "Card Title", "purpose": "Nome do produto e dos ambientes." },
-      "body": { "displayName": "Body", "purpose": "Texto corrido e descrições." },
-      "lede": { "displayName": "Lede", "purpose": "Parágrafos de abertura." },
-      "label": { "displayName": "Label", "purpose": "Interface: botões, chips, títulos da barra lateral." }
+      "display": {
+        "displayName": "Display",
+        "purpose": "Títulos do hero da home, da Experiência e do convite final."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Título principal das seções e páginas internas."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Títulos de seção e categorias do cardápio."
+      },
+      "card-title": {
+        "displayName": "Card Title",
+        "purpose": "Nome do produto e dos ambientes."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto corrido e descrições."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Parágrafos de abertura."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Interface: botões, chips, títulos da barra lateral."
+      },
+      "section-title": {
+        "displayName": "Section Title",
+        "purpose": "Categorias do cardápio, ambientes, título da gaveta (2rem, 2.5rem a partir de 640px)."
+      },
+      "section-title-lg": {
+        "displayName": "Section Title Large",
+        "purpose": "Section Title a partir de 640px."
+      },
+      "card-title-feature": {
+        "displayName": "Card Title Feature",
+        "purpose": "Card grande dos destaques; nunca maior que o título da seção."
+      },
+      "card-title-sm": {
+        "displayName": "Card Title Small",
+        "purpose": "Card horizontal."
+      },
+      "price-lg": {
+        "displayName": "Price Large",
+        "purpose": "Preço na página do produto, algarismos tabulares."
+      },
+      "ui": {
+        "displayName": "UI",
+        "purpose": "Botões, menu, opções da busca, descrições curtas."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Selos de produto e notas como preço de exemplo."
+      },
+      "micro": {
+        "displayName": "Micro",
+        "purpose": "Selo Foto ilustrativa, contadores, sublinha do logo."
+      }
     },
     "shadows": [
-      { "name": "card-rest", "value": "0 1px 2px rgb(0 0 0 / 0.04)", "purpose": "Presença mínima de card em repouso." },
-      { "name": "card-hover", "value": "0 24px 48px -28px rgb(36 24 16 / 0.42)", "purpose": "Card em hover, com subida de 2px." },
-      { "name": "overlap", "value": "0 40px 80px -30px rgb(14 11 9 / 0.55)", "purpose": "Foto emoldurada que atravessa outra seção." },
-      { "name": "header-scrolled", "value": "0 10px 30px -14px rgb(0 0 0 / 0.6)", "purpose": "Header escuro sobre conteúdo rolado." },
-      { "name": "search", "value": "0 10px 30px -22px rgb(36 24 16 / 0.5)", "purpose": "Campo de busca do cardápio." }
+      {
+        "name": "card-rest",
+        "value": "0 1px 2px rgb(0 0 0 / 0.04)",
+        "purpose": "Presença mínima de card em repouso."
+      },
+      {
+        "name": "card-hover",
+        "value": "0 24px 48px -28px rgb(36 24 16 / 0.42)",
+        "purpose": "Card em hover, com subida de 2px."
+      },
+      {
+        "name": "overlap",
+        "value": "0 40px 80px -30px rgb(14 11 9 / 0.55)",
+        "purpose": "Foto emoldurada que atravessa outra seção."
+      },
+      {
+        "name": "header-scrolled",
+        "value": "0 10px 30px -14px rgb(0 0 0 / 0.6)",
+        "purpose": "Header escuro sobre conteúdo rolado."
+      },
+      {
+        "name": "search",
+        "value": "0 10px 30px -22px rgb(36 24 16 / 0.5)",
+        "purpose": "Campo de busca do cardápio."
+      }
     ],
     "motion": [
-      { "name": "ease-out", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Entradas, hover e toque." },
-      { "name": "ease-in-out", "value": "cubic-bezier(0.77, 0, 0.175, 1)", "purpose": "Movimento na tela." },
-      { "name": "ease-drawer", "value": "cubic-bezier(0.32, 0.72, 0, 1)", "purpose": "Menu mobile e gaveta de filtros." },
-      { "name": "dur-press", "value": "140ms", "purpose": "Escala 0.97 ao pressionar." },
-      { "name": "dur-hover", "value": "200ms", "purpose": "Cor e borda." },
-      { "name": "dur-ui", "value": "260ms", "purpose": "Card subindo, itens de menu, troca de resultados." },
-      { "name": "dur-photo-hover", "value": "450ms", "purpose": "Zoom de 1.03 na foto." },
-      { "name": "dur-sheet", "value": "420ms", "purpose": "Gavetas e menu mobile." },
-      { "name": "dur-hero", "value": "900ms", "purpose": "Linhas do título do hero." },
-      { "name": "dur-photo", "value": "1600ms", "purpose": "Cortina e zoom da foto do hero." }
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Entradas, hover e toque."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "Movimento na tela."
+      },
+      {
+        "name": "ease-drawer",
+        "value": "cubic-bezier(0.32, 0.72, 0, 1)",
+        "purpose": "Menu mobile e gaveta de filtros."
+      },
+      {
+        "name": "dur-press",
+        "value": "140ms",
+        "purpose": "Escala 0.97 ao pressionar."
+      },
+      {
+        "name": "dur-hover",
+        "value": "200ms",
+        "purpose": "Cor e borda."
+      },
+      {
+        "name": "dur-ui",
+        "value": "260ms",
+        "purpose": "Card subindo, itens de menu, troca de resultados."
+      },
+      {
+        "name": "dur-photo-hover",
+        "value": "450ms",
+        "purpose": "Zoom de 1.03 na foto."
+      },
+      {
+        "name": "dur-sheet",
+        "value": "420ms",
+        "purpose": "Gavetas e menu mobile."
+      },
+      {
+        "name": "dur-hero",
+        "value": "900ms",
+        "purpose": "Linhas do título do hero."
+      },
+      {
+        "name": "dur-photo",
+        "value": "1600ms",
+        "purpose": "Cortina e zoom da foto do hero."
+      }
     ],
     "breakpoints": [
-      { "name": "xs", "value": "416px" },
-      { "name": "sm", "value": "640px" },
-      { "name": "md", "value": "768px" },
-      { "name": "lg", "value": "1024px" },
-      { "name": "xl", "value": "1280px" }
+      {
+        "name": "xs",
+        "value": "416px"
+      },
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
     ]
   },
   "components": [
@@ -116,12 +308,41 @@
       "Movimento só onde explica ou responde."
     ],
     "rules": [
-      { "name": "A Regra do Açúcar", "body": "O caramelo é o açúcar da xícara: pouco e onde importa. Um botão principal por tela, preços e o estado ativo. Nunca como fundo de seção.", "section": "colors" },
-      { "name": "A Regra da Moldura de Torra", "body": "O escuro de torra emoldura a experiência (header, rodapé e as faixas de história e convite). As superfícies de tarefa, como cardápio e produto, ficam claras.", "section": "colors" },
-      { "name": "A Regra do Título que Fala Sozinho", "body": "Nenhum rótulo pequeno em caixa alta acima de um título. O título carrega o peso dele.", "section": "typography" },
-      { "name": "A Regra do Peso Único da Serifa", "body": "A Instrument Serif é usada só no peso 400 e sem itálico. Ênfase vem de tamanho ou da cor caramelo, nunca de negrito falso.", "section": "typography" },
-      { "name": "A Regra da Mesa Lisa", "body": "Em repouso tudo fica plano. A sombra é uma resposta, não um enfeite.", "section": "elevation" },
-      { "name": "A Regra do Véu Localizado", "body": "Texto sobre foto ganha degradê só atrás do texto (direcional e vertical), mais uma vinheta leve. Nunca um véu escuro uniforme sobre a foto inteira.", "section": "elevation" }
+      {
+        "name": "A Regra do Açúcar",
+        "body": "O caramelo é o açúcar da xícara: pouco e onde importa. Um botão principal por tela, preços e o estado ativo. Nunca como fundo de seção.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra da Moldura de Torra",
+        "body": "O escuro de torra emoldura a experiência (header, rodapé e as faixas de história e convite). As superfícies de tarefa, como cardápio e produto, ficam claras.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra do Título que Fala Sozinho",
+        "body": "Nenhum rótulo pequeno em caixa alta acima de um título. O título carrega o peso dele.",
+        "section": "typography"
+      },
+      {
+        "name": "A Regra do Peso Único da Serifa",
+        "body": "A Instrument Serif é usada só no peso 400 e sem itálico, com font-synthesis: none para o navegador nunca inventar negrito ou itálico. Ênfase vem de tamanho ou da cor caramelo. Abaixo de 24px a serifa não aparece: títulos pequenos são Inter 600.",
+        "section": "typography"
+      },
+      {
+        "name": "A Regra da Mesa Lisa",
+        "body": "Em repouso tudo fica plano. A sombra é uma resposta, não um enfeite.",
+        "section": "elevation"
+      },
+      {
+        "name": "A Regra do Véu Localizado",
+        "body": "Texto sobre foto ganha degradê só atrás do texto (direcional e vertical), mais uma vinheta leve. Nunca um véu escuro uniforme sobre a foto inteira.",
+        "section": "elevation"
+      },
+      {
+        "name": "A Regra da Palavra que Cabe",
+        "body": "Títulos em serifa usam overflow-wrap: break-word e hifenização, para nomes longos de produto nunca empurrarem a página para os lados.",
+        "section": "typography"
+      }
     ],
     "dos": [
       "Do usar Caramelo Profundo (#9c5f22) para texto e botões sobre claro, e Caramelo Claro (#e3b07a) sobre escuro.",

@@ -115,7 +115,7 @@ export default async function ProductPage({ params }: Props) {
                 <Tag tone={tag === "destaque" || tag === "novidade" ? "accent" : "dark"}>{tagLabels[tag]}</Tag>
               ) : null}
             </div>
-            <h1 className="mt-3 text-h1 text-espresso">{product.name}</h1>
+            <h1 className="mt-3 text-h1 break-words hyphens-auto text-espresso">{product.name}</h1>
 
             <ProductOptions
               product={product}

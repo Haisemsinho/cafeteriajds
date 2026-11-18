@@ -4,18 +4,20 @@ import { useRouter } from "next/navigation";
 import { useId, useMemo, useState, type KeyboardEvent } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
-import { normalize } from "@/lib/format";
+import { normalize, plural } from "@/lib/format";
 import type { MenuProduct } from "@/types/content";
 
-type Suggestion = Pick<MenuProduct, "id" | "name" | "slug">;
+type Suggestion = Pick<MenuProduct, "id" | "name" | "slug" | "description">;
 
 type Props = {
   value: string;
   onChange: (value: string) => void;
   onClear: () => void;
   products: Suggestion[];
+  total: number;
   hrefFor: (slug: string) => string;
   onNavigate: () => void;
+  onShowAll: () => void;
   className?: string;
 };
 
@@ -49,7 +51,17 @@ function Highlight({ text, query }: { text: string; query: string }) {
   );
 }
 
-export function MenuSearch({ value, onChange, onClear, products, hrefFor, onNavigate, className }: Props) {
+export function MenuSearch({
+  value,
+  onChange,
+  onClear,
+  products,
+  total,
+  hrefFor,
+  onNavigate,
+  onShowAll,
+  className,
+}: Props) {
   const router = useRouter();
   const listId = useId();
   const [open, setOpen] = useState(false);
@@ -59,15 +71,20 @@ export function MenuSearch({ value, onChange, onClear, products, hrefFor, onNavi
   const suggestions = useMemo(() => {
     if (!q) return [];
     return products
-      .map((p) => ({ p, at: fold(p.name).out.indexOf(q) }))
-      .filter((s) => s.at >= 0)
-      .sort((a, b) => Number(a.at > 0) - Number(b.at > 0))
+      .map((p) => {
+        const inName = fold(p.name).out.indexOf(q);
+        return { p, rank: inName === 0 ? 0 : inName > 0 ? 1 : fold(p.description).out.includes(q) ? 2 : -1 };
+      })
+      .filter((s) => s.rank >= 0)
+      .sort((a, b) => a.rank - b.rank)
       .slice(0, MAX_SUGGESTIONS)
       .map((s) => s.p);
   }, [products, q]);
 
-  const expanded = open && suggestions.length > 0;
-  const noMatch = open && q.length > 0 && suggestions.length === 0;
+  const showAll = q.length > 0 && total > 0;
+  const count = suggestions.length + (showAll ? 1 : 0);
+  const expanded = open && count > 0;
+  const noMatch = open && q.length > 0 && total === 0;
   const optionId = (i: number) => `${listId}-${i}`;
 
   const go = (s: Suggestion) => {
@@ -76,20 +93,25 @@ export function MenuSearch({ value, onChange, onClear, products, hrefFor, onNavi
     router.push(hrefFor(s.slug));
   };
 
+  const seeAll = () => {
+    setOpen(false);
+    setActive(-1);
+    onShowAll();
+  };
+
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    const n = suggestions.length;
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-      if (!n) return;
+      if (!count) return;
       e.preventDefault();
       setOpen(true);
-      if (e.key === "ArrowDown") setActive((i) => (i + 1) % n);
-      else setActive((i) => (i <= 0 ? n - 1 : i - 1));
+      if (e.key === "ArrowDown") setActive((i) => (i + 1) % count);
+      else setActive((i) => (i <= 0 ? count - 1 : i - 1));
     } else if (e.key === "Enter") {
       const picked = expanded ? suggestions[active] : undefined;
-      if (picked) {
-        e.preventDefault();
-        go(picked);
-      } else setOpen(false);
+      e.preventDefault();
+      if (picked) go(picked);
+      else if (showAll) seeAll();
+      else setOpen(false);
     } else if (e.key === "Escape" && (expanded || noMatch)) {
       e.preventDefault();
       setOpen(false);
@@ -127,7 +149,7 @@ export function MenuSearch({ value, onChange, onClear, products, hrefFor, onNavi
         placeholder="Buscar cafés, bebidas, doces..."
         autoComplete="off"
         enterKeyHint="search"
-        className="h-14 w-full rounded-full border border-line-strong bg-paper pr-14 pl-13 text-base text-espresso shadow-[0_10px_30px_-22px_rgb(36_24_16/0.5)] transition-[border-color,box-shadow] duration-200 placeholder:text-mocha/80 focus:border-caramel-deep focus:shadow-[0_0_0_4px_rgb(185_119_53/0.14)] focus:outline-none"
+        className="h-14 w-full rounded-full border border-line-strong bg-paper pr-14 pl-13 text-base text-espresso shadow-[0_10px_30px_-22px_rgb(36_24_16/0.5)] transition-[border-color,box-shadow] duration-200 placeholder:text-mocha focus:border-caramel-deep focus:shadow-[0_0_0_4px_rgb(185_119_53/0.14)] focus:outline-none"
       />
       {value ? (
         <button
@@ -157,7 +179,7 @@ export function MenuSearch({ value, onChange, onClear, products, hrefFor, onNavi
             onMouseEnter={() => setActive(i)}
             onClick={() => go(s)}
             className={cn(
-              "flex min-h-11 cursor-pointer items-center px-3.5 text-[0.9375rem] text-mocha",
+              "flex min-h-11 cursor-pointer items-center px-5 text-[0.9375rem] text-mocha",
               i === active && "bg-cream-soft text-espresso",
             )}
           >
@@ -166,10 +188,27 @@ export function MenuSearch({ value, onChange, onClear, products, hrefFor, onNavi
             </span>
           </li>
         ))}
+        {showAll ? (
+          <li
+            id={optionId(suggestions.length)}
+            role="option"
+            aria-selected={active === suggestions.length}
+            onMouseDown={(e) => e.preventDefault()}
+            onMouseEnter={() => setActive(suggestions.length)}
+            onClick={seeAll}
+            className={cn(
+              "flex min-h-11 cursor-pointer items-center gap-2 border-t border-line px-5 text-sm font-semibold text-caramel-deep",
+              active === suggestions.length && "bg-cream-soft",
+            )}
+          >
+            {`Ver ${plural(total, "resultado", "resultados")} para "${value.trim()}"`}
+            <Icon name="arrowRight" size={16} />
+          </li>
+        ) : null}
       </ul>
       {noMatch ? (
-        <p className="absolute inset-x-0 top-full z-40 mt-2 rounded-2xl border border-line bg-white px-3.5 py-3 text-sm text-mocha shadow-lg">
-          Nenhum produto com esse nome.
+        <p className="absolute inset-x-0 top-full z-40 mt-2 rounded-2xl border border-line bg-white px-5 py-3 text-sm text-mocha shadow-lg">
+          Nenhum produto encontrado.
         </p>
       ) : null}
     </form>

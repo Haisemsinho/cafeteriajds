@@ -64,7 +64,7 @@ export default function NossaHistoriaPage() {
                 <li key={block.id} className="rounded-2xl border border-dashed border-caramel-deep/40 bg-white p-6">
                   <p className="text-xs font-semibold text-caramel-deep">A preencher</p>
                   <h3 className="mt-1.5 text-h3">{block.title}</h3>
-                  <p className="mt-1.5 text-sm text-mocha">{block.hint}</p>
+                  <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-mocha">{block.hint}</p>
                 </li>
               ))}
             </ol>
