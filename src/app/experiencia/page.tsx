@@ -39,14 +39,13 @@ export default function ExperienciaPage() {
   return (
     <>
       <PageHero
-        eyebrow={`Experiência ${business.shortName}`}
         title="Entre a madeira e a luz"
         intro="Um passeio pelos cantos da casa: a fachada de ripas, a varanda de entrada, o salão e os detalhes do balcão."
         photo={photos.interior}
       />
 
       <section aria-labelledby="ambientes-title" className="page-x py-20 sm:py-24">
-        <SectionHeading id="ambientes-title" eyebrow="Ambientes" title="Cada canto tem seu clima" />
+        <SectionHeading id="ambientes-title" title="Cada canto tem seu clima" />
         <div className="mt-12 space-y-16 sm:space-y-20">
           {spaces.map((space, i) => (
             <article key={space.title} className="grid items-center gap-8 md:grid-cols-12 lg:gap-10">
@@ -63,11 +62,7 @@ export default function ExperienciaPage() {
                   i % 2 === 1 ? "md:order-2 md:col-start-8 lg:col-start-9" : "lg:col-start-2",
                 )}
               />
-              <div
-                data-reveal
-                className={cn("md:col-span-5", i % 2 === 1 ? "md:order-1 md:col-start-2" : "md:col-start-8")}
-              >
-                <p className="eyebrow mb-3">{String(i + 1).padStart(2, "0")}</p>
+              <div className={cn("md:col-span-5", i % 2 === 1 ? "md:order-1 md:col-start-2" : "md:col-start-8")}>
                 <h3 className="font-display text-[2.5rem] leading-none font-normal">{space.title}</h3>
                 <p className="mt-5 max-w-md text-lede text-mocha">{space.text}</p>
               </div>
@@ -80,7 +75,6 @@ export default function ExperienciaPage() {
         <div className="page-x">
           <SectionHeading
             id="galeria-title"
-            eyebrow="Galeria"
             title="Detalhes de perto"
             intro="Toque em uma foto para ampliar. Use as setas do teclado ou deslize para navegar."
           />

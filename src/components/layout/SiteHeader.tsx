@@ -26,7 +26,6 @@ export function SiteHeader({ brand, instagram }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [intro] = useState(() => pathname === "/");
-  const overlay = pathname === "/" && !scrolled;
 
   useEffect(() => {
     dialogRef.current?.close();
@@ -41,13 +40,9 @@ export function SiteHeader({ brand, instagram }: Props) {
   return (
     <header
       className={cn(
-        "on-dark sticky top-0 z-50 border-b text-white transition-[background-color,border-color,box-shadow] duration-500 ease-out-expo",
-        overlay
-          ? "border-white/10 bg-transparent"
-          : cn(
-              "bg-night",
-              scrolled ? "border-line-dark shadow-[0_10px_30px_-14px_rgb(0_0_0/0.6)]" : "border-transparent",
-            ),
+        "on-dark sticky top-0 z-50 border-b text-white transition-[border-color,box-shadow] duration-300 ease-out-expo",
+        pathname === "/" ? "header-overlay" : "bg-night",
+        scrolled ? "border-line-dark shadow-[0_10px_30px_-14px_rgb(0_0_0/0.6)]" : "border-transparent",
       )}
     >
       <div className={cn("page-x flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]", intro && "header-intro")}>

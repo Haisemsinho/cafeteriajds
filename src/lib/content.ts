@@ -4,7 +4,7 @@ import { gallery as rawGallery } from "@/content/gallery";
 import { highlights as rawHighlights } from "@/content/highlights";
 import { categories as rawCategories, products as rawProducts } from "@/content/menu";
 import { philosophy, storyBlocks as rawStory, storyIntro } from "@/content/story";
-import { ambience } from "@/content/illustrative";
+import { ambience, productPhotos } from "@/content/illustrative";
 import { photos } from "@/content/photos";
 import {
   announcementSchema,
@@ -97,6 +97,15 @@ const withAllowedPhotos = (p: MenuProduct): MenuProduct => ({
   image: allowPhoto(p.image),
   images: p.images?.filter((i) => allowPhoto(i)),
 });
+
+export function getPhotoCredits() {
+  if (!showDrafts) return [];
+  const seen = new Map<string, NonNullable<Photo["credit"]>>();
+  for (const photo of [...Object.values(ambience), ...Object.values(productPhotos)]) {
+    if (photo.credit && !seen.has(photo.credit.url)) seen.set(photo.credit.url, photo.credit);
+  }
+  return [...seen.values()];
+}
 
 export function getScenes() {
   const pick = (demo: Photo, real: Photo) => (showDrafts ? demo : real);

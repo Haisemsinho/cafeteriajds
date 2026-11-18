@@ -8,8 +8,7 @@ import { ProductGallery } from "@/components/product/ProductGallery";
 import { JsonLd } from "@/components/layout/BusinessJsonLd";
 import { ProductOptions } from "@/components/product/ProductOptions";
 import { Notice } from "@/components/ui/Feedback";
-import { PhotoCredit } from "@/components/ui/PhotoCredit";
-import { delay, stagger } from "@/lib/cn";
+import { delay } from "@/lib/cn";
 import { Tag } from "@/components/ui/Tag";
 import { getBusiness, getMenu, getProduct, getRelatedProducts } from "@/lib/content";
 import { siteUrl } from "@/lib/site";
@@ -102,7 +101,6 @@ export default async function ProductPage({ params }: Props) {
                 <ProductVisual product={product} sizes="(min-width: 768px) 45vw, 100vw" label />
               </div>
             )}
-            {photos[0] ? <PhotoCredit photo={photos[0]} className="mt-3" /> : null}
           </div>
 
           <div className="hero-in md:pt-6" style={delay(1)}>
@@ -154,18 +152,14 @@ export default async function ProductPage({ params }: Props) {
       {related.length ? (
         <section aria-labelledby="relacionados-title" className="bg-cream-soft py-24 sm:py-32">
           <div className="page-x">
-            <p data-reveal className="eyebrow mb-4">
-              Para acompanhar
-            </p>
-            <h2 id="relacionados-title" data-reveal style={stagger(1)} className="text-h2">
+            <h2 id="relacionados-title" className="text-h2">
               Você também pode gostar
             </h2>
             <ul className="scrollbar-none -mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
-              {related.map((item, i) => (
+              {related.map((item) => (
                 <li
                   key={item.id}
-                  data-reveal
-                  style={stagger(i)}
+
                   className="w-[80%] shrink-0 snap-start xs:w-[70%] sm:w-auto"
                 >
                   <ProductCard

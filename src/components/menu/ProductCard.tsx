@@ -10,33 +10,42 @@ type Props = {
   categoryName?: string;
   action: ReactNode;
   corner?: ReactNode;
+  variant?: "stack" | "feature" | "row";
   className?: string;
 };
 
-export function ProductCard({ product, categoryName, action, corner, className }: Props) {
+const visualSizes = {
+  stack: "(min-width: 1280px) 26rem, (min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw",
+  feature: "(min-width: 1024px) 44rem, 100vw",
+  row: "(min-width: 1024px) 14rem, 40vw",
+};
+
+export function ProductCard({ product, categoryName, action, corner, variant = "stack", className }: Props) {
   const unavailable = availabilityLabel(product);
   const tag = product.tags?.[0];
+  const row = variant === "row";
 
   return (
     <article
       className={cn(
-        "lift group relative flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white shadow-[0_1px_2px_rgb(0_0_0/0.04)]",
-        "hover:border-transparent hover:shadow-[0_30px_60px_-30px_rgb(36_24_16/0.45)]",
+        "lift group relative flex h-full overflow-hidden rounded-3xl border border-line bg-white shadow-[0_1px_2px_rgb(0_0_0/0.04)]",
+        row ? "flex-row" : "flex-col",
         className,
       )}
     >
       <div
         className={cn(
-          "zoom-frame relative m-2 mb-0 aspect-[5/4] rounded-[1.1rem] bg-oat",
+          "zoom-frame relative shrink-0 rounded-[1.1rem] bg-oat",
+          row ? "m-2 w-[38%] self-stretch" : "m-2 mb-0",
+          variant === "stack" && "aspect-[5/4]",
+          variant === "feature" && "aspect-[4/3] lg:aspect-auto lg:flex-1",
+          row && "min-h-36",
           unavailable && "opacity-70 grayscale-[0.5]",
         )}
       >
-        <ProductVisual
-          product={product}
-          sizes="(min-width: 1280px) 26rem, (min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw"
-        />
+        <ProductVisual product={product} sizes={visualSizes[variant]} />
         {product.image ? <PhotoBadge photo={product.image} className="right-3 bottom-3" /> : null}
-        {tag ? (
+        {tag && !row ? (
           <Tag tone={tag === "destaque" || tag === "novidade" ? "accent" : "dark"} className="absolute top-3 left-3">
             {tagLabels[tag]}
           </Tag>
@@ -50,13 +59,30 @@ export function ProductCard({ product, categoryName, action, corner, className }
 
       {corner ? <div className="absolute top-4 right-4 z-10">{corner}</div> : null}
 
-      <div className="flex flex-1 flex-col px-5 pt-5 pb-5 sm:px-6 sm:pb-6">
-        {categoryName ? <p className="eyebrow mb-2 text-[0.6875rem] text-mocha">{categoryName}</p> : null}
-        <h3 className="font-display text-[1.75rem] leading-[1.05] font-normal tracking-[-0.01em] text-espresso">
+      <div className={cn("flex flex-1 flex-col", row ? "py-4 pr-5 pl-3" : "px-5 pt-5 pb-5 sm:px-6 sm:pb-6")}>
+        <h3
+          className={cn(
+            "font-display leading-[1.05] font-normal tracking-[-0.01em] text-espresso",
+            variant === "feature" ? "text-[2.25rem] sm:text-[2.75rem]" : row ? "text-[1.5rem]" : "text-[1.75rem]",
+          )}
+        >
           {product.name}
         </h3>
-        <p className="mt-2 mb-5 line-clamp-2 text-[0.9375rem] leading-relaxed text-mocha">{product.description}</p>
-        <div className="mt-auto flex items-end justify-between gap-3 border-t border-line pt-4">
+        {categoryName ? <p className="mt-1 text-sm text-mocha">{categoryName}</p> : null}
+        <p
+          className={cn(
+            "mt-2 text-[0.9375rem] leading-relaxed text-mocha",
+            row ? "mb-4 line-clamp-2 max-sm:hidden" : "mb-5 line-clamp-2",
+          )}
+        >
+          {product.description}
+        </p>
+        <div
+          className={cn(
+            "mt-auto flex items-end justify-between gap-3 border-t border-line pt-4",
+            row && "flex-wrap gap-y-3",
+          )}
+        >
           <ProductPrice product={product} />
           {action}
         </div>
@@ -66,4 +92,4 @@ export function ProductCard({ product, categoryName, action, corner, className }
 }
 
 export const cardActionClass =
-  "inline-flex min-h-10 shrink-0 items-center gap-1 rounded-full bg-night px-4 text-sm font-semibold text-white transition-colors duration-300 group-hover:bg-caramel-deep after:absolute after:inset-0 after:rounded-3xl after:content-[''] focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-caramel-deep focus-visible:after:outline";
+  "press inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full bg-night px-4 text-sm font-semibold text-white transition-colors duration-200 group-hover:bg-caramel-deep after:absolute after:inset-0 after:rounded-3xl after:content-[''] focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-caramel-deep focus-visible:after:outline";

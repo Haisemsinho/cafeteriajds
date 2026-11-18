@@ -6,29 +6,30 @@ import { Icon } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { home } from "@/content/home";
 import { getFeaturedProducts, getInstagram } from "@/lib/content";
-import { stagger } from "@/lib/cn";
 
 export function FeaturedProducts() {
-  const featured = getFeaturedProducts(6);
+  const featured = getFeaturedProducts(4);
+  const [lead, ...rest] = featured;
   const instagram = getInstagram();
   const hasDrafts = featured.some((p) => p.dataStatus === "draft");
+
+  const action = (slug: string, name: string) => (
+    <Link href={`/cardapio/${slug}`} className={cardActionClass}>
+      Ver detalhes
+      <span className="sr-only"> de {name}</span>
+    </Link>
+  );
 
   return (
     <section aria-labelledby="destaques-title" className="bg-cream-soft py-24 sm:py-32">
       <div className="page-x">
         <SectionHeading
           id="destaques-title"
-          eyebrow={home.featured.eyebrow}
           title={home.featured.title}
           intro={home.featured.subtitle}
           action={
             featured.length ? (
-              <ButtonLink
-                href={home.featured.cta.href}
-                variant="outline"
-                icon="arrowRight"
-                className="hidden sm:inline-flex"
-              >
+              <ButtonLink href={home.featured.cta.href} variant="outline" icon="arrowRight">
                 {home.featured.cta.label}
               </ButtonLink>
             ) : undefined
@@ -41,30 +42,31 @@ export function FeaturedProducts() {
           </p>
         ) : null}
 
-        {featured.length ? (
-          <>
-            <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-              {featured.map((product, i) => (
-                <li key={product.id} data-reveal style={stagger(i % 3)}>
-                  <ProductCard
-                    product={product}
-                    categoryName={product.categoryName}
-                    action={
-                      <Link href={`/cardapio/${product.slug}`} className={cardActionClass}>
-                        Ver detalhes
-                        <span className="sr-only"> de {product.name}</span>
-                      </Link>
-                    }
-                  />
-                </li>
-              ))}
-            </ul>
-            <div className="mt-12 text-center sm:hidden">
-              <ButtonLink href={home.featured.cta.href} variant="dark" icon="arrowRight">
-                {home.featured.cta.label}
-              </ButtonLink>
+        {lead ? (
+          <div className="mt-12 grid gap-6 lg:grid-cols-12 lg:gap-8">
+            <div className="lg:col-span-7">
+              <ProductCard
+                product={lead}
+                categoryName={lead.categoryName}
+                variant="feature"
+                action={action(lead.slug, lead.name)}
+              />
             </div>
-          </>
+            {rest.length ? (
+              <ul className="grid gap-6 lg:col-span-5 lg:grid-rows-3">
+                {rest.map((product) => (
+                  <li key={product.id}>
+                    <ProductCard
+                      product={product}
+                      categoryName={product.categoryName}
+                      variant="row"
+                      action={action(product.slug, product.name)}
+                    />
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
         ) : (
           <EmptyState
             className="mt-10"

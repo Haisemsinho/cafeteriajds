@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
-import { getBrand, getBusiness, getInstagram } from "@/lib/content";
+import { getBrand, getBusiness, getInstagram, getPhotoCredits } from "@/lib/content";
 import { formatPeriods, weekdayNames } from "@/lib/hours";
 import { formatAddress, formatPhone, whatsappUrl } from "@/lib/links";
 import { footerNav } from "@/lib/navigation";
@@ -14,11 +14,12 @@ export function SiteFooter() {
   const business = getBusiness();
   const instagram = getInstagram();
   const address = business.address ? formatAddress(business.address) : undefined;
+  const credits = getPhotoCredits();
 
   return (
     <footer className="on-dark grain bg-night text-sand">
       <div className="page-x border-b border-line-dark pt-20 pb-14 sm:pt-24">
-        <p data-reveal className="max-w-3xl font-display text-h1 text-white">
+        <p className="max-w-3xl font-display text-h1 text-white">
           {business.tagline}
           <span className="text-caramel">.</span>
         </p>
@@ -98,6 +99,31 @@ export function SiteFooter() {
           </Link>
         </div>
       </div>
+
+      {credits.length ? (
+        <div className="border-t border-line-dark">
+          <div className="page-x py-6 text-sm leading-relaxed text-latte">
+            <h2 className="font-sans text-sm font-semibold text-sand">Fotos ilustrativas</h2>
+            <p className="mt-1.5 max-w-4xl">
+              As fotos marcadas como ilustrativas são de bancos de imagens e não retratam a {business.shortName}.
+              Créditos:{" "}
+              {credits.map((credit, i) => (
+                <span key={credit.url}>
+                  <a
+                    href={credit.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-latte/40 underline-offset-2 hover:text-white"
+                  >
+                    {credit.author ?? "autor não identificado"}
+                  </a>{" "}
+                  ({credit.license}){i < credits.length - 1 ? ", " : "."}
+                </span>
+              ))}
+            </p>
+          </div>
+        </div>
+      ) : null}
 
       <div className="border-t border-line-dark">
         <div className="page-x flex flex-col gap-2 py-5 text-sm text-latte sm:flex-row sm:items-center sm:justify-between">

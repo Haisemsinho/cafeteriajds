@@ -31,7 +31,6 @@ export function Logo({ brand, className, large }: { brand: Brand; className?: st
           {rest}
         </span>
       ) : null}
-      <span aria-hidden className="size-1.5 self-center rounded-full bg-caramel" />
     </span>
   );
 }

@@ -11,7 +11,6 @@ import { getHighlights, getInstagram, getMenu } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
 import type { Highlight } from "@/types/content";
 import { business } from "@/content/business";
-import { stagger } from "@/lib/cn";
 
 export const metadata = pageMetadata({
   title: "Produtos e novidades",
@@ -28,16 +27,14 @@ const kindLabels: Record<Highlight["kind"], string> = {
   kit: "Kit",
 };
 
-const groups: { id: string; eyebrow: string; title: string; kinds: Highlight["kind"][] }[] = [
+const groups: { id: string; title: string; kinds: Highlight["kind"][] }[] = [
   {
     id: "novidades",
-    eyebrow: "Destaques e novidades",
     title: "O que está em alta",
     kinds: ["destaque", "novidade", "sazonal"],
   },
   {
     id: "levar",
-    eyebrow: "Para levar e presentear",
     title: `Um pouco da ${business.shortName} para casa`,
     kinds: ["embalado", "presente", "kit"],
   },
@@ -51,7 +48,6 @@ export default function ProdutosPage() {
   return (
     <>
       <PageHero
-        eyebrow="Produtos e novidades"
         title="O que tem de novo na casa"
         intro="Lançamentos do cardápio, itens da estação e o que dá para levar para casa."
         photo={photos.diaDoCafe}
@@ -88,12 +84,12 @@ export default function ProdutosPage() {
               className={gi % 2 ? "bg-cream-soft py-20 sm:py-24" : "py-20 sm:py-24"}
             >
               <div className="page-x">
-                <SectionHeading id={`${group.id}-title`} eyebrow={group.eyebrow} title={group.title} />
+                <SectionHeading id={`${group.id}-title`} title={group.title} />
                 <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-                  {items.map((item, ii) => {
+                  {items.map((item) => {
                     const product = item.productSlug ? products.find((p) => p.slug === item.productSlug) : undefined;
                     return (
-                      <li key={item.id} data-reveal style={stagger(ii % 3)}>
+                      <li key={item.id}>
                         <article className="lift group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white hover:border-transparent hover:shadow-[0_30px_60px_-30px_rgb(36_24_16/0.45)]">
                           <div className="zoom-frame relative m-2 mb-0 aspect-[5/4] rounded-[1.1rem] bg-oat">
                             {item.image ? (

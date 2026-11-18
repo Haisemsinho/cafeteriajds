@@ -17,7 +17,6 @@ export default function CardapioPage() {
   return (
     <>
       <PageHero
-        eyebrow={business.name}
         title="Cardápio"
         backdrop={getScenes().menu}
         intro="Feito para acompanhar seus melhores momentos. Busque pelo nome, filtre por categoria e toque em um item para ver os detalhes."

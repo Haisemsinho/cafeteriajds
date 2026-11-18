@@ -19,13 +19,7 @@ export function HomeGallery() {
   return (
     <section aria-labelledby="galeria-title" className="bg-cream-soft py-20 sm:py-24">
       <div className="page-x">
-        <SectionHeading
-          id="galeria-title"
-          eyebrow={home.gallery.eyebrow}
-          title={home.gallery.title}
-          intro={home.gallery.intro}
-          align="center"
-        />
+        <SectionHeading id="galeria-title" title={home.gallery.title} intro={home.gallery.intro} align="center" />
         <div className="mt-10">
           <Gallery images={images} layout={images.length === 5 ? "feature" : "grid"} />
         </div>

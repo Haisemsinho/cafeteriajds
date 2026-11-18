@@ -4,7 +4,6 @@ import { ButtonLink } from "@/components/ui/Button";
 export default function NotFound() {
   return (
     <PageHero
-      eyebrow="Página não encontrada"
       title="Essa página saiu para um café"
       intro="O endereço pode ter mudado ou não existe mais. Que tal voltar para o começo?"
     >

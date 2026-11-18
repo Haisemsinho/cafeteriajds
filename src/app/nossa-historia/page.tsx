@@ -19,16 +19,11 @@ export default function NossaHistoriaPage() {
 
   return (
     <>
-      <PageHero
-        eyebrow={storyPage.hero.eyebrow}
-        title={storyPage.hero.title}
-        intro={storyPage.hero.intro}
-        photo={photos.letreiro}
-      />
+      <PageHero title={storyPage.hero.title} intro={storyPage.hero.intro} photo={photos.letreiro} />
 
       <section aria-labelledby="marca-title" className="page-x py-20 sm:py-24">
         <div className="grid gap-8 md:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <SectionHeading id="marca-title" eyebrow="A marca" title="Um lugar para ficar" />
+          <SectionHeading id="marca-title" title="Um lugar para ficar" />
           <div className="space-y-4 text-lede text-mocha">
             {intro.length ? (
               <>
@@ -47,7 +42,7 @@ export default function NossaHistoriaPage() {
       {blocks.length || pending.length ? (
         <section aria-labelledby="capitulos-title" className="bg-cream-soft py-20 sm:py-24">
           <div className="page-x">
-            <SectionHeading id="capitulos-title" eyebrow="Capítulos" title={storyPage.chaptersTitle} />
+            <SectionHeading id="capitulos-title" title={storyPage.chaptersTitle} />
             <ol className="mt-10 grid gap-5 md:grid-cols-2">
               {blocks.map((block) => (
                 <li key={block.id} className="overflow-hidden rounded-2xl border border-line bg-white">
@@ -81,7 +76,7 @@ export default function NossaHistoriaPage() {
         <section aria-labelledby="filosofia-title" className="page-x py-20 sm:py-24">
           <div className="grid gap-8 md:grid-cols-[1fr_1.4fr] lg:gap-16">
             <div>
-              <SectionHeading id="filosofia-title" eyebrow="Jeito de receber" title={philosophy.title} />
+              <SectionHeading id="filosofia-title" title={philosophy.title} />
               {philosophy.status === "draft" ? <DraftTag className="mt-4" label="Proposta de texto" /> : null}
             </div>
             <ul className="divide-y divide-line border-y border-line">
@@ -98,7 +93,7 @@ export default function NossaHistoriaPage() {
 
       <section aria-labelledby="casa-fotos-title" className="bg-cream-soft py-20 sm:py-24">
         <div className="page-x">
-          <SectionHeading id="casa-fotos-title" eyebrow="A casa" title="O que as fotos já contam" />
+          <SectionHeading id="casa-fotos-title" title="O que as fotos já contam" />
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             <PhotoFrame photo={photos.fachada} ratio="4/5" sizes="(min-width: 1024px) 24rem, 50vw" caption />
             <PhotoFrame photo={photos.prateleiras} ratio="4/5" sizes="(min-width: 1024px) 24rem, 50vw" caption />

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
-import { cn, stagger } from "@/lib/cn";
+import { cn } from "@/lib/cn";
 import type { GalleryImage } from "@/types/content";
 
 type Props = { images: GalleryImage[]; layout?: "grid" | "feature" };
@@ -52,8 +52,7 @@ export function Gallery({ images, layout = "grid" }: Props) {
           return (
             <li
               key={image.id}
-              data-reveal
-              style={stagger(i % 3)}
+
               className={cn(feature && "col-span-2 md:col-span-1 md:row-span-2")}
             >
               <button

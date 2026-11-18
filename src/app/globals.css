@@ -28,7 +28,7 @@
   --color-line-strong: rgb(36 32 29 / 0.2);
   --color-line-dark: rgb(255 255 255 / 0.12);
 
-  --text-display: clamp(3rem, 1.6rem + 6vw, 6.75rem);
+  --text-display: clamp(3rem, 1.7rem + 5.2vw, 6rem);
   --text-display--line-height: 0.95;
   --text-display--letter-spacing: -0.02em;
   --text-h1: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
@@ -66,24 +66,28 @@
 }
 
 :root {
-  --dur-micro: 160ms;
-  --dur-quick: 280ms;
-  --dur-base: 480ms;
-  --dur-slow: 800ms;
-  --dur-hero: 1100ms;
-  --dur-photo: 2200ms;
+  --dur-press: 140ms;
+  --dur-hover: 200ms;
+  --dur-ui: 260ms;
+  --dur-photo-hover: 450ms;
+  --dur-sheet: 420ms;
+  --dur-hero: 900ms;
+  --dur-photo: 1600ms;
 
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
-  --ease-hover: cubic-bezier(0.25, 0.6, 0.35, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-hover: ease;
 
   --dist-sm: 0.5rem;
-  --dist-md: 1.5rem;
-  --dist-lg: 3rem;
+  --dist-md: 1.25rem;
+  --lift: -2px;
+  --zoom: 1.03;
+  --press: 0.97;
 
-  --stagger: 80ms;
-  --hero-step: 150ms;
-  --reveal-step: 7%;
+  --stagger: 60ms;
+  --hero-step: 110ms;
+  --hero-start: 160ms;
 }
 
 @utility page-x {
@@ -193,7 +197,7 @@
     color: var(--color-porcelain);
     font-weight: 600;
     transform: translateY(-200%);
-    transition: transform var(--dur-quick) var(--ease-hover);
+    transition: transform var(--dur-hover) var(--ease-hover);
   }
 
   .skip-link:focus-visible {
@@ -314,13 +318,58 @@
   }
 }
 
+.header-overlay {
+  background-color: var(--color-night);
+}
+
+@supports (animation-timeline: scroll()) {
+  .header-overlay {
+    animation: header-solid linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 7rem;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .lift {
+    transition:
+      transform var(--dur-ui) var(--ease-out),
+      box-shadow var(--dur-ui) var(--ease-out),
+      border-color var(--dur-hover) var(--ease-hover);
+  }
+
+  .lift:hover {
+    transform: translateY(var(--lift));
+    border-color: transparent;
+    box-shadow: 0 24px 48px -28px rgb(36 24 16 / 0.42);
+  }
+
+  .zoom-frame img {
+    transition: transform var(--dur-photo-hover) var(--ease-out);
+  }
+
+  .group:hover .zoom-frame img,
+  .zoom-frame:hover img {
+    transform: scale(var(--zoom));
+  }
+
+  .link-underline {
+    transition: background-size var(--dur-ui) var(--ease-out);
+  }
+
+  .link-underline:hover,
+  .group:hover .link-underline {
+    background-size: 100% 1px;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .skeleton {
     animation: var(--animate-shimmer);
   }
 
   .page-enter {
-    animation: page-enter var(--dur-base) var(--ease-out) both;
+    animation: page-enter 320ms var(--ease-out) both;
   }
 
   .hero-photo {
@@ -333,90 +382,58 @@
 
   .hero-line > span {
     animation: line-up var(--dur-hero) var(--ease-out) both;
-    animation-delay: calc(var(--hero-step) * var(--d, 0) + 200ms);
+    animation-delay: calc(var(--hero-step) * var(--d, 0) + var(--hero-start));
   }
 
   .hero-in {
     animation: rise var(--dur-hero) var(--ease-out) both;
-    animation-delay: calc(var(--hero-step) * var(--d, 0) + 200ms);
+    animation-delay: calc(var(--hero-step) * var(--d, 0) + var(--hero-start));
   }
 
   .header-intro {
-    animation: header-in var(--dur-slow) var(--ease-out) both;
-    animation-delay: calc(var(--hero-step) * 5 + 200ms);
-  }
-
-  .rise {
-    animation: rise var(--dur-slow) var(--ease-out) both;
-    animation-delay: calc(var(--d, 0) * var(--stagger) + 80ms);
-  }
-
-  .lift {
-    transition:
-      transform var(--dur-base) var(--ease-out),
-      box-shadow var(--dur-base) var(--ease-out),
-      border-color var(--dur-quick) var(--ease-hover);
-  }
-
-  .lift:hover,
-  .lift:focus-within {
-    transform: translateY(-4px);
-  }
-
-  .zoom-frame img {
-    transition: transform var(--dur-slow) var(--ease-out);
-  }
-
-  .group:hover .zoom-frame img,
-  .group:focus-within .zoom-frame img,
-  .zoom-frame:hover img {
-    transform: scale(1.06);
-  }
-
-  .link-underline {
-    transition: background-size var(--dur-base) var(--ease-out);
-  }
-
-  .link-underline:hover,
-  .group:hover .link-underline {
-    background-size: 100% 1px;
+    animation: header-in var(--dur-hero) var(--ease-out) both;
+    animation-delay: calc(var(--hero-step) * 5 + var(--hero-start));
   }
 
   .press {
-    transition: transform var(--dur-micro) var(--ease-hover);
+    transition: transform var(--dur-press) var(--ease-out);
   }
 
   .press:active {
-    transform: scale(0.97);
+    transform: scale(var(--press));
   }
 
   @supports (animation-timeline: view()) {
-    [data-reveal] {
-      animation: reveal-up linear both;
+    .hero-exit-photo {
+      animation: hero-exit-photo linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+    }
+
+    .hero-exit-content {
+      animation: hero-exit-content linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 70%;
+    }
+
+    [data-moment="rise"] {
+      animation: moment-rise linear both;
       animation-timeline: view();
       animation-timing-function: var(--ease-out);
-      animation-range: entry calc(var(--i, 0) * var(--reveal-step)) entry calc(75% + var(--i, 0) * var(--reveal-step));
+      animation-range: entry 0% cover 45%;
     }
 
-    [data-reveal="fade"] {
-      animation-name: fade-in;
-    }
-
-    [data-reveal="image"] {
-      animation-name: reveal-clip;
-      animation-range: entry 0% cover 35%;
-    }
-
-    [data-reveal="image"] img {
-      animation: reveal-zoom linear both;
+    [data-moment="unveil"] {
+      animation: moment-unveil linear both;
       animation-timeline: view();
-      animation-range: entry 0% cover 50%;
+      animation-timing-function: var(--ease-out);
+      animation-range: entry 0% cover 40%;
     }
 
-    [data-parallax] {
-      animation: drift linear both;
+    [data-moment="unveil"] img {
+      animation: moment-unveil-photo linear both;
       animation-timeline: view();
-      animation-range: cover 0% cover 100%;
+      animation-range: entry 0% cover 60%;
     }
   }
 
@@ -424,10 +441,10 @@
   .sheet,
   .lightbox {
     transition:
-      opacity var(--dur-quick) var(--ease-hover),
-      transform var(--dur-base) var(--ease-out),
-      overlay var(--dur-base) allow-discrete,
-      display var(--dur-base) allow-discrete;
+      opacity var(--dur-hover) var(--ease-hover),
+      transform var(--dur-sheet) var(--ease-drawer),
+      overlay var(--dur-sheet) allow-discrete,
+      display var(--dur-sheet) allow-discrete;
     opacity: 0;
   }
 
@@ -449,8 +466,8 @@
 
   .sheet .sheet-item {
     transition:
-      opacity var(--dur-base) var(--ease-out),
-      transform var(--dur-base) var(--ease-out);
+      opacity var(--dur-ui) var(--ease-out),
+      transform var(--dur-ui) var(--ease-out);
     transition-delay: calc(var(--i, 0) * 50ms + 120ms);
   }
 
@@ -478,9 +495,9 @@
   .sheet::backdrop,
   .lightbox::backdrop {
     transition:
-      opacity var(--dur-quick) var(--ease-hover),
-      overlay var(--dur-quick) allow-discrete,
-      display var(--dur-quick) allow-discrete;
+      opacity var(--dur-hover) var(--ease-hover),
+      overlay var(--dur-hover) allow-discrete,
+      display var(--dur-hover) allow-discrete;
     opacity: 0;
   }
 
@@ -547,33 +564,47 @@
   }
 }
 
-@keyframes reveal-up {
+@keyframes header-solid {
   from {
-    opacity: 0;
-    translate: 0 var(--dist-lg);
-  }
-}
-
-@keyframes reveal-clip {
-  from {
-    clip-path: inset(14% 10% 14% 10%);
+    background-color: transparent;
+    border-color: rgb(255 255 255 / 0.1);
   }
   to {
-    clip-path: inset(0);
+    background-color: var(--color-night);
+    border-color: transparent;
   }
 }
 
-@keyframes reveal-zoom {
-  from {
-    scale: 1.18;
+@keyframes hero-exit-photo {
+  to {
+    scale: 1.08;
   }
 }
 
-@keyframes drift {
+@keyframes hero-exit-content {
+  to {
+    opacity: 0.001;
+    translate: 0 -3rem;
+  }
+}
+
+@keyframes moment-rise {
   from {
-    translate: 0 -6%;
+    translate: 0 4rem;
+  }
+}
+
+@keyframes moment-unveil {
+  from {
+    clip-path: inset(12% 9% round 2rem);
   }
   to {
-    translate: 0 6%;
+    clip-path: inset(0 round 0);
+  }
+}
+
+@keyframes moment-unveil-photo {
+  from {
+    scale: 1.14;
   }
 }

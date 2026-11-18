@@ -10,3 +10,7 @@ next-env.d.ts
 !.env.example
 npm-debug.log*
 .vercel
+
+.impeccable/
+AGENTS.md
+.taste-skill/

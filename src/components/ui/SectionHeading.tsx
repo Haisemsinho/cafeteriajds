@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 type Props = {
-  eyebrow?: string;
   title: ReactNode;
   intro?: ReactNode;
   as?: "h1" | "h2";
@@ -14,7 +13,6 @@ type Props = {
 };
 
 export function SectionHeading({
-  eyebrow,
   title,
   intro,
   as: Tag = "h2",
@@ -26,8 +24,7 @@ export function SectionHeading({
 }: Props) {
   const dark = tone === "dark";
   const text = (
-    <div data-reveal className={cn("max-w-2xl", align === "center" && "mx-auto text-center")}>
-      {eyebrow ? <p className={cn("eyebrow mb-4", dark && "text-caramel-light")}>{eyebrow}</p> : null}
+    <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center")}>
       <Tag id={id} className={cn(Tag === "h1" ? "text-h1" : "text-h2", dark ? "text-paper" : "text-espresso")}>
         {title}
       </Tag>

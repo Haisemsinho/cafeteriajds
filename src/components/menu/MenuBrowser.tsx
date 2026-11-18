@@ -8,7 +8,7 @@ import { EmptyState } from "@/components/ui/Feedback";
 import { Icon } from "@/components/ui/Icon";
 import { useSavedItems } from "@/hooks/useSavedItems";
 import { setUrlParams, useUrlParam } from "@/hooks/useUrlParam";
-import { cn, stagger } from "@/lib/cn";
+import { cn } from "@/lib/cn";
 import { normalize, plural } from "@/lib/format";
 import type { MenuCategory, MenuProduct } from "@/types/content";
 import { cardActionClass, ProductCard } from "./ProductCard";
@@ -135,10 +135,10 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
     );
   }
 
-  const renderCard = (product: MenuProduct, index: number) => {
+  const renderCard = (product: MenuProduct) => {
     const isSaved = saved.includes(product.id);
     return (
-      <li key={product.id} data-reveal style={stagger(index % 3)}>
+      <li key={product.id}>
         <ProductCard
           product={product}
           categoryName={grouped ? undefined : names.get(product.categoryId)}

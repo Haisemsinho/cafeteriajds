@@ -10,7 +10,6 @@ type Props = {
   ratio?: string;
   priority?: boolean;
   caption?: boolean | string;
-  reveal?: boolean;
   rounded?: string;
   badge?: string;
   className?: string;
@@ -22,7 +21,6 @@ export function PhotoFrame({
   ratio = "4/3",
   priority,
   caption,
-  reveal = true,
   rounded = "rounded-2xl",
   badge = "bottom-3 left-3",
   className,
@@ -36,11 +34,7 @@ export function PhotoFrame({
 
   return (
     <figure className={className}>
-      <div
-        className={cn("relative overflow-hidden bg-cream", rounded)}
-        style={focus}
-        data-reveal={reveal && !priority ? "image" : undefined}
-      >
+      <div className={cn("relative overflow-hidden bg-cream", rounded)} style={focus}>
         <Image
           src={photo.src}
           alt={photo.alt}

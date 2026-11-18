@@ -134,3 +134,39 @@ Peso por página no celular, cache desligado: home de 299 KB para cerca de 424 K
 - Conferir no Safari (iPhone) o reveal por rolagem, que depende de `animation-timeline`.
 - Firefox mostra o site sem reveal por rolagem, o que é aceitável.
 - O CLAUDE.md fora do repositório ainda diz que o design v4/v5 é o aprovado. Atualizar quando houver decisão.
+
+## Revisão de 18/11/2026 (critique e polish)
+
+Critique da home: 22/32 (dual-agent). Direção aprovada pelo cliente: fotografia lidera, sem 3D, sem WebGL, sem tilt.
+
+Mudanças:
+
+- Hero sem altura máxima: ocupa a tela inteira em qualquer resolução (antes parava em 992 px e deixava faixa vazia em telas altas).
+- Header da home: a troca de transparente para sólido agora é CSS (`.header-overlay` com `animation-timeline: scroll()`). Funciona mesmo sem JavaScript. Navegador sem suporte mostra o header sólido.
+- Véu do hero em camadas: degradê direcional atrás do texto, degradê vertical para o header e para a base, vinheta leve. A foto aparece mais.
+- Transição hero para conteúdo: a xícara real da JDS atravessa a borda do hero e sobe um pouco com a rolagem.
+- Destaques: 1 produto grande e 3 em linha, com "Ver todos os produtos" no topo.
+- Rótulos acima dos títulos (eyebrows) e números de seção removidos do site todo.
+- Créditos das fotos ilustrativas: uma seção no rodapé, gerada de `src/content/illustrative.ts`. O selo "Foto ilustrativa" continua sobre cada foto externa.
+- `allowedDevOrigins` com o IP da rede local, para testar o servidor de desenvolvimento pelo IP.
+
+Movimento (tokens novos, critério Emil Kowalski):
+
+| Token | Valor | Uso |
+|---|---|---|
+| `--dur-press` | 140ms | pressionar botão (`scale(0.97)`) |
+| `--dur-hover` | 200ms | cor e borda |
+| `--dur-ui` | 260ms | card subindo, itens do menu |
+| `--dur-photo-hover` | 450ms | zoom de foto no hover |
+| `--dur-sheet` | 420ms | menu mobile e modais, curva de gaveta |
+| `--dur-hero` | 900ms | linhas do título do hero |
+| `--dur-photo` | 1600ms | cortina e zoom da foto do hero |
+| `--ease-out` | cubic-bezier(0.23, 1, 0.32, 1) | entradas |
+| `--ease-drawer` | cubic-bezier(0.32, 0.72, 0, 1) | menu mobile |
+| `--lift`, `--zoom`, `--press` | -2px, 1.03, 0.97 | hover e toque |
+
+- Hover só em dispositivo com mouse (`hover: hover` e `pointer: fine`).
+- Movimento ligado à rolagem só em três momentos: a saída do hero (a foto aproxima, o texto sobe), a xícara que atravessa a borda (`data-moment="rise"`) e a foto do convite que se abre (`data-moment="unveil"`). Todos os `data-reveal` de seção foram retirados.
+- Com movimento reduzido nada se move e nada fica escondido.
+
+Verificação: `npm run check` sem erros, 42 testes de interação passando, nenhuma rolagem horizontal em 9 páginas e 7 larguras. Os links de crédito no rodapé ficam dentro de texto corrido, que é a exceção da regra de alvo mínimo.

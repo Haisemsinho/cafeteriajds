@@ -37,7 +37,12 @@ export default function ContatoPage() {
     });
   }
   if (contact.phone) {
-    channels.push({ icon: "phone", label: "Telefone", value: formatPhone(contact.phone), href: `tel:+${contact.phone}` });
+    channels.push({
+      icon: "phone",
+      label: "Telefone",
+      value: formatPhone(contact.phone),
+      href: `tel:+${contact.phone}`,
+    });
   }
   if (contact.email) {
     channels.push({ icon: "arrowUpRight", label: "E-mail", value: contact.email, href: `mailto:${contact.email}` });
@@ -54,11 +59,7 @@ export default function ContatoPage() {
 
   return (
     <>
-      <PageHero
-        eyebrow={`Visite a ${business.shortName}`}
-        title="Contato e localização"
-        intro="Onde estamos, quando abrimos e os canais para falar com a casa."
-      />
+      <PageHero title="Contato e localização" intro="Onde estamos, quando abrimos e os canais para falar com a casa." />
 
       {announcements.length ? (
         <div className="page-x space-y-3 pt-10">
@@ -94,8 +95,8 @@ export default function ContatoPage() {
               <p className="text-2xl font-semibold tracking-[-0.02em] text-espresso">Endereço em breve</p>
               {showDrafts ? (
                 <SetupHint field="endereço" className="mt-6 max-w-lg">
-                  Preencha <code>address</code> em src/content/business.ts. Com ele, entram o botão de rota, o rodapé e os
-                  dados estruturados para o Google.
+                  Preencha <code>address</code> em src/content/business.ts. Com ele, entram o botão de rota, o rodapé e
+                  os dados estruturados para o Google.
                 </SetupHint>
               ) : null}
             </div>
@@ -111,8 +112,8 @@ export default function ContatoPage() {
                 <BusinessHours hours={hours} />
               ) : showDrafts ? (
                 <SetupHint field="horários">
-                  Preencha <code>hours</code> com os sete dias da semana. O selo &ldquo;Aberto agora&rdquo; só aparece quando os
-                  horários estiverem marcados como verificados.
+                  Preencha <code>hours</code> com os sete dias da semana. O selo &ldquo;Aberto agora&rdquo; só aparece
+                  quando os horários estiverem marcados como verificados.
                 </SetupHint>
               ) : (
                 <p className="text-mocha">Os horários serão publicados aqui em breve.</p>
@@ -139,9 +140,7 @@ export default function ContatoPage() {
                     <Icon name={c.icon} size={22} className="shrink-0 text-caramel-deep" />
                     <span className="flex-1">
                       <span className="block text-xs font-semibold text-mocha">{c.label}</span>
-                      <span className="mt-0.5 block font-medium text-espresso">
-                        {c.value}
-                      </span>
+                      <span className="mt-0.5 block font-medium text-espresso">{c.value}</span>
                     </span>
                     <Icon
                       name={c.external ? "arrowUpRight" : "arrowRight"}
@@ -160,7 +159,9 @@ export default function ContatoPage() {
           {contact.whatsapp ? (
             <div className="mt-14">
               <h2 className="text-h3">Mande uma mensagem</h2>
-              <p className="mt-2 mb-7 text-sm text-mocha">Preencha e a conversa abre direto no WhatsApp da {business.shortName}.</p>
+              <p className="mt-2 mb-7 text-sm text-mocha">
+                Preencha e a conversa abre direto no WhatsApp da {business.shortName}.
+              </p>
               <WhatsAppForm number={contact.whatsapp} greeting={`Olá, ${business.shortName}!`} />
             </div>
           ) : showDrafts ? (
