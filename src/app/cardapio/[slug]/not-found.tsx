@@ -3,7 +3,7 @@ import { EmptyState } from "@/components/ui/Feedback";
 
 export default function ProductNotFound() {
   return (
-    <div className="page-x py-20 sm:py-28">
+    <div className="page-x py-20 sm:py-24">
       <EmptyState
         icon="search"
         title="Produto não encontrado"

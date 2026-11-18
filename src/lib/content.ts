@@ -74,6 +74,10 @@ export function getBusiness() {
 
 export type PublicBusiness = ReturnType<typeof getBusiness>;
 
+export function getBrand() {
+  return { name: business.name, shortName: business.shortName, logo: business.logo };
+}
+
 export function getInstagram() {
   return getBusiness().social.find((s) => s.network === "instagram");
 }

@@ -22,7 +22,7 @@ function validate(values: Values) {
 const inputClass =
   "w-full rounded-md border bg-paper px-4 py-3 text-[0.9375rem] text-espresso placeholder:text-mocha/70 transition-colors focus:outline-none focus:border-caramel-deep";
 
-export function WhatsAppForm({ number }: { number: string }) {
+export function WhatsAppForm({ number, greeting }: { number: string; greeting: string }) {
   const [values, setValues] = useState<Values>({ name: "", subject: subjects[0] ?? "", message: "" });
   const [touched, setTouched] = useState<Partial<Record<Field, boolean>>>({});
   const [sent, setSent] = useState(false);
@@ -44,7 +44,7 @@ export function WhatsAppForm({ number }: { number: string }) {
       formRef.current?.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
       return;
     }
-    const text = `Olá, JDS! Sou ${values.name.trim()}.\nAssunto: ${values.subject}\n\n${values.message.trim()}`;
+    const text = `${greeting} Sou ${values.name.trim()}.\nAssunto: ${values.subject}\n\n${values.message.trim()}`;
     window.open(whatsappUrl(number, text), "_blank", "noopener,noreferrer");
     setSent(true);
   };

@@ -1,5 +1,6 @@
 import { getImageProps } from "next/image";
 import { ButtonLink } from "@/components/ui/Button";
+import { home } from "@/content/home";
 import { heroPhotos } from "@/content/photos";
 import { delay } from "@/lib/cn";
 
@@ -19,26 +20,26 @@ export function Hero() {
           <img {...mobile} srcSet={mobileSrcSet} alt="" className="size-full object-cover object-[50%_25%] md:object-[60%_50%]" />
         </picture>
       </div>
-      <div aria-hidden className="absolute inset-0 -z-10 bg-black/55" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-black/60" />
       <div
         aria-hidden
         className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgb(0_0_0/0.45)_100%)]"
       />
 
       <div className="page-x text-center">
-        <p className="rise text-sm font-semibold tracking-[0.08em] text-[#e8b27c] uppercase">Café, pausa e encontro</p>
+        <p className="rise text-sm font-semibold tracking-[0.08em] text-white uppercase">{home.hero.eyebrow}</p>
         <h1 id="hero-title" className="rise mx-auto mt-4 max-w-3xl text-display text-white" style={delay(1)}>
-          Bem-vindo à JDS Cafeteria
+          {home.hero.title}
         </h1>
-        <p className="rise mx-auto mt-5 max-w-xl text-lg text-white/85 sm:text-xl" style={delay(2)}>
-          Seu lugar para apreciar um bom café e viver bons momentos.
+        <p className="rise mx-auto mt-5 max-w-xl text-lg text-white sm:text-xl" style={delay(2)}>
+          {home.hero.subtitle}
         </p>
         <div className="rise mt-9 flex flex-col justify-center gap-3 xs:flex-row" style={delay(3)}>
-          <ButtonLink href="/cardapio" icon="arrowRight" className="min-w-52">
-            Explorar cardápio
+          <ButtonLink href={home.hero.primary.href} icon="arrowRight" className="min-w-52">
+            {home.hero.primary.label}
           </ButtonLink>
-          <ButtonLink href="/experiencia" variant="outline-light" className="min-w-52">
-            Conheça nosso espaço
+          <ButtonLink href={home.hero.secondary.href} variant="outline-light" className="min-w-52">
+            {home.hero.secondary.label}
           </ButtonLink>
         </div>
       </div>

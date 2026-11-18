@@ -69,7 +69,7 @@ export default function ContatoPage() {
         </div>
       ) : null}
 
-      <div className="page-x grid gap-12 py-14 sm:py-20 lg:grid-cols-12 lg:gap-10">
+      <div className="page-x grid gap-12 py-20 sm:py-24 lg:grid-cols-12 lg:gap-10">
         <section aria-labelledby="onde-title" className="lg:col-span-6">
           <h2 id="onde-title" className="flex items-center gap-2 text-h3">
             <Icon name="pin" size={20} className="text-caramel-deep" />
@@ -126,7 +126,7 @@ export default function ContatoPage() {
             Fale com a gente
           </h2>
           {channels.length ? (
-            <ul className="mt-4 divide-y divide-line overflow-hidden rounded-xl border border-line bg-paper">
+            <ul className="mt-4 divide-y divide-line overflow-hidden rounded-2xl border border-line bg-paper">
               {channels.map((c) => (
                 <li key={c.label}>
                   <a
@@ -160,7 +160,7 @@ export default function ContatoPage() {
             <div className="mt-14">
               <h2 className="text-h3">Mande uma mensagem</h2>
               <p className="mt-2 mb-7 text-sm text-mocha">Preencha e a conversa abre direto no WhatsApp da JDS.</p>
-              <WhatsAppForm number={contact.whatsapp} />
+              <WhatsAppForm number={contact.whatsapp} greeting={`Olá, ${business.shortName}!`} />
             </div>
           ) : showDrafts ? (
             <SetupHint field="WhatsApp e telefone" className="mt-8">

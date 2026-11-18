@@ -25,7 +25,7 @@ export function ProductCard({ product, categoryName, action, corner, className }
       )}
     >
       <div className={cn("relative aspect-[16/10] overflow-hidden bg-oat sm:aspect-[4/3]", unavailable && "opacity-70 grayscale-[0.5]")}>
-        <div className="absolute inset-0 transition-transform duration-500 ease-soft group-hover:scale-[1.04]">
+        <div className="absolute inset-0 transition-transform duration-500 ease-soft motion-safe:group-hover:scale-[1.04]">
           <ProductVisual product={product} sizes="(min-width: 1024px) 24rem, (min-width: 640px) 50vw, 100vw" />
         </div>
         {tag ? (

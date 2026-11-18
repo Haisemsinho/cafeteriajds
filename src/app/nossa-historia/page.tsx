@@ -51,7 +51,7 @@ export default function NossaHistoriaPage() {
             <SectionHeading id="capitulos-title" eyebrow="Capítulos" title="Como a JDS chegou aqui" />
             <ol className="mt-10 grid gap-5 md:grid-cols-2">
               {blocks.map((block) => (
-                <li key={block.id} className="overflow-hidden rounded-xl border border-line bg-paper">
+                <li key={block.id} className="overflow-hidden rounded-2xl border border-line bg-white">
                   {block.image ? (
                     <PhotoFrame photo={block.image} ratio="16/9" sizes="(min-width: 768px) 45vw, 100vw" />
                   ) : null}
@@ -67,7 +67,7 @@ export default function NossaHistoriaPage() {
                 </li>
               ))}
               {pending.map((block) => (
-                <li key={block.id} className="rounded-xl border border-dashed border-caramel-deep/40 bg-paper/60 p-6">
+                <li key={block.id} className="rounded-2xl border border-dashed border-caramel-deep/40 bg-white p-6">
                   <p className="text-xs font-semibold text-caramel-deep">A preencher</p>
                   <h3 className="mt-1.5 text-h3">{block.title}</h3>
                   <p className="mt-1.5 text-sm text-mocha">{block.hint}</p>

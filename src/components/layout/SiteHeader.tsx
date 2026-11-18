@@ -7,16 +7,16 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
 import { isActive, mainNav } from "@/lib/navigation";
-import { Logo } from "./Logo";
+import { Logo, type Brand } from "./Logo";
 
 function subscribeScroll(callback: () => void) {
   window.addEventListener("scroll", callback, { passive: true });
   return () => window.removeEventListener("scroll", callback);
 }
 
-type Props = { instagram?: { url: string; handle: string } };
+type Props = { brand: Brand; instagram?: { url: string; handle: string } };
 
-export function SiteHeader({ instagram }: Props) {
+export function SiteHeader({ brand, instagram }: Props) {
   const pathname = usePathname();
   const scrolled = useSyncExternalStore(
     subscribeScroll,
@@ -44,8 +44,8 @@ export function SiteHeader({ instagram }: Props) {
       )}
     >
       <div className="page-x flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">
-        <Link href="/" className="-my-2 py-2 text-white" aria-label="JDS Cafeteria, página inicial">
-          <Logo />
+        <Link href="/" className="-my-2 py-2 text-white" aria-label={`${brand.name}, página inicial`}>
+          <Logo brand={brand} />
         </Link>
 
         <nav aria-label="Principal" className="hidden md:block">
@@ -95,7 +95,7 @@ export function SiteHeader({ instagram }: Props) {
       >
         <div className="flex min-h-full flex-col px-6 pb-8">
           <div className="flex h-16 items-center justify-between">
-            <Logo />
+            <Logo brand={brand} />
             <button
               type="button"
               onClick={closeMenu}

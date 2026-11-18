@@ -5,7 +5,7 @@ import { BusinessJsonLd } from "@/components/layout/BusinessJsonLd";
 import { DraftNotice } from "@/components/layout/DraftNotice";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { getBusiness, getInstagram } from "@/lib/content";
+import { getBrand, getBusiness, getInstagram } from "@/lib/content";
 import { isIndexable, showDrafts, siteUrl } from "@/lib/site";
 import "./globals.css";
 
@@ -20,8 +20,8 @@ const business = getBusiness();
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "JDS Cafeteria | Café, pausa e encontro",
-    template: "%s | JDS Cafeteria",
+    default: `${business.name} | ${business.tagline}`,
+    template: `%s | ${business.name}`,
   },
   description: business.description,
   applicationName: business.name,
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     siteName: business.name,
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Fachada da JDS Cafeteria" }],
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: business.name }],
   },
   twitter: { card: "summary_large_image" },
   robots: isIndexable ? { index: true, follow: true } : { index: false, follow: false },
@@ -48,7 +48,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <a href="#conteudo" className="skip-link">
           Pular para o conteúdo
         </a>
-        <SiteHeader instagram={instagram ? { url: instagram.url, handle: instagram.handle } : undefined} />
+        <SiteHeader
+          brand={getBrand()}
+          instagram={instagram ? { url: instagram.url, handle: instagram.handle } : undefined}
+        />
         <main id="conteudo" tabIndex={-1} className="outline-none">
           {children}
         </main>

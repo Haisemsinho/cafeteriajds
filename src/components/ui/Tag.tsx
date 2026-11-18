@@ -5,9 +5,9 @@ type Tone = "neutral" | "accent" | "dark" | "draft";
 
 const tones: Record<Tone, string> = {
   neutral: "bg-cream-soft text-walnut",
-  accent: "bg-caramel-deep text-paper",
-  dark: "bg-espresso/85 text-paper",
-  draft: "bg-paper/95 text-caramel-deep ring-1 ring-inset ring-caramel-deep/30",
+  accent: "bg-caramel-deep text-white",
+  dark: "bg-night text-white",
+  draft: "bg-white text-caramel-deep ring-1 ring-inset ring-caramel-deep/30",
 };
 
 export function Tag({ children, tone = "neutral", className }: { children: ReactNode; tone?: Tone; className?: string }) {

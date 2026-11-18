@@ -5,10 +5,12 @@ import { cardActionClass, ProductCard } from "@/components/menu/ProductCard";
 import { availabilityLabel, ProductVisual, tagLabels, temperatureInfo } from "@/components/menu/ProductParts";
 import { BackToMenu } from "@/components/product/BackToMenu";
 import { ProductGallery } from "@/components/product/ProductGallery";
+import { JsonLd } from "@/components/layout/BusinessJsonLd";
 import { ProductOptions } from "@/components/product/ProductOptions";
 import { Notice } from "@/components/ui/Feedback";
 import { Tag } from "@/components/ui/Tag";
 import { getBusiness, getMenu, getProduct, getRelatedProducts } from "@/lib/content";
+import { siteUrl } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -27,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: product.description,
     alternates: { canonical: `/cardapio/${product.slug}` },
     openGraph: {
-      title: `${product.name} | JDS Cafeteria`,
+      title: `${product.name} | ${getBusiness().name}`,
       description: product.description,
       url: `/cardapio/${product.slug}`,
       ...(product.image ? { images: [{ url: product.image.src.src, alt: product.image.alt }] } : {}),
@@ -69,8 +71,23 @@ export default async function ProductPage({ params }: Props) {
     { label: "Disponibilidade", value: unavailable ?? "Disponível" },
   ].filter((d): d is { label: string; value: string } => d !== null);
 
+  const price = product.priceCents ?? product.variants?.find((v) => v.priceCents)?.priceCents;
+  const structured =
+    product.dataStatus === "verified"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "MenuItem",
+          name: product.name,
+          description: product.description,
+          url: `${siteUrl}/cardapio/${product.slug}`,
+          ...(product.image ? { image: `${siteUrl}${product.image.src.src}` } : {}),
+          ...(price ? { offers: { "@type": "Offer", price: (price / 100).toFixed(2), priceCurrency: "BRL" } } : {}),
+        }
+      : null;
+
   return (
     <>
+      {structured ? <JsonLd data={structured} /> : null}
       <div className="page-x pt-6 pb-16 sm:pt-8 sm:pb-24">
         <BackToMenu />
 
@@ -89,7 +106,7 @@ export default async function ProductPage({ params }: Props) {
             <div className="flex flex-wrap items-center gap-2">
               <Link
                 href={`/cardapio?categoria=${product.categoryId}`}
-                className="text-sm font-semibold text-caramel-deep hover:text-caramel-dark hover:underline"
+                className="inline-flex min-h-8 items-center text-sm font-semibold text-caramel-deep hover:text-caramel-dark hover:underline"
               >
                 {product.categoryName}
               </Link>
@@ -100,6 +117,7 @@ export default async function ProductPage({ params }: Props) {
             <ProductOptions
               product={product}
               whatsapp={contact.whatsapp}
+              greeting={`Olá, ${getBusiness().shortName}!`}
               intro={
                 <>
                   <p className="mt-5 text-lede text-mocha">{product.description}</p>
@@ -129,7 +147,7 @@ export default async function ProductPage({ params }: Props) {
       </div>
 
       {related.length ? (
-        <section aria-labelledby="relacionados-title" className="bg-cream-soft py-16 sm:py-20">
+        <section aria-labelledby="relacionados-title" className="bg-cream-soft py-20 sm:py-24">
           <div className="page-x">
             <h2 id="relacionados-title" className="text-h2">
               Você também pode gostar

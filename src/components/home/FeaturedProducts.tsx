@@ -4,6 +4,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/Feedback";
 import { Icon } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { home } from "@/content/home";
 import { getFeaturedProducts, getInstagram } from "@/lib/content";
 
 export function FeaturedProducts() {
@@ -12,19 +13,19 @@ export function FeaturedProducts() {
   const hasDrafts = featured.some((p) => p.dataStatus === "draft");
 
   return (
-    <section aria-labelledby="destaques-title" className="bg-cream-soft py-20 sm:py-28">
+    <section aria-labelledby="destaques-title" className="bg-cream-soft py-20 sm:py-24">
       <div className="page-x">
         <SectionHeading
           id="destaques-title"
-          eyebrow="Do nosso cardápio"
-          title="Nossos Destaques"
-          intro="Sabores especiais para acompanhar seus melhores momentos."
+          eyebrow={home.featured.eyebrow}
+          title={home.featured.title}
+          intro={home.featured.subtitle}
           align="center"
         />
         {hasDrafts ? (
           <p className="mx-auto mt-6 flex w-fit max-w-full items-start gap-2 rounded-xl border border-caramel/30 bg-white px-4 py-2.5 text-left text-sm text-mocha sm:items-center sm:rounded-full">
             <Icon name="info" size={16} className="shrink-0 text-caramel-deep" />
-            Produtos, imagens e preços demonstrativos. O cardápio oficial será publicado pela JDS.
+            {home.featured.demoNotice}
           </p>
         ) : null}
 
@@ -47,8 +48,8 @@ export function FeaturedProducts() {
               ))}
             </ul>
             <div className="mt-12 text-center">
-              <ButtonLink href="/cardapio" variant="dark" icon="arrowRight">
-                Ver todos os produtos
+              <ButtonLink href={home.featured.cta.href} variant="dark" icon="arrowRight">
+                {home.featured.cta.label}
               </ButtonLink>
             </div>
           </>

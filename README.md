@@ -1,12 +1,53 @@
 # JDS Cafeteria
 
-Site institucional e cardápio digital da JDS Cafeteria.
+Site institucional com cardápio digital e página para cada produto. É uma vitrine: não tem carrinho, pagamento, pedido online nem painel administrativo.
 
-Next.js 16 (App Router), React 19, TypeScript strict, Tailwind CSS 4 e Zod. Sem banco de dados, sem pagamento, sem pedido online.
+O que já é real e o que ainda é exemplo está em [PENDENCIAS_COMERCIAIS.md](./PENDENCIAS_COMERCIAIS.md).
 
-## Rodando
+## Tecnologias
 
-Precisa de Node 20.9 ou mais novo.
+| | |
+| --- | --- |
+| Framework | Next.js 16 (App Router, páginas estáticas) |
+| Interface | React 19, TypeScript em modo strict |
+| Estilo | Tailwind CSS 4 com tokens em `src/app/globals.css` |
+| Fonte | Inter, servida pelo próprio site via `next/font` |
+| Validação | Zod, para checar todo o conteúdo no build |
+| Imagens | `next/image` (AVIF e WebP automáticos) |
+
+Sem banco de dados, sem biblioteca de animação, sem pacote de ícones e sem serviços de terceiros. As dependências de produção são quatro: `next`, `react`, `react-dom` e `zod`.
+
+## Estrutura
+
+```
+src/
+  app/                  rotas
+    page.tsx            início
+    cardapio/           cardápio e /cardapio/[slug] (página do produto)
+    nossa-historia/
+    experiencia/
+    produtos/           produtos e novidades
+    contato/
+    sitemap.ts, robots.ts, error.tsx, not-found.tsx
+  content/              tudo que a cafeteria pode querer mudar
+    business.ts         nome, logo, descrição, endereço, horários, contatos, redes, avisos
+    menu.ts             categorias e produtos
+    home.ts             textos da página inicial
+    story.ts            história, capítulos e jeito de receber
+    highlights.ts       destaques da página Produtos
+    gallery.ts          fotos da galeria
+    photos.ts           registro de fotos (arquivo, texto alternativo, legenda, enquadramento)
+  assets/photos/        arquivos das fotos
+  components/           peças da interface
+  lib/                  validação, leitura do conteúdo, horários, formatação, SEO
+public/og.jpg           imagem de compartilhamento
+```
+
+Nenhum componente tem preço, telefone, endereço ou horário escrito dentro dele. Tudo sai de `src/content/`.
+
+## Instalação e execução
+
+Precisa de Node 20.9 ou mais novo (o arquivo `.nvmrc` indica a 22).
 
 ```bash
 npm install
@@ -19,102 +60,140 @@ Abre em http://localhost:3000.
 | comando | o que faz |
 | --- | --- |
 | `npm run dev` | servidor de desenvolvimento |
+| `npm run typecheck` | gera os tipos das rotas e roda o TypeScript |
+| `npm run lint` | ESLint com a configuração oficial do Next |
 | `npm run build` | build de produção |
-| `npm run start` | serve o build |
-| `npm run typecheck` | gera os tipos de rota e roda o tsc |
-| `npm run lint` | eslint com a config do next |
-| `npm run check` | typecheck, lint e build em sequência |
+| `npm run start` | serve o build localmente |
+| `npm run check` | typecheck, lint e build, nessa ordem |
 
 ### Variáveis de ambiente
 
 | variável | uso |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | domínio final, sem barra no fim. Usado em canonical, sitemap, open graph e dados estruturados |
-| `SHOW_DRAFT_CONTENT` | `true` mostra o conteúdo de demonstração (com selo). Em `npm run dev` ele já vem ligado se a variável não existir |
+| `NEXT_PUBLIC_SITE_URL` | domínio final, com https. Usado em canonical, sitemap, Open Graph e dados estruturados. Se estiver com formato errado, o build para com uma mensagem clara |
+| `SHOW_DRAFT_CONTENT` | `true` mostra o conteúdo de exemplo, sempre identificado. Em `npm run dev` já vem ligado se a variável não existir |
 
-O site só libera indexação (robots e meta robots) quando `NEXT_PUBLIC_SITE_URL` está preenchida **e** `SHOW_DRAFT_CONTENT` não é `true`. Versão de apresentação nunca vai pro Google.
+O Google só é liberado (robots e meta robots) quando `NEXT_PUBLIC_SITE_URL` está preenchida e `SHOW_DRAFT_CONTENT` não é `true`. A versão de demonstração nunca é indexada.
 
 ## Como o conteúdo funciona
 
-Tudo que é texto comercial mora em `src/content/`. Nenhum componente tem produto, preço ou horário escrito dentro dele.
+Cada item de conteúdo tem um status:
 
+- `verified`: confirmado pela JDS. Aparece sempre.
+- `draft`: exemplo. Só aparece com `SHOW_DRAFT_CONTENT=true` e sempre marcado como exemplo.
+- `pending` (só na história): bloco esperando conteúdo. Na demonstração vira um cartão "A preencher". Em produção some.
+
+Todo o conteúdo é validado com Zod quando o site sobe e no build (`src/lib/content.ts`). Id repetido, categoria inexistente, horário mal escrito, link sem https ou telefone em formato errado fazem o build parar apontando o campo.
+
+As páginas leem o conteúdo só por funções como `getMenu()`, `getProduct()` e `getBusiness()`. Para trocar os arquivos por um CMS no futuro, basta mudar o que essas funções leem.
+
+## Nome, logo e textos
+
+Em `src/content/business.ts`:
+
+```ts
+name: "JDS Cafeteria",
+shortName: "JDS",
+tagline: "Café, pausa e encontro",
+description: "Texto curto usado no rodapé e no Google.",
+logo: undefined,
 ```
-src/content/
-  business.ts     nome, endereço, horários, contato, redes, avisos
-  menu.ts         categorias e produtos
-  highlights.ts   destaques da página Produtos
-  gallery.ts      fotos da galeria
-  story.ts        textos da Nossa História
-  photos.ts       registro das fotos (import + alt + legenda)
+
+Sem logo, o site mostra o nome em texto. Para usar o logo oficial, coloque o arquivo em `src/assets/brand/`, importe e preencha:
+
+```ts
+import logo from "@/assets/brand/logo.png";
+
+logo: { src: logo, alt: "JDS Cafeteria" },
 ```
 
-Cada item tem um status:
-
-- `verified`: dado confirmado pela JDS. Aparece sempre.
-- `draft`: demonstração. Só aparece com `SHOW_DRAFT_CONTENT=true` e sempre com o selo "Demonstração".
-- `pending` (só na história): bloco que ainda precisa de conteúdo. Em modo demonstração vira um cartão "A preencher". Em produção some.
-
-Os arquivos são validados com Zod quando o site sobe ou faz build (`src/lib/content.ts`). Se tiver id repetido, categoria inexistente, horário mal escrito ou WhatsApp com formato errado, o build para e diz exatamente o campo.
-
-A leitura passa toda por funções como `getMenu()`, `getBusiness()` e `getGallery()`. Quando entrar um CMS, é só trocar o que essas funções leem. As páginas não mudam.
+Os textos da página inicial ficam em `src/content/home.ts`. A história fica em `src/content/story.ts`. Os textos curtos das outras páginas ficam no próprio arquivo da página, em `src/app/`.
 
 ## Editando o cardápio
 
-Em `src/content/menu.ts`:
+Categorias e produtos ficam em `src/content/menu.ts`. Um produto completo:
 
 ```ts
 {
   id: "p-020",                 // fixo, nunca reaproveitar
-  slug: "cafe-com-leite",      // vira o link /cardapio?item=cafe-com-leite
+  slug: "cafe-com-leite",      // vira /cardapio/cafe-com-leite
   name: "Café com leite",
-  description: "Uma linha, no máximo duas.",
+  description: "Uma ou duas linhas.",
   categoryId: "cafes-tradicionais",
+  image: photos.cafeComLeite,  // foto real do produto (opcional)
+  images: [photos.a, photos.b],// várias fotos viram galeria (opcional)
   illustration: "latte",       // desenho usado enquanto nao houver foto
-  priceCents: 900,             // R$ 9,00. sem preço aparece "Preço a confirmar"
+  priceCents: 900,             // R$ 9,00
   variants: [
     { id: "p", label: "Pequeno", volume: "180 ml", priceCents: 900 },
     { id: "m", label: "Médio", volume: "300 ml", priceCents: 1200 },
   ],
-  temperature: "hot",          // hot, iced ou both
+  temperature: "both",         // hot, iced ou both (both mostra quente e gelado)
+  ingredients: ["café", "leite integral"],
+  allergens: { contains: ["leite"], checkedAt: "2026-11-20" },
   availability: "available",   // available, unavailable ou coming-soon
   availabilityNote: "Volta em breve",
-  featured: true,              // entra na Seleção da casa da home
+  featured: true,              // entra nos destaques da home
   tags: ["novidade"],          // destaque, novidade, sazonal, da-casa
   order: 4,
   dataStatus: "verified",
 }
 ```
 
-Coisas que vale saber:
+Regras que valem a pena saber:
 
-- Categoria sem nenhum produto visível não aparece no site. Pode deixar todas cadastradas.
-- `allergens` só deve ser preenchido com informação conferida pela cozinha: `{ contains: ["leite", "glúten"], checkedAt: "2026-11-20" }`. Sem isso, o detalhe do produto pede para o cliente falar com a equipe.
-- Preço de item `draft` aparece com "preço de exemplo" do lado.
-- Foto do produto: importe em `photos.ts` e use `image: photos.nomeDaFoto`.
+- Categoria sem produto visível não aparece no site.
+- Só cadastre `ingredients` e `allergens` com informação conferida pela cozinha. Sem isso, a página do produto orienta o cliente a falar com a equipe.
+- Seletor de tamanho só aparece quando existe `variants`. Quente e gelado só aparecem com `temperature: "both"`.
+- Produto `draft` mostra "preço de exemplo" ao lado do valor.
 
-## Página de cada produto
+### Atualizando preços
 
-Cada item do cardápio tem uma página própria em `/cardapio/[slug]`, gerada a partir de `src/content/menu.ts`. Nada é duplicado: a página lê o mesmo item do cardápio.
+Os preços ficam em centavos (`priceCents: 1250` é R$ 12,50), no produto ou em cada tamanho. O site mostra o menor valor como "a partir de" quando os tamanhos têm preços diferentes. Depois de editar, rode `npm run build` (ou faça o deploy) para publicar.
 
-- Slug que não existe cai na tela "Produto não encontrado", com link de volta ao cardápio.
-- "Voltar ao cardápio" devolve a pessoa para a mesma categoria, busca e filtros que ela usava. Esse contexto fica na própria URL (`?categoria=`, `?busca=`, `?filtros=`).
-- O seletor de tamanho só aparece quando o item tem `variants`, e o preço muda conforme a escolha. Quente e gelado só aparecem quando `temperature` é `"both"`.
-- `volume` em cada variante (ex.: `"300 ml"`) aparece nas informações do produto.
-- `images` aceita várias fotos e vira uma galeria com miniaturas.
-- O botão "Consultar pelo WhatsApp" só aparece com `contact.whatsapp` preenchido e verificado. Ele abre a conversa com o nome do produto e a escolha já escritos, sem enviar nada.
-- "Você também pode gostar" mostra até quatro itens: primeiro da mesma categoria, depois destaques, depois o resto disponível.
-- Links antigos no formato `/cardapio?item=slug` redirecionam para a página nova.
+## Página do produto
 
-## Horários e "Aberto agora"
+Cada item tem uma página em `/cardapio/[slug]`, gerada no build a partir do mesmo cadastro.
+
+- "Voltar ao cardápio" devolve a pessoa à mesma categoria, busca e filtros.
+- O preço muda com o tamanho escolhido.
+- "Consultar pelo WhatsApp" só aparece com número oficial configurado e abre a conversa com o produto e a escolha escritos, sem enviar nada.
+- "Você também pode gostar" mostra até quatro itens: mesma categoria, depois destaques, depois o resto.
+- Endereço inexistente mostra "Produto não encontrado". Links antigos `/cardapio?item=slug` redirecionam.
+- Produtos verificados ganham dados estruturados `MenuItem` para o Google. Produtos de exemplo não.
+
+## Trocando as fotos
+
+As fotos atuais têm 335 px de largura. Funcionam na demonstração, mas ficam borradas em telas grandes.
+
+1. Coloque os originais em `src/assets/photos/` com o mesmo nome do arquivo atual. Pode ser JPG grande: o Next gera os tamanhos e formatos certos.
+2. Ajuste o enquadramento em `src/content/photos.ts` (`position: "50% 30%"`) se precisar.
+3. Revise o texto alternativo (`alt`) de cada foto no mesmo arquivo.
+4. Para o hero, `heroPhotos` em `photos.ts` define a foto do celular e a do computador. O ideal no computador é uma foto horizontal do salão em alta resolução.
+5. Troque `public/og.jpg` (1200 x 630), a imagem que aparece ao compartilhar o link.
+
+Foto de produto vai no próprio item do cardápio (`image` ou `images`) e substitui a ilustração.
+
+## Configurando contatos
 
 Em `src/content/business.ts`:
 
 ```ts
+address: {
+  status: "verified",
+  street: "Rua Exemplo",
+  number: "123",
+  district: "Centro",
+  city: "Cidade",
+  state: "MG",
+  postalCode: "00000-000",
+  mapsUrl: "https://maps.app.goo.gl/...",
+},
 hours: {
   status: "verified",
   timezone: "America/Sao_Paulo",
   week: {
-    0: [],                                         // domingo fechado
+    0: [],
     1: [{ opens: "07:30", closes: "19:00" }],
     2: [{ opens: "07:30", closes: "12:00" }, { opens: "14:00", closes: "19:00" }],
     3: [{ opens: "07:30", closes: "19:00" }],
@@ -124,102 +203,53 @@ hours: {
   },
   exceptions: [{ date: "2026-12-25", label: "Natal", periods: [] }],
 },
+contact: {
+  status: "verified",
+  whatsapp: "5531999999999",
+  phone: "553133333333",
+},
 ```
 
-O selo "Aberto agora / Fechado agora, abre amanhã às 7h30" só aparece com `status: "verified"`. Ele roda no navegador, respeita o fuso informado e as exceções, e atualiza sozinho a cada minuto.
+- WhatsApp e telefone vão só com números, com 55 e DDD.
+- Com endereço, aparecem o botão "Como chegar", o endereço no rodapé e os dados no Google.
+- Com horários verificados, aparece o selo "Aberto agora / Fechado agora", que respeita o fuso e as exceções.
+- Com WhatsApp, aparecem o botão no rodapé, o formulário do contato e "Consultar pelo WhatsApp" nos produtos.
+- O Instagram fica em `social`.
+- Avisos temporários (feriado, horário especial) ficam em `announcements`, com data de início e fim.
 
-Endereço, WhatsApp e telefone seguem a mesma ideia. WhatsApp e telefone vão só com números, com 55 e DDD (`5511999990000`). Com o WhatsApp preenchido aparecem o botão e o formulário que abre a conversa pronta.
+## Deploy
 
-## Trocando as fotos
+O site é quase todo estático e funciona em qualquer hospedagem compatível com Next.js. O caminho mais simples é a Vercel.
 
-As fotos atuais são capturas de 335 px de largura que vieram nas referências. Servem para apresentar, mas ficam borradas em tela grande. Antes de publicar:
+1. Rode `npm run check` e corrija o que aparecer.
+2. Suba o projeto para um repositório Git privado.
+3. Na hospedagem, configure `NEXT_PUBLIC_SITE_URL` com o domínio final e **não** defina `SHOW_DRAFT_CONTENT`.
+4. Aponte o domínio para a hospedagem.
+5. Depois de publicado: rode o Lighthouse no celular, cadastre o domínio no Google Search Console, envie o `sitemap.xml` e confira se o endereço bate com o Perfil da Empresa no Google.
 
-1. Coloque os originais em `src/assets/photos/` com o mesmo nome (`fachada.jpg`, `interior.jpg` etc). Pode ser JPG grande, o Next gera AVIF/WebP e os tamanhos certos sozinho.
-2. Se mudar o enquadramento, ajuste `position` em `src/content/photos.ts` (ex: `"50% 20%"`).
-3. Revise o `alt` de cada foto no mesmo arquivo.
-4. Troque `public/og.jpg` (1200 x 630) pela imagem de compartilhamento final.
+Para uma prévia de apresentação, faça um deploy separado com `SHOW_DRAFT_CONTENT=true`. Ele sai com `noindex`. Não publique nenhuma das duas versões sem autorização da JDS.
 
-Foto nova é só importar em `photos.ts` e usar onde quiser.
-
-O logo hoje é tipográfico (`src/components/layout/Logo.tsx`). Quando tiver o SVG oficial, troque o conteúdo desse componente e o `src/app/icon.svg`.
-
-## Estrutura
-
-```
-src/
-  app/                rotas, layout, sitemap, robots, ícone
-  components/
-    layout/           header, footer, hero das páginas, json-ld
-    home/             seções da home
-    menu/             cardápio (card, modal, navegação)
-    gallery/          galeria com lightbox
-    business/         horários
-    forms/            formulário de WhatsApp
-    ui/               botões, tags, títulos, feedback, foto
-  content/            dados editáveis
-  hooks/              seleção salva e estado na url
-  lib/                schemas, leitura do conteúdo, horários, formatação
-  types/              tipos derivados dos schemas
-```
-
-## Direção de arte
-
-Visual comercial: header escuro, fundos claros, fotografia grande e chamadas evidentes.
-
-- Cores: header e rodapé `#171717`, fundo `#FFFFFF`, fundo secundário `#F7F5F2`, texto `#24201D`, marrom `#573628` e caramelo `#B97735`. Nos textos e botões o caramelo usa uma versão mais escura (`#9C5F22`) para passar no contraste AA.
-- Tipografia: Inter em tudo. Escala em `globals.css` (`text-display`, `text-h1`, `text-h2`, `text-h3`, `text-lede`).
-- Hero: foto em largura total, overlay preto e conteúdo centralizado. As fotos ficam em `heroPhotos`, dentro de `src/content/photos.ts`: hoje a fachada no celular e a xícara no desktop. Para trocar por uma foto horizontal do salão em alta resolução, basta importar o arquivo e apontar `heroPhotos.desktop` para ela.
-- Home organizada em conversões: hero (cardápio), destaques (todos os produtos), história (conhecer a cafeteria) e convite final (visitar ou contato).
-- Movimento: entrada do título, subtítulo e botões, zoom lento na foto do hero e leve elevação dos cards no hover. Com `prefers-reduced-motion`, nada se move.
-
-### Versões
-
-O projeto tem histórico git. O design anterior está marcado como `v3-limpo` (`git checkout v3-limpo` para ver).
-
-### Imagens dos produtos
-
-Ainda não existem fotos dos produtos. Para não usar foto falsa, cada item tem uma ilustração própria (`components/menu/ProductIllustration.tsx`), marcada com o selo "Ilustração". O campo `illustration` no cardápio escolhe o desenho. Quando entrar a foto real, preencha `image` no item e ela substitui a ilustração no card e no detalhe.
-
-## Decisões
-
-- **Sem Motion, Lenis e Lucide.** O movimento ficou restrito ao que ajuda: hover discreto e abertura e fechamento de modais com `@starting-style`. Com `prefers-reduced-motion` tudo para. Ícones são SVG próprios (`components/ui/Icon.tsx`).
-- **Modais com `<dialog>` nativo.** Foco preso, Escape e fundo inerte vêm do navegador.
-- **Seleção de itens** fica no `localStorage` do aparelho. Não é carrinho e não envia nada.
-- **Estado do cardápio na URL** (`?categoria=` e `?item=`), então dá pra mandar o link de um item direto.
-- **Sem formulário com backend.** O formulário de contato só monta a mensagem e abre o WhatsApp.
+O `next.config.ts` já envia cabeçalhos de segurança (sem iframe de terceiros, `nosniff`, HSTS, política de referência e permissões).
 
 ## Verificação
 
-Rodado nesta entrega, num ambiente sem acesso ao npm. Por isso `npm install`, `next build` e `eslint` **não foram executados**. Rode `npm run check` antes de publicar.
+Este projeto foi montado num ambiente sem acesso ao npm. Por isso `npm install`, `npm run lint` e `npm run build` **não foram executados** aqui. Rode `npm run check` antes de qualquer publicação.
 
-O que foi feito no lugar:
+O que foi verificado no lugar:
 
-- Checagem de tipos de todo o `src` com `tsc --strict --noUncheckedIndexedAccess --noUnusedLocals`, usando declarações mínimas de React e Next no lugar dos pacotes. Sem erros.
-- CSS compilado com o Tailwind 4.3 de verdade a partir do `globals.css`. Todas as classes usadas geram CSS.
-- Páginas renderizadas com React 19 (`renderToString`) e hidratadas no Chrome, com `next/link`, `next/image` e `next/font` substituídos por versões simples. Sem erro de hidratação nem de console.
-- Inspeção visual por captura de tela em 320, 375, 390, 430, 768, 1024, 1440 e 1920 px, com as capturas analisadas e os problemas corrigidos.
-- 117 testes automatizados no Chrome (Playwright), todos passando:
-  - cardápio: busca com e sem acento, estado vazio, categorias, busca e filtros na URL, item indisponível, seleção salva sobrevivendo a reload;
-  - página de produto: abertura pelo card, volta ao cardápio com a busca, preço mudando com o tamanho, quente e gelado, WhatsApp só com número oficial e com a mensagem certa, relacionados, navegação entre produtos, slug inexistente e link antigo `?item=`;
-  - menu mobile: abre, `aria-expanded`, Escape, navegação;
-  - galeria: abre, setas do teclado, botões, volta circular, Escape;
-  - formulário: erros no blur e no envio, foco no primeiro erro, link `wa.me` com assunto e mensagem;
-  - horários: lógica de aberto/fechado testada à parte com almoço, feriado, fim de semana e virada de fuso;
-  - modo produção sem dados: nenhum selo de demonstração, nenhum aviso de configuração, estados vazios no lugar;
-  - skip link, troca do header ao rolar, `prefers-reduced-motion`, um `h1` por página, hierarquia de títulos, `alt` em todas as imagens, botões com nome acessível, links internos válidos;
-  - sem rolagem horizontal em 320, 375, 390, 430, 768, 1024, 1440 e 1920 px.
+- TypeScript strict em todo o `src`, com declarações mínimas de React e Next, sem erros.
+- CSS compilado com o Tailwind 4 de verdade. Todas as classes usadas geram CSS.
+- Páginas renderizadas com React 19 e hidratadas no Chrome, sem erro de hidratação nem de console.
+- 117 testes de interação no Chrome (Playwright) e mais 17 testes de hero, rodapé, teclado e segurança, todos passando.
+- Auditoria automática de 9 páginas em 320, 375, 390, 430, 768, 1024 e 1440 px:
+  - nenhuma rolagem horizontal;
+  - nenhum texto abaixo do contraste AA;
+  - nenhum alvo de toque menor que 24 px;
+  - nenhum erro de console.
+- Contraste do texto do hero medido sobre a foto, no pior ponto: 5,7:1.
 
-Ficou sem verificar aqui: build real do Next 16, ESLint, otimização de imagem do `next/image`, carregamento da Inter pelo Google Fonts (as capturas usaram a Inter instalada localmente, então a tipografia das capturas é a mesma do site), Lighthouse e Core Web Vitals, Safari e Firefox, leitor de tela real.
+Ficou sem verificar: build real do Next, ESLint, otimização de imagem do `next/image`, Lighthouse e Core Web Vitals reais, Safari e Firefox, leitor de tela real.
 
-## Publicação
+## Versões
 
-1. Rodar `npm run check` e corrigir o que aparecer.
-2. Trocar as fotos pelos originais.
-3. Preencher pelo menos endereço, horários e WhatsApp em `business.ts` com `status: "verified"`.
-4. Trocar os produtos de demonstração pelos reais (ou deixar o cardápio vazio até ter os dados).
-5. Na Vercel: importar o repositório, definir `NEXT_PUBLIC_SITE_URL` e **não** definir `SHOW_DRAFT_CONTENT`.
-6. Depois de publicar: Lighthouse no celular, cadastrar o domínio no Google Search Console e mandar o `sitemap.xml`, e conferir se o endereço bate com o Perfil da Empresa no Google.
-
-Para uma prévia de apresentação, faça um deploy separado com `SHOW_DRAFT_CONTENT=true`. Ele sai com `noindex`.
-
-Lista do que falta da JDS: [PENDENCIAS.md](./PENDENCIAS.md).
+O projeto tem histórico Git com marcos de design: `v3-limpo`, `v4-comercial`, `v5-produto` e `v6-entrega`. Para ver uma versão antiga, use `git checkout <nome>`.

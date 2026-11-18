@@ -11,6 +11,7 @@ import type { MenuProduct } from "@/types/content";
 type Props = {
   product: Pick<MenuProduct, "name" | "priceCents" | "variants" | "temperature" | "dataStatus" | "availability">;
   whatsapp?: string;
+  greeting: string;
   intro: ReactNode;
   details: ReactNode;
 };
@@ -26,7 +27,7 @@ const optionClass = cn(
   "has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-caramel-deep",
 );
 
-export function ProductOptions({ product, whatsapp, intro, details }: Props) {
+export function ProductOptions({ product, whatsapp, greeting, intro, details }: Props) {
   const variants = product.variants ?? [];
   const [variantId, setVariantId] = useState(variants[0]?.id);
   const [temperature, setTemperature] = useState("quente");
@@ -38,7 +39,7 @@ export function ProductOptions({ product, whatsapp, intro, details }: Props) {
   const choices = [variant?.label, choosesTemperature ? temperatures.find((t) => t.id === temperature)?.label : undefined]
     .filter(Boolean)
     .map((c) => c?.toLowerCase());
-  const message = `Olá, JDS! Gostaria de saber mais sobre ${product.name}${choices.length ? ` (${choices.join(", ")})` : ""}.`;
+  const message = `${greeting} Gostaria de saber mais sobre ${product.name}${choices.length ? ` (${choices.join(", ")})` : ""}.`;
 
   return (
     <>

@@ -3,6 +3,8 @@ import type { BusinessAnnouncement, BusinessProfile } from "@/types/content";
 export const business: BusinessProfile = {
   name: "JDS Cafeteria",
   shortName: "JDS",
+  tagline: "Café, pausa e encontro",
+  logo: undefined,
   description:
     "Cafeteria de fachada em ripas de madeira, com tijolo aparente, plantas e luz natural. Um lugar para o café, a pausa e o encontro.",
 

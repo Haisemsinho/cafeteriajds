@@ -4,9 +4,23 @@ import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 import { useUrlParam } from "@/hooks/useUrlParam";
 
+const allowed = ["categoria", "busca", "filtros"];
+
+function menuHref(from: string | null) {
+  if (!from) return "/cardapio";
+  const source = new URLSearchParams(from);
+  const clean = new URLSearchParams();
+  for (const key of allowed) {
+    const value = source.get(key);
+    if (value) clean.set(key, value.slice(0, 80));
+  }
+  const query = clean.toString();
+  return query ? `/cardapio?${query}` : "/cardapio";
+}
+
 export function BackToMenu() {
   const [from] = useUrlParam("de");
-  const href = from ? `/cardapio?${from}` : "/cardapio";
+  const href = menuHref(from);
 
   return (
     <Link

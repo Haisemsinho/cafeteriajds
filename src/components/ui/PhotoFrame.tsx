@@ -14,7 +14,7 @@ export function PhotoFrame({ photo, sizes, ratio = "4/3", priority, caption, cla
   const text = typeof caption === "string" ? caption : caption ? photo.caption : undefined;
   return (
     <figure className={className}>
-      <div className="relative overflow-hidden rounded-lg bg-cream" style={{ aspectRatio: ratio }}>
+      <div className="relative overflow-hidden rounded-xl bg-cream" style={{ aspectRatio: ratio }}>
         <Image
           src={photo.src}
           alt={photo.alt}

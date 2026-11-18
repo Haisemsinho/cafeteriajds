@@ -6,7 +6,9 @@ import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
 import type { GalleryImage } from "@/types/content";
 
-export function Gallery({ images }: { images: GalleryImage[] }) {
+type Props = { images: GalleryImage[]; layout?: "grid" | "feature" };
+
+export function Gallery({ images, layout = "grid" }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [index, setIndex] = useState(0);
   const touchX = useRef<number | null>(null);
@@ -35,32 +37,43 @@ export function Gallery({ images }: { images: GalleryImage[] }) {
 
   return (
     <>
-      <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
-        {images.map((image, i) => (
-          <li key={image.id}>
-            <button
-              type="button"
-              onClick={() => open(i)}
-              className="group relative block aspect-[4/3] w-full overflow-hidden rounded-lg bg-cream"
-            >
-              <span className="absolute inset-0 transition-transform duration-500 ease-soft group-hover:scale-[1.03]">
-                <Image
-                  src={image.src}
-                  alt=""
-                  fill
-                  placeholder="blur"
-                  sizes="(min-width: 768px) 24rem, 50vw"
-                  className="object-cover"
-                  style={image.position ? { objectPosition: image.position } : undefined}
-                />
-              </span>
-              <span className="absolute inset-x-0 bottom-0 bg-linear-to-t from-espresso/70 to-transparent p-3 pt-8 text-left text-sm font-medium text-paper sm:p-4 sm:pt-10">
-                {image.caption}
-              </span>
-              <span className="sr-only">Ampliar foto: {image.alt}</span>
-            </button>
-          </li>
-        ))}
+      <ul
+        className={cn(
+          "grid grid-cols-2 gap-3 sm:gap-4",
+          layout === "feature" ? "md:grid-cols-3 md:grid-rows-2" : images.length === 4 ? "md:grid-cols-4" : "md:grid-cols-3",
+        )}
+      >
+        {images.map((image, i) => {
+          const feature = layout === "feature" && i === 0;
+          return (
+            <li key={image.id} className={cn(feature && "col-span-2 md:col-span-1 md:row-span-2")}>
+              <button
+                type="button"
+                onClick={() => open(i)}
+                className={cn(
+                  "group relative block w-full overflow-hidden rounded-xl bg-cream",
+                  feature ? "aspect-[4/3] md:aspect-auto md:h-full" : "aspect-[4/3]",
+                )}
+              >
+                <span className="absolute inset-0 transition-transform duration-500 ease-soft motion-safe:group-hover:scale-[1.03]">
+                  <Image
+                    src={image.src}
+                    alt=""
+                    fill
+                    placeholder="blur"
+                    sizes={feature ? "(min-width: 768px) 24rem, 100vw" : "(min-width: 768px) 24rem, 50vw"}
+                    className="object-cover"
+                    style={image.position ? { objectPosition: image.position } : undefined}
+                  />
+                </span>
+                <span className="absolute inset-x-0 bottom-0 bg-linear-to-t from-espresso/70 to-transparent p-3 pt-8 text-left text-sm font-medium text-paper sm:p-4 sm:pt-10">
+                  {image.caption}
+                </span>
+                <span className="sr-only">Ampliar foto: {image.alt}</span>
+              </button>
+            </li>
+          );
+        })}
       </ul>
 
       <dialog

@@ -56,14 +56,16 @@ export const addressSchema = z.object({
   state: z.string().length(2),
   postalCode: z.string().optional(),
   reference: z.string().optional(),
-  mapsUrl: z.string().url().optional(),
+  mapsUrl: z.string().url().startsWith("https://", "use um link https").optional(),
   geo: z.object({ lat: z.number(), lng: z.number() }).optional(),
 });
+
+const httpsUrl = z.string().url().startsWith("https://", "use um link https");
 
 export const socialLinkSchema = z.object({
   network: z.enum(["instagram", "facebook", "tiktok"]),
   handle: z.string(),
-  url: z.string().url(),
+  url: httpsUrl,
   status: dataStatusSchema,
 });
 
@@ -81,9 +83,11 @@ export const contactInformationSchema = z.object({
 });
 
 export const businessProfileSchema = z.object({
-  name: z.string(),
-  shortName: z.string(),
+  name: z.string().min(2),
+  shortName: z.string().min(1),
+  tagline: z.string(),
   description: z.string(),
+  logo: photoSchema.optional(),
   foundedYear: z.number().int().optional(),
   address: addressSchema.optional(),
   hours: openingHoursSchema.optional(),

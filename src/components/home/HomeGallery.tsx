@@ -1,8 +1,9 @@
 import { Gallery } from "@/components/gallery/Gallery";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { home } from "@/content/home";
 import { getGallery } from "@/lib/content";
 
-const preferred = ["varanda", "prateleiras", "balcao", "dia-do-cafe", "fachada", "xicara"];
+const preferred = ["fachada", "varanda", "prateleiras", "balcao", "dia-do-cafe"];
 
 function rank(id: string) {
   const i = preferred.indexOf(id);
@@ -10,21 +11,23 @@ function rank(id: string) {
 }
 
 export function HomeGallery() {
-  const images = [...getGallery()].sort((a, b) => rank(a.id) - rank(b.id)).slice(0, 6);
+  const images = getGallery()
+    .filter((g) => preferred.includes(g.id))
+    .sort((a, b) => rank(a.id) - rank(b.id));
   if (!images.length) return null;
 
   return (
-    <section aria-labelledby="galeria-title" className="bg-cream-soft py-20 sm:py-28">
+    <section aria-labelledby="galeria-title" className="bg-cream-soft py-20 sm:py-24">
       <div className="page-x">
         <SectionHeading
           id="galeria-title"
-          eyebrow="Galeria"
-          title="Por dentro da JDS"
-          intro="Um pouco da casa. Toque em uma foto para ampliar."
+          eyebrow={home.gallery.eyebrow}
+          title={home.gallery.title}
+          intro={home.gallery.intro}
           align="center"
         />
         <div className="mt-10">
-          <Gallery images={images} />
+          <Gallery images={images} layout={images.length === 5 ? "feature" : "grid"} />
         </div>
       </div>
     </section>

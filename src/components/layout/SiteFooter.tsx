@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
-import { getBusiness, getInstagram } from "@/lib/content";
+import { getBrand, getBusiness, getInstagram } from "@/lib/content";
 import { formatPeriods, weekdayNames } from "@/lib/hours";
 import { formatAddress, formatPhone, whatsappUrl } from "@/lib/links";
 import { footerNav } from "@/lib/navigation";
@@ -19,8 +19,8 @@ export function SiteFooter() {
     <footer className="on-dark bg-night text-sand">
       <div className="page-x grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] lg:py-16">
         <div>
-          <Logo large className="text-white" />
-          <p className="mt-4 max-w-xs">Café, pausa e encontro num espaço de madeira, tijolo e luz natural.</p>
+          <Logo brand={getBrand()} large className="text-white" />
+          <p className="mt-4 max-w-xs">{business.description}</p>
           <div className="mt-6 flex flex-col items-start gap-1">
             {instagram ? (
               <a
@@ -95,7 +95,7 @@ export function SiteFooter() {
           <p>
             © {year} {business.name}
           </p>
-          <a href="#topo" className="inline-flex min-h-11 items-center gap-1.5 hover:text-white sm:min-h-0">
+          <a href="#topo" className="inline-flex min-h-11 items-center gap-1.5 hover:text-white">
             Voltar ao topo
             <Icon name="arrowUpRight" size={14} className="-rotate-45" />
           </a>

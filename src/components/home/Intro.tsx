@@ -1,25 +1,24 @@
 import { TextLink } from "@/components/ui/Button";
 import { PhotoFrame } from "@/components/ui/PhotoFrame";
+import { home } from "@/content/home";
 import { photos } from "@/content/photos";
 
 export function Intro() {
   return (
-    <section aria-labelledby="intro-title" className="page-x py-20 sm:py-28">
+    <section aria-labelledby="intro-title" className="page-x py-20 sm:py-24">
       <div className="grid items-center gap-10 md:grid-cols-2 lg:gap-16">
         <div>
-          <p className="eyebrow mb-3">Sobre a JDS</p>
+          <p className="eyebrow mb-3">{home.intro.eyebrow}</p>
           <h2 id="intro-title" className="text-h2">
-            Um café para tomar com calma
+            {home.intro.title}
           </h2>
           <div className="mt-5 space-y-4 text-lede text-mocha">
-            <p>
-              Madeira, tijolo aparente, plantas e muita luz natural. A JDS é um lugar para fazer uma pausa no dia,
-              encontrar os amigos ou simplesmente aproveitar um bom café.
-            </p>
-            <p>Da fachada de ripas ao balcão, cada canto foi pensado para receber bem quem chega.</p>
+            {home.intro.paragraphs.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
           </div>
-          <TextLink href="/nossa-historia" className="mt-6">
-            Conheça nossa história
+          <TextLink href={home.intro.link.href} className="mt-6">
+            {home.intro.link.label}
           </TextLink>
         </div>
         <PhotoFrame

@@ -33,7 +33,7 @@ const spaces = [
 ];
 
 export default function ExperienciaPage() {
-  const images = getGallery();
+  const images = getGallery().filter((g) => !["letreiro", "varanda", "prateleiras", "interior"].includes(g.id));
 
   return (
     <>
