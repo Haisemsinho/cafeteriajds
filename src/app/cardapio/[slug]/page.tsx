@@ -14,7 +14,7 @@ import { siteUrl } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return getMenu().products.map((p) => ({ slug: p.slug }));

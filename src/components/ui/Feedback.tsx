@@ -20,7 +20,7 @@ export function EmptyState({
       <span className="mb-4 grid size-12 place-items-center rounded-full bg-cream-soft text-caramel-deep">
         <Icon name={icon} size={22} />
       </span>
-      <h3 className="text-h3 text-espresso">{title}</h3>
+      <h2 className="text-h3 text-espresso">{title}</h2>
       {children ? <div className="mt-3 max-w-md text-mocha">{children}</div> : null}
       {action ? <div className="mt-8">{action}</div> : null}
     </div>

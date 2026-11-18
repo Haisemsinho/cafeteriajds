@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useDeferredValue, useEffect, useMemo } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/Feedback";
 import { Icon } from "@/components/ui/Icon";
@@ -12,7 +12,10 @@ import { cn } from "@/lib/cn";
 import { normalize, plural } from "@/lib/format";
 import type { MenuCategory, MenuProduct } from "@/types/content";
 import { cardActionClass, ProductCard } from "./ProductCard";
+import { MenuSearch } from "./MenuSearch";
 import { business } from "@/content/business";
+
+const URL_SYNC_MS = 300;
 
 type FilterId = "destaques" | "quentes" | "gelados" | "disponiveis" | "salvos";
 
@@ -39,8 +42,12 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
   const [queryParam, setQueryParam] = useUrlParam("busca");
   const [filtersParam, setFiltersParam] = useUrlParam("filtros");
   const { ids: saved, toggle } = useSavedItems();
-  const query = queryParam ?? "";
+  const [typed, setTyped] = useState<string | null>(null);
+  const syncTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const query = typed ?? queryParam ?? "";
   const deferredQuery = useDeferredValue(query);
+
+  useEffect(() => () => clearTimeout(syncTimer.current), []);
   const filters = useMemo(
     () => (filtersParam ?? "").split(",").filter((f): f is FilterId => filterIds.has(f)),
     [filtersParam],
@@ -71,14 +78,34 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
         .filter((s) => s.items.length)
     : [];
 
-  const setQuery = (value: string) => setQueryParam(value || null);
+  const commitQuery = (value: string) => {
+    clearTimeout(syncTimer.current);
+    syncTimer.current = undefined;
+    setQueryParam(value || null);
+    setTyped(null);
+  };
+
+  const setQuery = (value: string) => {
+    setTyped(value);
+    clearTimeout(syncTimer.current);
+    syncTimer.current = setTimeout(() => commitQuery(value), URL_SYNC_MS);
+  };
+
+  const flushQuery = () => {
+    if (syncTimer.current) commitQuery(query);
+  };
 
   const toggleFilter = (id: FilterId) => {
     const next = filters.includes(id) ? filters.filter((f) => f !== id) : [...filters, id];
     setFiltersParam(next.length ? next.join(",") : null);
   };
 
-  const resetAll = () => setUrlParams({ busca: null, filtros: null, categoria: null });
+  const resetAll = () => {
+    clearTimeout(syncTimer.current);
+    syncTimer.current = undefined;
+    setTyped(null);
+    setUrlParams({ busca: null, filtros: null, categoria: null });
+  };
 
   const context = new URLSearchParams();
   if (category) context.set("categoria", category);
@@ -128,7 +155,7 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
             </button>
           }
           action={
-            <Link href={detailHref(product.slug)} className={cardActionClass}>
+            <Link href={detailHref(product.slug)} onClick={flushQuery} className={cardActionClass}>
               Ver detalhes
               <span className="sr-only"> de {product.name}</span>
             </Link>
@@ -144,32 +171,14 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
     <>
       <div className="sticky top-16 z-30 border-b border-line bg-white/95 backdrop-blur-sm lg:top-[4.5rem]">
         <div className="page-x flex flex-col gap-3 py-3 md:flex-row md:items-center md:gap-6">
-          <form role="search" onSubmit={(e) => e.preventDefault()} className="relative md:w-72 md:shrink-0">
-            <label htmlFor="busca-cardapio" className="sr-only">
-              Buscar no cardápio
-            </label>
-            <Icon name="search" size={18} className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-mocha" />
-            <input
-              id="busca-cardapio"
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Buscar pelo nome"
-              autoComplete="off"
-              enterKeyHint="search"
-              className="h-11 w-full rounded-md border border-line-strong bg-paper pr-10 pl-10 text-[0.9375rem] text-espresso transition-colors placeholder:text-mocha/80 focus:border-caramel-deep focus:outline-none"
-            />
-            {query ? (
-              <button
-                type="button"
-                onClick={() => setQuery("")}
-                className="absolute top-1/2 right-0.5 grid size-10 -translate-y-1/2 place-items-center rounded-md text-mocha hover:text-espresso"
-                aria-label="Limpar busca"
-              >
-                <Icon name="close" size={16} />
-              </button>
-            ) : null}
-          </form>
+          <MenuSearch
+            value={query}
+            onChange={setQuery}
+            onClear={() => commitQuery("")}
+            products={products}
+            hrefFor={detailHref}
+            onNavigate={flushQuery}
+          />
 
           <nav aria-label="Categorias do cardápio" className="-mx-5 min-w-0 flex-1 sm:-mx-8 md:mx-0">
             <ul className="scrollbar-none flex gap-1.5 overflow-x-auto px-5 sm:px-8 md:px-0 xl:flex-wrap">
@@ -215,7 +224,7 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
                   {active ? <Icon name="check" size={14} /> : null}
                   {f.id === "salvos" ? <Icon name="heart" size={14} fill={active ? "currentColor" : "none"} /> : null}
                   {f.label}
-                  {f.id === "salvos" ? <span className="tabular-nums opacity-75">({saved.length})</span> : null}
+                  {f.id === "salvos" ? <span className="tabular-nums">({saved.length})</span> : null}
                 </button>
               );
             })}
