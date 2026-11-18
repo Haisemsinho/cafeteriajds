@@ -17,7 +17,7 @@ export function DraftNotice() {
         <button
           type="button"
           onClick={() => setVisible(false)}
-          className="-mr-2 grid size-9 shrink-0 place-items-center rounded-full text-sand hover:bg-white/10 hover:text-white"
+          className="-my-1 -mr-3 grid size-11 shrink-0 place-items-center rounded-full text-sand hover:bg-white/10 hover:text-white"
           aria-label="Fechar aviso de demonstração"
         >
           <Icon name="close" size={14} />

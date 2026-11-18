@@ -60,7 +60,7 @@ export function SiteHeader({ brand, instagram }: Props) {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "group/nav relative block rounded-md px-3 py-2 text-[0.9375rem] transition-colors duration-300 lg:px-4",
+                      "group/nav relative flex min-h-11 items-center rounded-md px-3 text-[0.9375rem] transition-colors duration-300 lg:px-4",
                       active ? "font-semibold text-white" : "text-white/75 hover:text-white",
                     )}
                   >

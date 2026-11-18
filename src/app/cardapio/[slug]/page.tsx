@@ -107,7 +107,7 @@ export default async function ProductPage({ params }: Props) {
             <div className="flex flex-wrap items-center gap-2">
               <Link
                 href={`/cardapio?categoria=${product.categoryId}`}
-                className="inline-flex min-h-8 items-center text-sm font-semibold text-caramel-deep hover:text-caramel-dark hover:underline"
+                className="inline-flex min-h-11 items-center text-sm font-semibold text-caramel-deep hover:text-caramel-dark hover:underline"
               >
                 {product.categoryName}
               </Link>

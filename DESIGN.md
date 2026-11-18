@@ -281,6 +281,8 @@ O cardápio no desktop usa uma barra lateral de 240px a 256px, fixa ao rolar aba
 
 Breakpoints: 416px (xs), 640px, 768px, 1024px e 1280px.
 
+Celular deitado (variante `short`: paisagem com até 520px de altura): o hero segue a altura do conteúdo, com título de 48px e espaços compactos, para os botões caberem na primeira tela. Alvos de toque fora de texto corrido têm no mínimo 44px. Galeria ampliada, gavetas e menu usam `overscroll-behavior: contain`, e a área de deslize da galeria usa `touch-action: pan-y`, para o gesto horizontal nunca virar o voltar do navegador.
+
 ## Elevation & Depth
 
 Profundidade vem de luz e sobreposição de fotografias, não de sombras pesadas. Superfícies ficam planas em repouso, com borda fina. A sombra aparece como resposta: no hover de cards e como base de peças que se sobrepõem, como a xícara que atravessa a borda do hero.

@@ -12,7 +12,7 @@ export function Intro() {
       <div className="page-x relative">
         <div
           data-moment="rise"
-          className="absolute -top-52 right-5 z-10 w-[46%] sm:-top-64 sm:right-8 sm:w-72 lg:-top-56 lg:w-80 xl:right-10"
+          className="absolute -top-52 right-5 z-10 w-[46%] sm:-top-64 sm:right-8 sm:w-72 short:-top-16 short:w-56 lg:-top-56 lg:w-80 xl:right-10"
         >
           <PhotoFrame
             photo={photos.xicara}

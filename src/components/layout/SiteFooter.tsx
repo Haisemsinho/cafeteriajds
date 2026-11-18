@@ -61,7 +61,7 @@ export function SiteFooter() {
           <ul className="grid grid-cols-2 gap-x-6 sm:grid-cols-1">
             {footerNav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="inline-flex min-h-10 items-center transition-colors hover:text-white">
+                <Link href={item.href} className="inline-flex min-h-11 items-center transition-colors hover:text-white">
                   {item.label}
                 </Link>
               </li>

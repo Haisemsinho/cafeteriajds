@@ -134,7 +134,7 @@ export function Gallery({ images, layout = "grid" }: Props) {
             </div>
 
             <div
-              className="relative flex-1"
+              className="relative flex-1 touch-pan-y"
               onTouchStart={(e) => (touchX.current = e.touches[0]?.clientX ?? null)}
               onTouchEnd={(e) => {
                 const start = touchX.current;
