@@ -16,6 +16,7 @@ type Props = {
   products: Suggestion[];
   hrefFor: (slug: string) => string;
   onNavigate: () => void;
+  className?: string;
 };
 
 const MAX_SUGGESTIONS = 6;
@@ -48,7 +49,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
   );
 }
 
-export function MenuSearch({ value, onChange, onClear, products, hrefFor, onNavigate }: Props) {
+export function MenuSearch({ value, onChange, onClear, products, hrefFor, onNavigate, className }: Props) {
   const router = useRouter();
   const listId = useId();
   const [open, setOpen] = useState(false);
@@ -97,11 +98,15 @@ export function MenuSearch({ value, onChange, onClear, products, hrefFor, onNavi
   };
 
   return (
-    <form role="search" onSubmit={(e) => e.preventDefault()} className="relative md:w-72 md:shrink-0">
+    <form role="search" onSubmit={(e) => e.preventDefault()} className={cn("relative", className)}>
       <label htmlFor="busca-cardapio" className="sr-only">
         Buscar no cardápio
       </label>
-      <Icon name="search" size={18} className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-mocha" />
+      <Icon
+        name="search"
+        size={20}
+        className="pointer-events-none absolute top-1/2 left-5 -translate-y-1/2 text-mocha"
+      />
       <input
         id="busca-cardapio"
         type="search"
@@ -119,16 +124,16 @@ export function MenuSearch({ value, onChange, onClear, products, hrefFor, onNavi
         onKeyDown={onKeyDown}
         onFocus={() => setOpen(true)}
         onBlur={() => setOpen(false)}
-        placeholder="Buscar pelo nome"
+        placeholder="Buscar cafés, bebidas, doces..."
         autoComplete="off"
         enterKeyHint="search"
-        className="h-11 w-full rounded-md border border-line-strong bg-paper pr-10 pl-10 text-[0.9375rem] text-espresso transition-colors placeholder:text-mocha/80 focus:border-caramel-deep focus:outline-none"
+        className="h-14 w-full rounded-full border border-line-strong bg-paper pr-14 pl-13 text-base text-espresso shadow-[0_10px_30px_-22px_rgb(36_24_16/0.5)] transition-[border-color,box-shadow] duration-200 placeholder:text-mocha/80 focus:border-caramel-deep focus:shadow-[0_0_0_4px_rgb(185_119_53/0.14)] focus:outline-none"
       />
       {value ? (
         <button
           type="button"
           onClick={onClear}
-          className="absolute top-1/2 right-0.5 grid size-10 -translate-y-1/2 place-items-center rounded-md text-mocha hover:text-espresso"
+          className="press absolute top-1/2 right-2 grid size-10 -translate-y-1/2 place-items-center rounded-full text-mocha hover:bg-cream-soft hover:text-espresso"
           aria-label="Limpar busca"
         >
           <Icon name="close" size={16} />
@@ -140,7 +145,7 @@ export function MenuSearch({ value, onChange, onClear, products, hrefFor, onNavi
         role="listbox"
         aria-label="Sugestões de produtos"
         hidden={!expanded}
-        className="absolute inset-x-0 top-full z-40 mt-1.5 overflow-hidden rounded-md border border-line bg-white py-1 shadow-lg"
+        className="absolute inset-x-0 top-full z-40 mt-2 overflow-hidden rounded-2xl border border-line bg-white py-1 shadow-lg"
       >
         {suggestions.map((s, i) => (
           <li
@@ -163,7 +168,7 @@ export function MenuSearch({ value, onChange, onClear, products, hrefFor, onNavi
         ))}
       </ul>
       {noMatch ? (
-        <p className="absolute inset-x-0 top-full z-40 mt-1.5 rounded-md border border-line bg-white px-3.5 py-3 text-sm text-mocha shadow-lg">
+        <p className="absolute inset-x-0 top-full z-40 mt-2 rounded-2xl border border-line bg-white px-3.5 py-3 text-sm text-mocha shadow-lg">
           Nenhum produto com esse nome.
         </p>
       ) : null}

@@ -43,6 +43,8 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
   const [filtersParam, setFiltersParam] = useUrlParam("filtros");
   const { ids: saved, toggle } = useSavedItems();
   const [typed, setTyped] = useState<string | null>(null);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const filterDialog = useRef<HTMLDialogElement>(null);
   const syncTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const query = typed ?? queryParam ?? "";
   const deferredQuery = useDeferredValue(query);
@@ -62,14 +64,24 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
 
   const availableFilters = filterDefs.filter((f) => f.id === "salvos" || products.some((p) => f.test(p, saved)));
 
-  const results = useMemo(() => {
+  const baseResults = useMemo(() => {
     const q = normalize(deferredQuery);
     return products.filter((p) => {
-      if (category && p.categoryId !== category) return false;
       if (q && !normalize(`${p.name} ${p.description}`).includes(q)) return false;
       return filters.every((id) => filterDefs.find((f) => f.id === id)?.test(p, saved));
     });
-  }, [products, category, deferredQuery, filters, saved]);
+  }, [products, deferredQuery, filters, saved]);
+
+  const results = useMemo(
+    () => (category ? baseResults.filter((p) => p.categoryId === category) : baseResults),
+    [baseResults, category],
+  );
+
+  const counts = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const p of baseResults) map.set(p.categoryId, (map.get(p.categoryId) ?? 0) + 1);
+    return map;
+  }, [baseResults]);
 
   const grouped = !deferredQuery && filters.length === 0;
   const sections = grouped
@@ -168,128 +180,201 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
   };
 
   const savedEmpty = filters.includes("salvos") && saved.length === 0;
+  const activeFilters = filters.length;
 
-  return (
-    <>
-      <div className="sticky top-16 z-30 border-b border-line bg-white/95 backdrop-blur-sm lg:top-[4.5rem]">
-        <div className="page-x flex flex-col gap-3 py-3 md:flex-row md:items-center md:gap-6">
-          <MenuSearch
-            value={query}
-            onChange={setQuery}
-            onClear={() => commitQuery("")}
-            products={products}
-            hrefFor={detailHref}
-            onNavigate={flushQuery}
-          />
-
-          <nav aria-label="Categorias do cardápio" className="-mx-5 min-w-0 flex-1 sm:-mx-8 md:mx-0">
-            <ul className="scrollbar-none flex gap-1.5 overflow-x-auto px-5 sm:px-8 md:px-0 xl:flex-wrap">
-              <li className="shrink-0">
-                <CategoryTab active={!category} onClick={() => setCategory(null)}>
-                  Todas
-                </CategoryTab>
-              </li>
-              {categories.map((c) => (
-                <li key={c.id} className="shrink-0">
-                  <CategoryTab active={category === c.id} onClick={() => setCategory(c.id)}>
-                    {c.name}
-                  </CategoryTab>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      </div>
-
-      <div className="page-x pt-8 pb-28 sm:pt-10">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-          <fieldset className="scrollbar-none -mx-5 flex min-w-0 items-center gap-2 overflow-x-auto px-5 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
-            <legend className="sr-only">Filtros rápidos</legend>
-            <span aria-hidden className="mr-1 hidden text-sm font-semibold text-espresso sm:inline">
-              Filtrar:
-            </span>
-            {availableFilters.map((f) => {
-              const active = filters.includes(f.id);
-              return (
-                <button
-                  key={f.id}
-                  type="button"
-                  aria-pressed={active}
-                  onClick={() => toggleFilter(f.id)}
-                  className={cn(
-                    "press inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-sm whitespace-nowrap transition-colors duration-300",
-                    active
-                      ? "border-caramel-deep bg-caramel-deep text-paper"
-                      : "border-line-strong bg-paper text-mocha hover:border-espresso hover:text-espresso",
-                  )}
-                >
-                  {active ? <Icon name="check" size={14} /> : null}
-                  {f.id === "salvos" ? <Icon name="heart" size={14} fill={active ? "currentColor" : "none"} /> : null}
-                  {f.label}
-                  {f.id === "salvos" ? <span className="tabular-nums">({saved.length})</span> : null}
-                </button>
-              );
-            })}
-          </fieldset>
-          <p aria-live="polite" className="shrink-0 text-sm text-mocha">
-            {plural(results.length, "item", "itens")}
-            {deferredQuery ? ` para "${deferredQuery}"` : ""}
-          </p>
-        </div>
-
-        <div>
-          {results.length === 0 ? (
-            <EmptyState
-              className="mt-12"
-              icon={savedEmpty ? "heart" : "search"}
-              title={savedEmpty ? "Sua seleção ainda está vazia" : "Nada encontrado por aqui"}
-              action={
-                <Button variant="outline" onClick={resetAll}>
-                  Limpar busca e filtros
-                </Button>
-              }
+  const categoryList = (compact: boolean) => (
+    <ul className={compact ? "scrollbar-none flex gap-1.5 overflow-x-auto pr-8" : "mt-3 space-y-0.5"}>
+      {[{ id: null as string | null, name: "Todas" }, ...categories].map((c) => {
+        const active = category === c.id;
+        const count = c.id ? (counts.get(c.id) ?? 0) : baseResults.length;
+        return (
+          <li key={c.id ?? "todas"} className={compact ? "shrink-0" : undefined}>
+            <button
+              type="button"
+              onClick={() => setCategory(c.id)}
+              aria-pressed={active}
+              className={cn(
+                "press flex items-center gap-3 transition-colors duration-200",
+                compact
+                  ? "min-h-11 rounded-full px-4 text-[0.9375rem] whitespace-nowrap"
+                  : "min-h-11 w-full justify-between rounded-xl px-3.5 text-left text-[0.9375rem]",
+                active ? "bg-night font-semibold text-white" : "text-mocha hover:bg-cream-soft hover:text-espresso",
+              )}
             >
-              {savedEmpty
-                ? "Toque no coração dos itens que quiser lembrar. A seleção fica guardada só neste aparelho."
-                : "Tente outro nome ou tire algum filtro."}
-            </EmptyState>
-          ) : grouped ? (
-            sections.map((section) => (
-              <section key={section.id} aria-labelledby={`cat-${section.id}`} className="mt-12 sm:mt-14">
-                <header className="flex items-baseline justify-between gap-6">
-                  <h2 id={`cat-${section.id}`} className="text-[2rem] leading-none sm:text-[2.5rem]">
-                    {section.name}
-                  </h2>
-                  <span className="shrink-0 text-sm text-mocha">{plural(section.items.length, "item", "itens")}</span>
-                </header>
-                {section.description ? <p className="mt-2 max-w-2xl text-mocha">{section.description}</p> : null}
-                <ul className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{section.items.map(renderCard)}</ul>
-              </section>
-            ))
-          ) : (
-            <>
-              <h2 className="sr-only">Resultados</h2>
-              <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{results.map(renderCard)}</ul>
-            </>
-          )}
+              {c.name}
+              {compact ? null : (
+                <span aria-hidden className={cn("text-xs tabular-nums", active ? "text-white/70" : "text-latte")}>
+                  {count}
+                </span>
+              )}
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
+
+  const filterList = (
+    <fieldset className="flex flex-wrap gap-2">
+      <legend className="sr-only">Filtros rápidos</legend>
+      {availableFilters.map((f) => {
+        const active = filters.includes(f.id);
+        return (
+          <button
+            key={f.id}
+            type="button"
+            aria-pressed={active}
+            onClick={() => toggleFilter(f.id)}
+            className={cn(
+              "press inline-flex min-h-11 items-center gap-1.5 rounded-full border px-4 text-sm whitespace-nowrap transition-colors duration-200",
+              active
+                ? "border-caramel-deep bg-caramel-deep text-paper"
+                : "border-line-strong bg-paper text-mocha hover:border-espresso hover:text-espresso",
+            )}
+          >
+            {active ? <Icon name="check" size={14} /> : null}
+            {f.id === "salvos" ? <Icon name="heart" size={14} fill={active ? "currentColor" : "none"} /> : null}
+            {f.label}
+            {f.id === "salvos" ? <span className="tabular-nums">({saved.length})</span> : null}
+          </button>
+        );
+      })}
+    </fieldset>
+  );
+
+  return (
+    <div className="page-x pb-28">
+      <div className="sticky top-16 z-30 -mx-5 border-b border-line bg-porcelain/95 px-5 py-3 backdrop-blur-sm sm:-mx-8 sm:px-8 lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:px-0 lg:pt-10 lg:pb-0 lg:backdrop-blur-none">
+        <MenuSearch
+          value={query}
+          onChange={setQuery}
+          onClear={() => commitQuery("")}
+          products={products}
+          hrefFor={detailHref}
+          onNavigate={flushQuery}
+          className="lg:ml-[calc(15rem+3rem)] lg:max-w-2xl xl:ml-[calc(16rem+3rem)]"
+        />
+        <div className="mt-3 flex items-center gap-2 lg:hidden">
+          <nav
+            aria-label="Categorias do cardápio"
+            className="min-w-0 flex-1 [mask-image:linear-gradient(to_right,black_85%,transparent)]"
+          >
+            {categoryList(true)}
+          </nav>
+          <button
+            type="button"
+            onClick={() => {
+              setFiltersOpen(true);
+              filterDialog.current?.showModal();
+            }}
+            aria-haspopup="dialog"
+            className="press inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-line-strong bg-paper px-4 text-sm font-semibold text-espresso"
+          >
+            Filtros
+            {activeFilters ? (
+              <span className="grid size-5 place-items-center rounded-full bg-caramel-deep text-xs text-white tabular-nums">
+                {activeFilters}
+              </span>
+            ) : null}
+          </button>
         </div>
       </div>
-    </>
-  );
-}
 
-function CategoryTab({ active, onClick, children }: { active: boolean; onClick: () => void; children: string }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={active}
-      className={cn(
-        "press inline-flex min-h-10 items-center rounded-full px-4 text-[0.9375rem] whitespace-nowrap transition-colors duration-300",
-        active ? "bg-night font-semibold text-white" : "text-mocha hover:bg-cream-soft hover:text-espresso",
-      )}
-    >
-      {children}
-    </button>
+      <dialog
+        ref={filterDialog}
+        aria-label="Filtros do cardápio"
+        onClose={() => setFiltersOpen(false)}
+        className="drawer lg:hidden"
+      >
+        <div className="px-5 pt-3 pb-6">
+          <span aria-hidden className="mx-auto block h-1 w-10 rounded-full bg-sand" />
+          <div className="mt-4 flex items-center justify-between">
+            <h2 className="text-[2rem] leading-none">Filtros</h2>
+            <button
+              type="button"
+              onClick={() => filterDialog.current?.close()}
+              className="press -mr-2 grid size-11 place-items-center rounded-full hover:bg-cream-soft"
+              aria-label="Fechar filtros"
+            >
+              <Icon name="close" size={20} />
+            </button>
+          </div>
+          <div className="mt-5">{filtersOpen ? filterList : null}</div>
+          <Button className="mt-8 w-full" onClick={() => filterDialog.current?.close()}>
+            {`Ver ${plural(results.length, "item", "itens")}`}
+          </Button>
+        </div>
+      </dialog>
+
+      <div className="mt-8 lg:mt-10 lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[16rem_minmax(0,1fr)]">
+        <aside className="hidden lg:block">
+          <div className="scrollbar-none sticky top-[6.5rem] max-h-[calc(100svh-8rem)] overflow-y-auto pb-6">
+            <h2 className="font-sans text-sm font-semibold text-espresso">Categorias</h2>
+            <nav aria-label="Categorias do cardápio">{categoryList(false)}</nav>
+            <h2 className="mt-9 font-sans text-sm font-semibold text-espresso">Filtros</h2>
+            <div className="mt-3">{filterList}</div>
+          </div>
+        </aside>
+
+        <div className="min-w-0">
+          <div className="flex min-h-11 flex-wrap items-center justify-between gap-x-6 gap-y-2">
+            <p aria-live="polite" className="text-sm text-mocha">
+              {plural(results.length, "item", "itens")}
+              {deferredQuery ? ` para "${deferredQuery}"` : ""}
+              {category ? ` em ${names.get(category)}` : ""}
+            </p>
+            {category || activeFilters || query ? (
+              <button
+                type="button"
+                onClick={resetAll}
+                className="press inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-caramel-deep hover:text-caramel-dark"
+              >
+                <Icon name="close" size={14} />
+                Limpar tudo
+              </button>
+            ) : null}
+          </div>
+
+          <div key={`${category ?? "todas"}|${filtersParam ?? ""}`} className="results-enter">
+            {results.length === 0 ? (
+              <EmptyState
+                className="mt-8"
+                icon={savedEmpty ? "heart" : "search"}
+                title={savedEmpty ? "Sua seleção ainda está vazia" : "Nada encontrado por aqui"}
+                action={
+                  <Button variant="outline" onClick={resetAll}>
+                    Limpar busca e filtros
+                  </Button>
+                }
+              >
+                {savedEmpty
+                  ? "Toque no coração dos itens que quiser lembrar. A seleção fica guardada só neste aparelho."
+                  : "Tente outro nome ou tire algum filtro."}
+              </EmptyState>
+            ) : grouped ? (
+              sections.map((section, i) => (
+                <section key={section.id} aria-labelledby={`cat-${section.id}`} className={i ? "mt-16" : "mt-6"}>
+                  <header className="flex items-baseline justify-between gap-6 border-b border-line pb-4">
+                    <h2 id={`cat-${section.id}`} className="text-[2rem] leading-none sm:text-[2.5rem]">
+                      {section.name}
+                    </h2>
+                    <span className="shrink-0 text-sm text-mocha tabular-nums">
+                      {plural(section.items.length, "item", "itens")}
+                    </span>
+                  </header>
+                  {section.description ? <p className="mt-3 max-w-2xl text-mocha">{section.description}</p> : null}
+                  <ul className="mt-6 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">{section.items.map(renderCard)}</ul>
+                </section>
+              ))
+            ) : (
+              <>
+                <h2 className="sr-only">Resultados</h2>
+                <ul className="mt-6 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">{results.map(renderCard)}</ul>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

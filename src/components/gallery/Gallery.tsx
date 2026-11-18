@@ -6,7 +6,15 @@ import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
 import type { GalleryImage } from "@/types/content";
 
-type Props = { images: GalleryImage[]; layout?: "grid" | "feature" };
+type Props = { images: GalleryImage[]; layout?: "grid" | "feature" | "editorial" };
+
+const editorialSpans = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
+const editorialRatios = [
+  "aspect-[16/10]",
+  "aspect-[4/5] md:aspect-auto md:h-full",
+  "aspect-[4/5] md:aspect-auto md:h-full",
+  "aspect-[16/10]",
+];
 
 export function Gallery({ images, layout = "grid" }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -40,27 +48,37 @@ export function Gallery({ images, layout = "grid" }: Props) {
       <ul
         className={cn(
           "grid grid-cols-2 gap-3 sm:gap-4",
-          layout === "feature"
-            ? "md:grid-cols-3 md:grid-rows-2"
-            : images.length === 4
-              ? "md:grid-cols-4"
-              : "md:grid-cols-3",
+          layout === "editorial"
+            ? "md:grid-cols-12"
+            : layout === "feature"
+              ? "md:grid-cols-3 md:grid-rows-2"
+              : images.length === 4
+                ? "md:grid-cols-4"
+                : "md:grid-cols-3",
         )}
       >
         {images.map((image, i) => {
           const feature = layout === "feature" && i === 0;
+          const editorial = layout === "editorial";
           return (
             <li
               key={image.id}
 
-              className={cn(feature && "col-span-2 md:col-span-1 md:row-span-2")}
+              className={cn(
+                feature && "col-span-2 md:col-span-1 md:row-span-2",
+                editorial && cn(i % 4 === 0 || i % 4 === 3 ? "col-span-2" : undefined, editorialSpans[i % 4]),
+              )}
             >
               <button
                 type="button"
                 onClick={() => open(i)}
                 className={cn(
                   "group zoom-frame press relative block w-full rounded-2xl bg-cream",
-                  feature ? "aspect-[4/3] md:aspect-auto md:h-full" : "aspect-[4/3]",
+                  layout === "editorial"
+                    ? editorialRatios[i % 4]
+                    : feature
+                      ? "aspect-[4/3] md:aspect-auto md:h-full"
+                      : "aspect-[4/3]",
                 )}
               >
                 <span className="absolute inset-0">

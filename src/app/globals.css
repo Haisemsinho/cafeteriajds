@@ -274,6 +274,23 @@
     background: rgb(10 8 7 / 0.6);
   }
 
+  .drawer {
+    margin: auto 0 0;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    max-width: none;
+    max-height: 85dvh;
+    border-radius: 1.5rem 1.5rem 0 0;
+    color: var(--color-espresso);
+    background: var(--color-porcelain);
+    box-shadow: 0 -24px 60px -30px rgb(14 11 9 / 0.5);
+  }
+
+  .drawer::backdrop {
+    background: rgb(10 8 7 / 0.5);
+  }
+
   .modal {
     margin: auto;
     padding: 0;
@@ -397,6 +414,44 @@
 
   .press {
     transition: transform var(--dur-press) var(--ease-out);
+  }
+
+  .results-enter {
+    animation: results-enter var(--dur-ui) var(--ease-out) both;
+  }
+
+  .drawer {
+    transition:
+      transform var(--dur-sheet) var(--ease-drawer),
+      overlay var(--dur-sheet) allow-discrete,
+      display var(--dur-sheet) allow-discrete;
+    transform: translateY(100%);
+  }
+
+  .drawer[open] {
+    transform: none;
+  }
+
+  .drawer::backdrop {
+    transition:
+      opacity var(--dur-hover) var(--ease-hover),
+      overlay var(--dur-hover) allow-discrete,
+      display var(--dur-hover) allow-discrete;
+    opacity: 0;
+  }
+
+  .drawer[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .drawer[open] {
+      transform: translateY(100%);
+    }
+
+    .drawer[open]::backdrop {
+      opacity: 0;
+    }
   }
 
   .press:active {
@@ -606,5 +661,12 @@
 @keyframes moment-unveil-photo {
   from {
     scale: 1.14;
+  }
+}
+
+@keyframes results-enter {
+  from {
+    opacity: 0.001;
+    translate: 0 0.5rem;
   }
 }

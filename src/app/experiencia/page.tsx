@@ -1,10 +1,9 @@
 import { Gallery } from "@/components/gallery/Gallery";
-import { PageHero } from "@/components/layout/PageHero";
 import { CtaBand } from "@/components/ui/CtaBand";
 import { PhotoFrame } from "@/components/ui/PhotoFrame";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { photos } from "@/content/photos";
-import { cn } from "@/lib/cn";
+import { cn, delay } from "@/lib/cn";
 import { getGallery } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
 import { business } from "@/content/business";
@@ -18,68 +17,86 @@ export const metadata = pageMetadata({
 const spaces = [
   {
     title: "A fachada",
-    text: "Ripas verticais em madeira avermelhada dão ritmo à fachada e emolduram o letreiro da casa. Logo abaixo, portas de vidro deixam ver o salão desde a calçada.",
+    text: "Ripas verticais em madeira avermelhada dão ritmo à fachada e emolduram o letreiro da casa. Portas de vidro deixam ver o salão desde a calçada.",
     photo: photos.letreiro,
+    ratio: "4/3",
+    span: "lg:col-span-5",
   },
   {
     title: "A varanda",
-    text: "Na entrada, um deck de madeira recebe uma mesa alta com banquetas, encostada no vidro. Um cantinho para quem gosta de ver a rua passar.",
+    text: "Um deck de madeira com mesa alta e banquetas, encostado no vidro. Um cantinho para ver a rua passar.",
     photo: photos.varanda,
+    ratio: "3/4",
+    span: "lg:col-span-3",
   },
   {
     title: "O salão",
-    text: "Prateleiras em madeira clara encostadas no tijolo aparente, plantas pendentes e o balcão em pedra, com seus detalhes artesanais.",
+    text: "Prateleiras em madeira clara junto ao tijolo aparente, plantas pendentes e o balcão em pedra.",
     photo: photos.prateleiras,
+    ratio: "3/4",
+    span: "lg:col-span-4",
   },
 ];
 
 export default function ExperienciaPage() {
-  const images = getGallery().filter((g) => !["letreiro", "varanda", "prateleiras", "interior"].includes(g.id));
+  const order = ["xicara", "fachada", "dia-do-cafe", "balcao"];
+  const details = getGallery()
+    .filter((g) => order.includes(g.id))
+    .sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
 
   return (
     <>
-      <PageHero
-        title="Entre a madeira e a luz"
-        intro="Um passeio pelos cantos da casa: a fachada de ripas, a varanda de entrada, o salão e os detalhes do balcão."
-        photo={photos.interior}
-      />
+      <section className="border-b border-line bg-cream-soft">
+        <div className="page-x grid items-end gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:gap-10 lg:py-24">
+          <div className="lg:col-span-7">
+            <h1 className="hero-in text-display text-espresso">Entre a madeira e a luz</h1>
+            <p className="hero-in mt-6 max-w-md text-lede text-mocha" style={delay(1)}>
+              A fachada de ripas, a varanda de entrada, o salão e os detalhes do balcão, nas fotos da casa.
+            </p>
+          </div>
+          <PhotoFrame
+            photo={photos.interior}
+            ratio="9/14"
+            rounded="rounded-[1.75rem]"
+            priority
+            sizes="(min-width: 1024px) 20rem, 60vw"
+            className="hero-in w-3/5 max-w-xs justify-self-end lg:col-span-4 lg:col-start-9 lg:w-full"
+          />
+        </div>
+      </section>
 
-      <section aria-labelledby="ambientes-title" className="page-x py-20 sm:py-24">
-        <SectionHeading id="ambientes-title" title="Cada canto tem seu clima" />
-        <div className="mt-12 space-y-16 sm:space-y-20">
+      <section aria-labelledby="ambientes-title" className="page-x py-24 sm:py-32">
+        <SectionHeading
+          id="ambientes-title"
+          title="Arquitetura e ambiente"
+          intro="Madeira, tijolo e vidro: o que se vê de fora e o que se encontra lá dentro."
+        />
+        <div className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           {spaces.map((space, i) => (
-            <article key={space.title} className="grid items-center gap-8 md:grid-cols-12 lg:gap-10">
+            <article key={space.title} className={cn(space.span, i === 0 && "sm:col-span-2")}>
+              <h3 className="font-display text-[2rem] leading-none font-normal text-espresso">{space.title}</h3>
+              <p className="mt-3 mb-6 max-w-sm text-mocha">{space.text}</p>
               <PhotoFrame
                 photo={space.photo}
-                ratio={i === 0 ? "4/3" : "4/5"}
-                rounded="rounded-[1.75rem]"
-                sizes="(min-width: 768px) 28rem, 80vw"
-                className={cn(
-                  "mx-auto w-full",
-                  i === 0
-                    ? "max-w-md md:col-span-6 md:max-w-none lg:col-span-5"
-                    : "max-w-xs md:col-span-4 md:max-w-none lg:col-span-3",
-                  i % 2 === 1 ? "md:order-2 md:col-start-8 lg:col-start-9" : "lg:col-start-2",
-                )}
+                ratio={space.ratio}
+                rounded="rounded-[1.5rem]"
+                sizes="(min-width: 1024px) 26rem, (min-width: 640px) 45vw, 92vw"
+                className={cn(i > 0 && "max-w-sm")}
               />
-              <div className={cn("md:col-span-5", i % 2 === 1 ? "md:order-1 md:col-start-2" : "md:col-start-8")}>
-                <h3 className="font-display text-[2.5rem] leading-none font-normal">{space.title}</h3>
-                <p className="mt-5 max-w-md text-lede text-mocha">{space.text}</p>
-              </div>
             </article>
           ))}
         </div>
       </section>
 
-      <section aria-labelledby="galeria-title" className="bg-cream-soft py-20 sm:py-24">
+      <section aria-labelledby="detalhes-title" className="bg-cream-soft py-24 sm:py-32">
         <div className="page-x">
           <SectionHeading
-            id="galeria-title"
+            id="detalhes-title"
             title="Detalhes de perto"
             intro="Toque em uma foto para ampliar. Use as setas do teclado ou deslize para navegar."
           />
-          <div className="mt-10">
-            <Gallery images={images} />
+          <div className="mt-12">
+            <Gallery images={details} layout="editorial" />
           </div>
         </div>
       </section>
