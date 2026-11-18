@@ -1,5 +1,4 @@
 import { Gallery } from "@/components/gallery/Gallery";
-import { TextLink } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getGallery } from "@/lib/content";
 
@@ -15,14 +14,14 @@ export function HomeGallery() {
   if (!images.length) return null;
 
   return (
-    <section aria-labelledby="galeria-title" className="bg-cream-soft py-20 sm:py-24">
+    <section aria-labelledby="galeria-title" className="bg-cream-soft py-20 sm:py-28">
       <div className="page-x">
         <SectionHeading
           id="galeria-title"
           eyebrow="Galeria"
-          title="Nosso espaço"
+          title="Por dentro da JDS"
           intro="Um pouco da casa. Toque em uma foto para ampliar."
-          action={<TextLink href="/experiencia">Ver mais do espaço</TextLink>}
+          align="center"
         />
         <div className="mt-10">
           <Gallery images={images} />

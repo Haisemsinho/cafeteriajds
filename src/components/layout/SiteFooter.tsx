@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 import { getBusiness, getInstagram } from "@/lib/content";
 import { formatPeriods, weekdayNames } from "@/lib/hours";
-import { formatAddress } from "@/lib/links";
+import { formatAddress, formatPhone, whatsappUrl } from "@/lib/links";
 import { footerNav } from "@/lib/navigation";
 import type { Weekday } from "@/types/content";
 import { Logo } from "./Logo";
@@ -16,31 +16,45 @@ export function SiteFooter() {
   const address = business.address ? formatAddress(business.address) : undefined;
 
   return (
-    <footer className="on-dark bg-espresso text-sand">
+    <footer className="on-dark bg-night text-sand">
       <div className="page-x grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] lg:py-16">
         <div>
-          <Logo large className="text-paper" />
+          <Logo large className="text-white" />
           <p className="mt-4 max-w-xs">Café, pausa e encontro num espaço de madeira, tijolo e luz natural.</p>
-          {instagram ? (
-            <a
-              href={instagram.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex min-h-11 items-center gap-2 font-medium text-paper hover:text-cream"
-            >
-              <Icon name="instagram" size={20} />
-              {instagram.handle}
-              <span className="sr-only"> no Instagram (abre em nova aba)</span>
-            </a>
-          ) : null}
+          <div className="mt-6 flex flex-col items-start gap-1">
+            {instagram ? (
+              <a
+                href={instagram.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 font-medium text-white hover:text-caramel"
+              >
+                <Icon name="instagram" size={20} />
+                {instagram.handle}
+                <span className="sr-only"> no Instagram (abre em nova aba)</span>
+              </a>
+            ) : null}
+            {business.contact.whatsapp ? (
+              <a
+                href={whatsappUrl(business.contact.whatsapp)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 font-medium text-white hover:text-caramel"
+              >
+                <Icon name="chat" size={20} />
+                WhatsApp {formatPhone(business.contact.whatsapp)}
+                <span className="sr-only"> (abre em nova aba)</span>
+              </a>
+            ) : null}
+          </div>
         </div>
 
         <nav aria-label="Rodapé">
-          <p className="mb-3 text-sm font-semibold text-paper">Navegação</p>
+          <p className="mb-3 text-sm font-semibold text-white">Navegação</p>
           <ul className="grid grid-cols-2 gap-x-6 sm:grid-cols-1">
             {footerNav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="inline-flex min-h-10 items-center hover:text-paper">
+                <Link href={item.href} className="inline-flex min-h-10 items-center transition-colors hover:text-white">
                   {item.label}
                 </Link>
               </li>
@@ -49,7 +63,7 @@ export function SiteFooter() {
         </nav>
 
         <div className="sm:col-span-2 lg:col-span-1">
-          <p className="mb-3 text-sm font-semibold text-paper">Visite</p>
+          <p className="mb-3 text-sm font-semibold text-white">Visite</p>
           {address ? (
             <address className="not-italic">
               {address.line1}
@@ -69,7 +83,7 @@ export function SiteFooter() {
               ))}
             </dl>
           ) : null}
-          <Link href="/contato" className="mt-4 inline-flex min-h-11 items-center gap-1.5 font-medium text-paper hover:text-cream">
+          <Link href="/contato" className="mt-4 inline-flex min-h-11 items-center gap-1.5 font-medium text-white hover:text-caramel">
             Contato e localização
             <Icon name="arrowRight" size={16} />
           </Link>
@@ -81,7 +95,7 @@ export function SiteFooter() {
           <p>
             © {year} {business.name}
           </p>
-          <a href="#topo" className="inline-flex min-h-11 items-center gap-1.5 hover:text-paper sm:min-h-0">
+          <a href="#topo" className="inline-flex min-h-11 items-center gap-1.5 hover:text-white sm:min-h-0">
             Voltar ao topo
             <Icon name="arrowUpRight" size={14} className="-rotate-45" />
           </a>

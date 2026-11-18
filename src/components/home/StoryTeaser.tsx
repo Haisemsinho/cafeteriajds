@@ -8,7 +8,7 @@ export function StoryTeaser() {
   const { intro } = getStory();
 
   return (
-    <section aria-labelledby="historia-title" className="page-x py-20 sm:py-24">
+    <section aria-labelledby="historia-title" className="page-x py-20 sm:py-28">
       <div className="grid items-center gap-10 md:grid-cols-2 lg:gap-16">
         <PhotoFrame photo={photos.letreiro} ratio="4/3" sizes="(min-width: 768px) 45vw, 100vw" />
         <div>
@@ -26,8 +26,8 @@ export function StoryTeaser() {
               A da JDS começa na fachada de ripas e continua em cada mesa. Conheça um pouco mais da casa.
             </p>
           )}
-          <ButtonLink href="/nossa-historia" variant="outline" icon="arrowRight" className="mt-7">
-            Conhecer nossa história
+          <ButtonLink href="/experiencia" variant="outline" icon="arrowRight" className="mt-7">
+            Conhecer a cafeteria
           </ButtonLink>
         </div>
       </div>

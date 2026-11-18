@@ -39,12 +39,12 @@ export function SiteHeader({ instagram }: Props) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 border-b bg-porcelain/95 backdrop-blur-sm transition-[border-color,box-shadow] duration-200",
-        scrolled ? "border-line shadow-[0_6px_20px_-16px_rgb(38_26_21/0.35)]" : "border-transparent",
+        "on-dark sticky top-0 z-50 border-b bg-night text-white transition-[border-color,box-shadow] duration-200",
+        scrolled ? "border-line-dark shadow-[0_8px_24px_-12px_rgb(0_0_0/0.5)]" : "border-transparent",
       )}
     >
       <div className="page-x flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">
-        <Link href="/" className="-my-2 py-2 text-espresso" aria-label="JDS Cafeteria, página inicial">
+        <Link href="/" className="-my-2 py-2 text-white" aria-label="JDS Cafeteria, página inicial">
           <Logo />
         </Link>
 
@@ -59,12 +59,12 @@ export function SiteHeader({ instagram }: Props) {
                     aria-current={active ? "page" : undefined}
                     className={cn(
                       "relative block rounded-md px-3 py-2 text-[0.9375rem] transition-colors duration-200 lg:px-4",
-                      active ? "font-semibold text-espresso" : "text-mocha hover:bg-cream-soft hover:text-espresso",
+                      active ? "font-semibold text-white" : "text-white/70 hover:bg-white/8 hover:text-white",
                     )}
                   >
                     {item.label}
                     {active ? (
-                      <span aria-hidden className="absolute inset-x-3 bottom-0.5 h-0.5 rounded-full bg-caramel-deep lg:inset-x-4" />
+                      <span aria-hidden className="absolute inset-x-3 bottom-0.5 h-0.5 rounded-full bg-caramel lg:inset-x-4" />
                     ) : null}
                   </Link>
                 </li>
@@ -79,7 +79,7 @@ export function SiteHeader({ instagram }: Props) {
           aria-haspopup="dialog"
           aria-expanded={menuOpen}
           aria-controls="menu-mobile"
-          className="-mr-2 inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-[0.9375rem] font-semibold text-espresso hover:bg-cream-soft md:hidden"
+          className="-mr-2 inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-[0.9375rem] font-semibold text-white hover:bg-white/10 md:hidden"
         >
           <Icon name="menu" size={22} />
           Menu
@@ -91,7 +91,7 @@ export function SiteHeader({ instagram }: Props) {
         id="menu-mobile"
         aria-label="Menu de navegação"
         onClose={() => setMenuOpen(false)}
-        className="sheet md:hidden"
+        className="sheet on-dark md:hidden"
       >
         <div className="flex min-h-full flex-col px-6 pb-8">
           <div className="flex h-16 items-center justify-between">
@@ -99,7 +99,7 @@ export function SiteHeader({ instagram }: Props) {
             <button
               type="button"
               onClick={closeMenu}
-              className="-mr-3 grid size-11 place-items-center rounded-md hover:bg-cream-soft"
+              className="-mr-3 grid size-11 place-items-center rounded-md hover:bg-white/10"
               aria-label="Fechar menu"
             >
               <Icon name="close" size={22} />
@@ -107,7 +107,7 @@ export function SiteHeader({ instagram }: Props) {
           </div>
 
           <nav aria-label="Principal" className="mt-4 flex-1">
-            <ul className="divide-y divide-line border-y border-line">
+            <ul className="divide-y divide-line-dark border-y border-line-dark">
               {mainNav.map((item) => {
                 const active = isActive(pathname, item.href);
                 return (
@@ -118,11 +118,11 @@ export function SiteHeader({ instagram }: Props) {
                       aria-current={active ? "page" : undefined}
                       className={cn(
                         "flex min-h-14 items-center justify-between text-lg",
-                        active ? "font-semibold text-caramel-deep" : "font-medium text-espresso",
+                        active ? "font-semibold text-caramel" : "font-medium text-white",
                       )}
                     >
                       {item.label}
-                      <Icon name="chevronRight" size={18} className="text-latte" />
+                      <Icon name="chevronRight" size={18} className="text-white/40" />
                     </Link>
                   </li>
                 );
@@ -139,7 +139,7 @@ export function SiteHeader({ instagram }: Props) {
                 href={instagram.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-11 items-center justify-center gap-2 text-sm font-medium text-mocha hover:text-espresso"
+                className="inline-flex min-h-11 items-center justify-center gap-2 text-sm font-medium text-sand hover:text-white"
               >
                 <Icon name="instagram" size={18} />
                 {instagram.handle}

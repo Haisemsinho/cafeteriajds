@@ -53,3 +53,8 @@ export const photos = {
     position: "60% 40%",
   },
 } satisfies Record<string, Photo>;
+
+export const heroPhotos = {
+  desktop: photos.xicara,
+  mobile: photos.fachada,
+};

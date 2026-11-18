@@ -4,10 +4,10 @@ import { photos } from "@/content/photos";
 
 export function Intro() {
   return (
-    <section aria-labelledby="intro-title" className="page-x py-20 sm:py-24">
+    <section aria-labelledby="intro-title" className="page-x py-20 sm:py-28">
       <div className="grid items-center gap-10 md:grid-cols-2 lg:gap-16">
         <div>
-          <p className="eyebrow mb-3">Bem-vindo à JDS</p>
+          <p className="eyebrow mb-3">Sobre a JDS</p>
           <h2 id="intro-title" className="text-h2">
             Um café para tomar com calma
           </h2>
@@ -18,8 +18,8 @@ export function Intro() {
             </p>
             <p>Da fachada de ripas ao balcão, cada canto foi pensado para receber bem quem chega.</p>
           </div>
-          <TextLink href="/experiencia" className="mt-6">
-            Conheça o espaço
+          <TextLink href="/nossa-historia" className="mt-6">
+            Conheça nossa história
           </TextLink>
         </div>
         <PhotoFrame

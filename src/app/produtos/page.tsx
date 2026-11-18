@@ -82,7 +82,7 @@ export default function ProdutosPage() {
                     const product = item.productSlug ? products.find((p) => p.slug === item.productSlug) : undefined;
                     return (
                       <li key={item.id}>
-                        <article className="flex h-full flex-col overflow-hidden rounded-xl border border-line bg-paper">
+                        <article className="lift flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white hover:shadow-[0_22px_44px_-24px_rgb(0_0_0/0.3)]">
                           <div className="relative aspect-[4/3] bg-oat">
                             {item.image ? (
                               <Image

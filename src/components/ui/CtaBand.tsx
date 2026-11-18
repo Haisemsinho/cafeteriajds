@@ -11,7 +11,7 @@ type Props = {
 export function CtaBand({ title, text, primary, secondary }: Props) {
   return (
     <section className="page-x py-16 sm:py-20">
-      <div className="on-dark rounded-2xl bg-espresso px-6 py-12 text-paper sm:px-12 sm:py-14 lg:flex lg:items-center lg:justify-between lg:gap-10">
+      <div className="on-dark rounded-3xl bg-night px-6 py-12 text-white sm:px-12 sm:py-16 lg:flex lg:items-center lg:justify-between lg:gap-10">
         <div className="max-w-xl">
           <h2 className="text-h2 text-paper">{title}</h2>
           {text ? <p className="mt-3 text-sand">{text}</p> : null}

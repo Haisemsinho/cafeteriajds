@@ -1,48 +1,45 @@
 import { getImageProps } from "next/image";
 import { ButtonLink } from "@/components/ui/Button";
-import { photos } from "@/content/photos";
+import { heroPhotos } from "@/content/photos";
+import { delay } from "@/lib/cn";
 
 export function Hero() {
-  const shared = { alt: "", sizes: "100vw", fetchPriority: "high" as const };
-  const desktop = getImageProps({ ...shared, src: photos.xicara.src, loading: "eager" }).props;
-  const { srcSet: mobileSrcSet, ...mobile } = getImageProps({ ...shared, src: photos.fachada.src, loading: "eager" }).props;
+  const shared = { alt: "", sizes: "100vw", fetchPriority: "high" as const, loading: "eager" as const };
+  const desktop = getImageProps({ ...shared, src: heroPhotos.desktop.src }).props;
+  const { srcSet: mobileSrcSet, ...mobile } = getImageProps({ ...shared, src: heroPhotos.mobile.src }).props;
 
   return (
     <section
       aria-labelledby="hero-title"
-      className="on-dark relative isolate flex h-[78svh] min-h-[32rem] max-h-[46rem] items-end overflow-hidden bg-espresso text-paper md:h-[min(82vh,44rem)] md:items-center"
+      className="on-dark relative isolate flex h-[86svh] max-h-[52rem] min-h-[34rem] items-center overflow-hidden bg-night text-white md:h-[80vh]"
     >
-      <picture>
-        <source media="(min-width: 768px)" srcSet={desktop.srcSet} sizes={desktop.sizes} />
-        <img
-          {...mobile}
-          srcSet={mobileSrcSet}
-          alt=""
-          className="absolute inset-0 -z-10 size-full object-cover object-[50%_20%] md:object-[70%_50%]"
-        />
-      </picture>
+      <div aria-hidden className="slow-zoom absolute inset-0 -z-20">
+        <picture className="block size-full">
+          <source media="(min-width: 768px)" srcSet={desktop.srcSet} sizes={desktop.sizes} />
+          <img {...mobile} srcSet={mobileSrcSet} alt="" className="size-full object-cover object-[50%_25%] md:object-[60%_50%]" />
+        </picture>
+      </div>
+      <div aria-hidden className="absolute inset-0 -z-10 bg-black/55" />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-linear-to-t from-espresso/90 via-espresso/45 to-espresso/10 md:bg-linear-to-r md:from-espresso/80 md:via-espresso/45 md:to-transparent"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgb(0_0_0/0.45)_100%)]"
       />
 
-      <div className="page-x pb-12 md:pb-0">
-        <div className="max-w-xl">
-          <p className="mb-4 text-sm font-semibold text-sand">JDS Cafeteria</p>
-          <h1 id="hero-title" className="text-display text-paper">
-            Seu café. Seu momento.
-          </h1>
-          <p className="mt-5 max-w-md text-lede text-paper/85">
-            Um espaço para apreciar bons sabores e aproveitar cada pausa.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 xs:flex-row">
-            <ButtonLink href="/cardapio" icon="arrowRight">
-              Explorar cardápio
-            </ButtonLink>
-            <ButtonLink href="/nossa-historia" variant="outline-light">
-              Conheça a JDS
-            </ButtonLink>
-          </div>
+      <div className="page-x text-center">
+        <p className="rise text-sm font-semibold tracking-[0.08em] text-[#e8b27c] uppercase">Café, pausa e encontro</p>
+        <h1 id="hero-title" className="rise mx-auto mt-4 max-w-3xl text-display text-white" style={delay(1)}>
+          Bem-vindo à JDS Cafeteria
+        </h1>
+        <p className="rise mx-auto mt-5 max-w-xl text-lg text-white/85 sm:text-xl" style={delay(2)}>
+          Seu lugar para apreciar um bom café e viver bons momentos.
+        </p>
+        <div className="rise mt-9 flex flex-col justify-center gap-3 xs:flex-row" style={delay(3)}>
+          <ButtonLink href="/cardapio" icon="arrowRight" className="min-w-52">
+            Explorar cardápio
+          </ButtonLink>
+          <ButtonLink href="/experiencia" variant="outline-light" className="min-w-52">
+            Conheça nosso espaço
+          </ButtonLink>
         </div>
       </div>
     </section>

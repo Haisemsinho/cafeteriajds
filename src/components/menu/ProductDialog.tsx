@@ -52,7 +52,7 @@ export function ProductDialog({ product, categoryName, open, saved, onToggleSave
       {product ? (
         <div className="md:grid md:grid-cols-[1fr_1.15fr]">
           <div className="relative aspect-[4/3] bg-oat md:aspect-auto md:min-h-[28rem]">
-            <ProductVisual product={product} sizes="(min-width: 768px) 24rem, 100vw" idSuffix="-modal" />
+            <ProductVisual product={product} sizes="(min-width: 768px) 24rem, 100vw" idSuffix="-modal" label />
           </div>
 
           <div className="relative flex flex-col p-6 sm:p-8">

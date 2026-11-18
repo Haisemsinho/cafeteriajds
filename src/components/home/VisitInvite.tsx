@@ -10,9 +10,9 @@ export function VisitInvite() {
   const lines = address ? formatAddress(address) : undefined;
 
   return (
-    <section aria-labelledby="convite-title" className="page-x py-20 sm:py-24">
-      <div className="on-dark rounded-2xl bg-espresso px-6 py-14 text-center text-paper sm:px-12 sm:py-16">
-        <h2 id="convite-title" className="text-h2 text-paper">
+    <section aria-labelledby="convite-title" className="page-x py-20 sm:py-28">
+      <div className="on-dark rounded-3xl bg-night px-6 py-14 text-center text-white sm:px-12 sm:py-20">
+        <h2 id="convite-title" className="text-h1 text-white">
           Venha nos visitar
         </h2>
         {lines ? (

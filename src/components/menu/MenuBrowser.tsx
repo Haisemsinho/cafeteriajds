@@ -108,7 +108,7 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
               aria-pressed={isSaved}
               aria-label={`Salvar ${product.name} na minha seleção`}
               className={cn(
-                "grid size-11 place-items-center rounded-full bg-paper/90 transition-colors duration-200",
+                "grid size-11 place-items-center rounded-full bg-white/95 shadow-sm transition-colors duration-200",
                 isSaved ? "text-caramel-deep" : "text-mocha hover:text-espresso",
               )}
             >
@@ -118,7 +118,6 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
           action={
             <button type="button" onClick={() => openItem(product.slug)} aria-haspopup="dialog" className={cardActionClass}>
               Ver detalhes
-              <Icon name="arrowRight" size={16} />
               <span className="sr-only"> de {product.name}</span>
             </button>
           }
@@ -131,7 +130,7 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
 
   return (
     <>
-      <div className="sticky top-16 z-30 border-b border-line bg-porcelain/95 backdrop-blur-sm lg:top-[4.5rem]">
+      <div className="sticky top-16 z-30 border-b border-line bg-white/95 backdrop-blur-sm lg:top-[4.5rem]">
         <div className="page-x flex flex-col gap-3 py-3 md:flex-row md:items-center md:gap-6">
           <form role="search" onSubmit={(e) => e.preventDefault()} className="relative md:w-72 md:shrink-0">
             <label htmlFor="busca-cardapio" className="sr-only">
@@ -241,13 +240,13 @@ export function MenuBrowser({ categories, products, instagramUrl }: Props) {
                   <span className="shrink-0 text-sm text-mocha">{plural(section.items.length, "item", "itens")}</span>
                 </header>
                 {section.description ? <p className="mt-2 max-w-2xl text-mocha">{section.description}</p> : null}
-                <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">{section.items.map(renderCard)}</ul>
+                <ul className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{section.items.map(renderCard)}</ul>
               </section>
             ))
           ) : (
             <>
               <h2 className="sr-only">Resultados</h2>
-              <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">{results.map(renderCard)}</ul>
+              <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{results.map(renderCard)}</ul>
             </>
           )}
         </div>
@@ -273,7 +272,7 @@ function CategoryTab({ active, onClick, children }: { active: boolean; onClick: 
       aria-pressed={active}
       className={cn(
         "inline-flex min-h-10 items-center rounded-md px-3.5 text-[0.9375rem] whitespace-nowrap transition-colors duration-200",
-        active ? "bg-espresso font-semibold text-paper" : "text-mocha hover:bg-cream-soft hover:text-espresso",
+        active ? "bg-night font-semibold text-white" : "text-mocha hover:bg-cream-soft hover:text-espresso",
       )}
     >
       {children}

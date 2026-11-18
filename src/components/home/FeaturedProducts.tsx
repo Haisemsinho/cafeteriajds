@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cardActionClass, ProductCard } from "@/components/menu/ProductCard";
-import { ButtonLink, TextLink } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/Feedback";
 import { Icon } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -12,38 +12,46 @@ export function FeaturedProducts() {
   const hasDrafts = featured.some((p) => p.dataStatus === "draft");
 
   return (
-    <section aria-labelledby="destaques-title" className="bg-cream-soft py-20 sm:py-24">
+    <section aria-labelledby="destaques-title" className="bg-cream-soft py-20 sm:py-28">
       <div className="page-x">
         <SectionHeading
           id="destaques-title"
           eyebrow="Do nosso cardápio"
-          title="Produtos em destaque"
-          intro={
-            hasDrafts
-              ? "Itens, ilustrações e preços de exemplo, só para apresentar o layout. O cardápio oficial entra quando a JDS confirmar."
-              : "Alguns dos favoritos da casa."
-          }
-          action={featured.length ? <TextLink href="/cardapio">Ver cardápio completo</TextLink> : undefined}
+          title="Nossos Destaques"
+          intro="Sabores especiais para acompanhar seus melhores momentos."
+          align="center"
         />
+        {hasDrafts ? (
+          <p className="mx-auto mt-6 flex w-fit max-w-full items-start gap-2 rounded-xl border border-caramel/30 bg-white px-4 py-2.5 text-left text-sm text-mocha sm:items-center sm:rounded-full">
+            <Icon name="info" size={16} className="shrink-0 text-caramel-deep" />
+            Produtos, imagens e preços demonstrativos. O cardápio oficial será publicado pela JDS.
+          </p>
+        ) : null}
 
         {featured.length ? (
-          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-            {featured.map((product) => (
-              <li key={product.id}>
-                <ProductCard
-                  product={product}
-                  categoryName={product.categoryName}
-                  action={
-                    <Link href={`/cardapio?item=${product.slug}`} className={cardActionClass}>
-                      Ver detalhes
-                      <Icon name="arrowRight" size={16} />
-                      <span className="sr-only"> de {product.name}</span>
-                    </Link>
-                  }
-                />
-              </li>
-            ))}
-          </ul>
+          <>
+            <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+              {featured.map((product) => (
+                <li key={product.id}>
+                  <ProductCard
+                    product={product}
+                    categoryName={product.categoryName}
+                    action={
+                      <Link href={`/cardapio?item=${product.slug}`} className={cardActionClass}>
+                        Ver detalhes
+                        <span className="sr-only"> de {product.name}</span>
+                      </Link>
+                    }
+                  />
+                </li>
+              ))}
+            </ul>
+            <div className="mt-12 text-center">
+              <ButtonLink href="/cardapio" variant="dark" icon="arrowRight">
+                Ver todos os produtos
+              </ButtonLink>
+            </div>
+          </>
         ) : (
           <EmptyState
             className="mt-10"

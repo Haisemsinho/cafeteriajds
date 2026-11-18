@@ -6,11 +6,11 @@ import { Icon, type IconName } from "./Icon";
 type Variant = "primary" | "dark" | "light" | "outline" | "outline-light";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-caramel-deep text-paper hover:bg-walnut",
-  dark: "bg-espresso text-paper hover:bg-walnut",
-  light: "bg-paper text-espresso hover:bg-cream",
-  outline: "border border-line-strong bg-paper/40 text-espresso hover:border-espresso",
-  "outline-light": "border border-paper/60 text-paper hover:bg-paper hover:text-espresso",
+  primary: "bg-caramel-deep text-white shadow-[0_8px_20px_-10px_rgb(156_95_34/0.7)] hover:bg-caramel-dark",
+  dark: "bg-night text-white hover:bg-walnut",
+  light: "bg-white text-night hover:bg-cream-soft",
+  outline: "border border-line-strong bg-white text-espresso hover:border-espresso",
+  "outline-light": "border border-white/70 text-white hover:bg-white hover:text-night",
 };
 
 const sizes = {
@@ -92,7 +92,7 @@ export function TextLink({
   external?: boolean;
 }) {
   const classes = cn(
-    "group/link inline-flex min-h-11 items-center gap-1.5 text-[0.9375rem] font-semibold text-caramel-deep hover:text-walnut",
+    "group/link inline-flex min-h-11 items-center gap-1.5 text-[0.9375rem] font-semibold text-caramel-deep hover:text-caramel-dark",
     className,
   );
   const content = (

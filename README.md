@@ -151,14 +151,17 @@ src/
 
 ## Direção de arte
 
-Visual limpo e direto: fundo claro e quente, fotografia grande e marrom como cor de identidade.
+Visual comercial: header escuro, fundos claros, fotografia grande e chamadas evidentes.
 
-- Tipografia: Inter em tudo. Escala em `globals.css` (`text-display`, `text-h1`, `text-h2`, `text-h3`, `text-lede`). Títulos em peso 600, sem itálico.
-- Paleta: preto espresso, marrom café, branco quente, creme e caramelo nos botões principais e destaques.
-- Container único de 76rem (`page-x`) em todas as seções.
-- Cards com borda fina, canto de 12px e sombra só no hover.
-- Header fixo no topo, compacto, com cinco links. Produtos e novidades fica no rodapé e no sitemap.
-- Hero com foto em largura total. No celular aparece a fachada, no desktop a xícara da casa (direção de arte com `getImageProps` e `<picture>`).
+- Cores: header e rodapé `#171717`, fundo `#FFFFFF`, fundo secundário `#F7F5F2`, texto `#24201D`, marrom `#573628` e caramelo `#B97735`. Nos textos e botões o caramelo usa uma versão mais escura (`#9C5F22`) para passar no contraste AA.
+- Tipografia: Inter em tudo. Escala em `globals.css` (`text-display`, `text-h1`, `text-h2`, `text-h3`, `text-lede`).
+- Hero: foto em largura total, overlay preto e conteúdo centralizado. As fotos ficam em `heroPhotos`, dentro de `src/content/photos.ts`: hoje a fachada no celular e a xícara no desktop. Para trocar por uma foto horizontal do salão em alta resolução, basta importar o arquivo e apontar `heroPhotos.desktop` para ela.
+- Home organizada em conversões: hero (cardápio), destaques (todos os produtos), história (conhecer a cafeteria) e convite final (visitar ou contato).
+- Movimento: entrada do título, subtítulo e botões, zoom lento na foto do hero e leve elevação dos cards no hover. Com `prefers-reduced-motion`, nada se move.
+
+### Versões
+
+O projeto tem histórico git. O design anterior está marcado como `v3-limpo` (`git checkout v3-limpo` para ver).
 
 ### Imagens dos produtos
 
