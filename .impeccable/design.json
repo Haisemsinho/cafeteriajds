@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-18T05:30:00Z",
+  "title": "Design System: JDS Cafeteria",
+  "extensions": {
+    "colorMeta": {
+      "caramelo-tostado": { "role": "primary", "displayName": "Caramelo Tostado", "canonical": "#b97735", "tonalRamp": ["#3d240c", "#5e3713", "#7e4b19", "#9c5f22", "#b97735", "#cf9558", "#e3b07a", "#f4dcc0"] },
+      "caramelo-profundo": { "role": "primary", "displayName": "Caramelo Profundo", "canonical": "#9c5f22" },
+      "vinho-da-xicara": { "role": "secondary", "displayName": "Vinho da Xícara", "canonical": "#7b2d26", "tonalRamp": ["#2a0f0d", "#461914", "#5f221c", "#7b2d26", "#9a4740", "#b96d66", "#d6a19c", "#efd8d5"] },
+      "torra-escura": { "role": "neutral", "displayName": "Torra Escura", "canonical": "#14110f", "tonalRamp": ["#14110f", "#1e1815", "#24201d", "#3a332e", "#573628", "#6b625b", "#a39a92", "#d6cec6"] },
+      "porcelana-morna": { "role": "neutral", "displayName": "Porcelana Morna", "canonical": "#fcfaf7", "tonalRamp": ["#6b625b", "#a39a92", "#d6cec6", "#e9e2da", "#efe8df", "#f6f2ec", "#fcfaf7", "#ffffff"] },
+      "mocha": { "role": "neutral", "displayName": "Mocha", "canonical": "#6b625b" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Títulos do hero da home, da Experiência e do convite final." },
+      "headline": { "displayName": "Headline", "purpose": "Título principal das seções e páginas internas." },
+      "title": { "displayName": "Title", "purpose": "Títulos de seção e categorias do cardápio." },
+      "card-title": { "displayName": "Card Title", "purpose": "Nome do produto e dos ambientes." },
+      "body": { "displayName": "Body", "purpose": "Texto corrido e descrições." },
+      "lede": { "displayName": "Lede", "purpose": "Parágrafos de abertura." },
+      "label": { "displayName": "Label", "purpose": "Interface: botões, chips, títulos da barra lateral." }
+    },
+    "shadows": [
+      { "name": "card-rest", "value": "0 1px 2px rgb(0 0 0 / 0.04)", "purpose": "Presença mínima de card em repouso." },
+      { "name": "card-hover", "value": "0 24px 48px -28px rgb(36 24 16 / 0.42)", "purpose": "Card em hover, com subida de 2px." },
+      { "name": "overlap", "value": "0 40px 80px -30px rgb(14 11 9 / 0.55)", "purpose": "Foto emoldurada que atravessa outra seção." },
+      { "name": "header-scrolled", "value": "0 10px 30px -14px rgb(0 0 0 / 0.6)", "purpose": "Header escuro sobre conteúdo rolado." },
+      { "name": "search", "value": "0 10px 30px -22px rgb(36 24 16 / 0.5)", "purpose": "Campo de busca do cardápio." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Entradas, hover e toque." },
+      { "name": "ease-in-out", "value": "cubic-bezier(0.77, 0, 0.175, 1)", "purpose": "Movimento na tela." },
+      { "name": "ease-drawer", "value": "cubic-bezier(0.32, 0.72, 0, 1)", "purpose": "Menu mobile e gaveta de filtros." },
+      { "name": "dur-press", "value": "140ms", "purpose": "Escala 0.97 ao pressionar." },
+      { "name": "dur-hover", "value": "200ms", "purpose": "Cor e borda." },
+      { "name": "dur-ui", "value": "260ms", "purpose": "Card subindo, itens de menu, troca de resultados." },
+      { "name": "dur-photo-hover", "value": "450ms", "purpose": "Zoom de 1.03 na foto." },
+      { "name": "dur-sheet", "value": "420ms", "purpose": "Gavetas e menu mobile." },
+      { "name": "dur-hero", "value": "900ms", "purpose": "Linhas do título do hero." },
+      { "name": "dur-photo", "value": "1600ms", "purpose": "Cortina e zoom da foto do hero." }
+    ],
+    "breakpoints": [
+      { "name": "xs", "value": "416px" },
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botão principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação principal da tela, uma por vez.",
+      "html": "<button class=\"ds-btn-primary\">Explorar cardápio <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 28px; border: 0; border-radius: 9999px; background: #9c5f22; color: #fff; font: 600 15px/1 Inter, system-ui, sans-serif; box-shadow: 0 10px 24px -12px rgb(156 95 34 / 0.8); cursor: pointer; transition: background-color 200ms ease, transform 140ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-btn-primary svg { transition: transform 260ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-btn-primary:hover { background: #7e4b19; } .ds-btn-primary:hover svg { transform: translateX(4px); } .ds-btn-primary:active { transform: scale(0.97); } .ds-btn-primary:focus-visible { outline: 2px solid #9c5f22; outline-offset: 2px; }"
+    },
+    {
+      "name": "Botão contorno",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Ação secundária sobre fundo claro.",
+      "html": "<button class=\"ds-btn-outline\">Ver todos os produtos</button>",
+      "css": ".ds-btn-outline { min-height: 48px; padding: 0 28px; border: 1px solid rgb(36 32 29 / 0.2); border-radius: 9999px; background: transparent; color: #24201d; font: 600 15px/1 Inter, system-ui, sans-serif; cursor: pointer; transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 140ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-btn-outline:hover { background: #24201d; border-color: #24201d; color: #fff; } .ds-btn-outline:active { transform: scale(0.97); } .ds-btn-outline:focus-visible { outline: 2px solid #9c5f22; outline-offset: 2px; }"
+    },
+    {
+      "name": "Busca do cardápio",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "Campo largo em pílula, no topo do catálogo.",
+      "html": "<label class=\"ds-search\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/></svg><input placeholder=\"Buscar cafés, bebidas, doces...\" /></label>",
+      "css": ".ds-search { position: relative; display: block; max-width: 640px; color: #6b625b; } .ds-search svg { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); pointer-events: none; } .ds-search input { width: 100%; height: 56px; padding: 0 56px 0 52px; border: 1px solid rgb(36 32 29 / 0.2); border-radius: 9999px; background: #fff; color: #24201d; font: 400 16px Inter, system-ui, sans-serif; box-shadow: 0 10px 30px -22px rgb(36 24 16 / 0.5); transition: border-color 200ms ease, box-shadow 200ms ease; } .ds-search input:focus { outline: none; border-color: #9c5f22; box-shadow: 0 0 0 4px rgb(185 119 53 / 0.14); }"
+    },
+    {
+      "name": "Chip de filtro",
+      "kind": "chip",
+      "refersTo": "chip-filter",
+      "description": "Filtro rápido que liga e desliga.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip\" aria-pressed=\"true\">Quentes</button><button class=\"ds-chip\" aria-pressed=\"false\">Gelados</button></div>",
+      "css": ".ds-chips { display: flex; gap: 8px; } .ds-chip { min-height: 44px; padding: 0 16px; border: 1px solid rgb(36 32 29 / 0.2); border-radius: 9999px; background: #fff; color: #6b625b; font: 400 14px Inter, system-ui, sans-serif; cursor: pointer; transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 140ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-chip:hover { border-color: #24201d; color: #24201d; } .ds-chip[aria-pressed=\"true\"] { background: #9c5f22; border-color: #9c5f22; color: #fff; } .ds-chip:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Item de categoria",
+      "kind": "custom",
+      "refersTo": "category-item",
+      "description": "Lista da barra lateral do cardápio, com contagem.",
+      "html": "<ul class=\"ds-cats\"><li><button class=\"ds-cat\" aria-pressed=\"true\">Todas <span>14</span></button></li><li><button class=\"ds-cat\" aria-pressed=\"false\">Cafés especiais <span>3</span></button></li></ul>",
+      "css": ".ds-cats { list-style: none; margin: 0; padding: 0; width: 256px; } .ds-cat { display: flex; justify-content: space-between; align-items: center; width: 100%; min-height: 44px; padding: 0 14px; border: 0; border-radius: 12px; background: transparent; color: #6b625b; font: 400 15px Inter, system-ui, sans-serif; cursor: pointer; transition: background-color 200ms ease, color 200ms ease; } .ds-cat span { font-size: 12px; color: #a39a92; font-variant-numeric: tabular-nums; } .ds-cat:hover { background: #f6f2ec; color: #24201d; } .ds-cat[aria-pressed=\"true\"] { background: #14110f; color: #fff; font-weight: 600; } .ds-cat[aria-pressed=\"true\"] span { color: rgb(255 255 255 / 0.7); }"
+    },
+    {
+      "name": "Card de produto",
+      "kind": "card",
+      "refersTo": "card-product",
+      "description": "Foto dominante, nome em serifa, preço e ação.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-photo\"><span class=\"ds-badge\">Foto ilustrativa</span></div><div class=\"ds-card-body\"><h3>Cappuccino</h3><p>Espresso, leite vaporizado e espuma.</p><div class=\"ds-card-foot\"><strong>R$ 11,00</strong><a href=\"#\">Ver detalhes</a></div></div></article>",
+      "css": ".ds-card { width: 320px; border: 1px solid rgb(36 32 29 / 0.1); border-radius: 24px; background: #fff; overflow: hidden; box-shadow: 0 1px 2px rgb(0 0 0 / 0.04); transition: transform 260ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 260ms cubic-bezier(0.23, 1, 0.32, 1), border-color 200ms ease; } .ds-card:hover { transform: translateY(-2px); border-color: transparent; box-shadow: 0 24px 48px -28px rgb(36 24 16 / 0.42); } .ds-card-photo { position: relative; margin: 8px 8px 0; aspect-ratio: 5 / 4; border-radius: 18px; background: linear-gradient(135deg, #573628, #b97735); } .ds-badge { position: absolute; right: 12px; bottom: 12px; padding: 4px 10px; border-radius: 9999px; background: rgb(20 17 15 / 0.7); color: #fff; font: 500 11px Inter, system-ui, sans-serif; } .ds-card-body { padding: 20px 24px 24px; } .ds-card-body h3 { margin: 0; font: 400 28px/1.05 'Instrument Serif', Georgia, serif; color: #24201d; } .ds-card-body p { margin: 8px 0 20px; font: 400 15px/1.6 Inter, system-ui, sans-serif; color: #6b625b; } .ds-card-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid rgb(36 32 29 / 0.1); } .ds-card-foot strong { font: 600 18px Inter, system-ui, sans-serif; color: #9c5f22; } .ds-card-foot a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 9999px; background: #14110f; color: #fff; font: 600 14px Inter, system-ui, sans-serif; text-decoration: none; transition: background-color 200ms ease; } .ds-card:hover .ds-card-foot a { background: #9c5f22; }"
+    },
+    {
+      "name": "Header",
+      "kind": "nav",
+      "refersTo": "nav-header",
+      "description": "Barra escura com logo tipográfico e links com sublinhado caramelo.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-logo\">JDS <small>Cafeteria</small></span><ul><li><a href=\"#\" aria-current=\"page\">Início</a></li><li><a href=\"#\">Cardápio</a></li><li><a href=\"#\">Experiência</a></li></ul></nav>",
+      "css": ".ds-nav { display: flex; justify-content: space-between; align-items: center; height: 72px; padding: 0 40px; background: #14110f; color: #fff; } .ds-logo { font: 400 32px/1 'Instrument Serif', Georgia, serif; } .ds-logo small { font: 600 11px Inter, system-ui, sans-serif; letter-spacing: 0.24em; text-transform: uppercase; opacity: 0.8; margin-left: 8px; } .ds-nav ul { display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; } .ds-nav a { position: relative; display: block; padding: 8px 16px; color: rgb(255 255 255 / 0.75); font: 400 15px Inter, system-ui, sans-serif; text-decoration: none; transition: color 200ms ease; } .ds-nav a::after { content: ''; position: absolute; left: 16px; right: 16px; bottom: 2px; height: 2px; border-radius: 2px; background: #b97735; transform: scaleX(0); transform-origin: left; transition: transform 260ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-nav a:hover, .ds-nav a[aria-current] { color: #fff; } .ds-nav a:hover::after, .ds-nav a[aria-current]::after { transform: scaleX(1); } .ds-nav a[aria-current] { font-weight: 600; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Pausa Bem Servida",
+    "overview": "O site se comporta como uma mesa bem posta: a fotografia chega primeiro, o texto acompanha em voz baixa e nada se move sem motivo. A sensação é de calma editorial, com títulos serifados grandes e respirados sobre fundos mornos, e o caramelo usado como o toque de açúcar que aponta para a ação. O escuro de torra emoldura a página (header, rodapé, faixas de história e convite) e cria o ritmo claro e escuro entre as seções.\n\nA densidade é baixa nas páginas de apresentação e média no cardápio, onde a tarefa é achar um item rápido: busca larga, categorias à mão e cards de mesmo formato. O movimento é parcimonioso: uma entrada coreografada no topo da home, poucos momentos ligados à rolagem e respostas curtas ao toque. A JDS real é a referência: madeira avermelhada, tijolo, plantas e a xícara própria. Quando falta foto real, entra foto de banco sempre identificada.\n\nRejeitado pelo cliente: objetos 3D, cenas WebGL, inclinação de cards no hover, revelação de cada seção ao rolar, rótulos acima dos títulos e numeração decorativa de seções.",
+    "keyCharacteristics": [
+      "Fotografia lidera; o texto acompanha.",
+      "Serifa de display em títulos, Inter no corpo e na interface.",
+      "Caramelo raro e funcional, escuro de torra como moldura.",
+      "Formas macias: pílulas e cantos generosos.",
+      "Movimento só onde explica ou responde."
+    ],
+    "rules": [
+      { "name": "A Regra do Açúcar", "body": "O caramelo é o açúcar da xícara: pouco e onde importa. Um botão principal por tela, preços e o estado ativo. Nunca como fundo de seção.", "section": "colors" },
+      { "name": "A Regra da Moldura de Torra", "body": "O escuro de torra emoldura a experiência (header, rodapé e as faixas de história e convite). As superfícies de tarefa, como cardápio e produto, ficam claras.", "section": "colors" },
+      { "name": "A Regra do Título que Fala Sozinho", "body": "Nenhum rótulo pequeno em caixa alta acima de um título. O título carrega o peso dele.", "section": "typography" },
+      { "name": "A Regra do Peso Único da Serifa", "body": "A Instrument Serif é usada só no peso 400 e sem itálico. Ênfase vem de tamanho ou da cor caramelo, nunca de negrito falso.", "section": "typography" },
+      { "name": "A Regra da Mesa Lisa", "body": "Em repouso tudo fica plano. A sombra é uma resposta, não um enfeite.", "section": "elevation" },
+      { "name": "A Regra do Véu Localizado", "body": "Texto sobre foto ganha degradê só atrás do texto (direcional e vertical), mais uma vinheta leve. Nunca um véu escuro uniforme sobre a foto inteira.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do usar Caramelo Profundo (#9c5f22) para texto e botões sobre claro, e Caramelo Claro (#e3b07a) sobre escuro.",
+      "Do deixar a fotografia liderar cada seção de apresentação, com foco definido por foto (position e positionMobile).",
+      "Do usar os tokens de movimento: ease-out cubic-bezier(0.23, 1, 0.32, 1), interface em até 260ms, gaveta em 420ms com cubic-bezier(0.32, 0.72, 0, 1), toque com escala 0.97.",
+      "Do restringir o hover a dispositivos com mouse (hover: hover e pointer: fine).",
+      "Do manter o selo \"Foto ilustrativa\" visível sobre qualquer foto que não seja da JDS.",
+      "Do exibir fotos reais em baixa resolução no tamanho em que ficam nítidas, em vez de esticá-las em tela cheia."
+    ],
+    "donts": [
+      "Don't colocar rótulos pequenos em caixa alta acima de títulos, nem numerar seções (01, 02, 03).",
+      "Don't usar objetos 3D, cenas WebGL ou inclinação de cards no hover.",
+      "Don't revelar cada seção ao rolar. O movimento ligado à rolagem fica só na saída do hero, na peça que atravessa a borda e na foto do convite.",
+      "Don't escurecer uma foto inteira com véu uniforme.",
+      "Don't usar travessão em nenhum texto do site.",
+      "Don't usar a Instrument Serif em negrito ou itálico."
+    ]
+  }
+}
