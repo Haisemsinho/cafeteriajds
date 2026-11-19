@@ -27,9 +27,10 @@ export const home = {
     fallback: `A da ${business.shortName} começa na fachada de ripas e continua em cada mesa. Conheça um pouco mais da casa.`,
     cta: { label: "Conheça nosso espaço", href: "/experiencia" },
   },
-  gallery: {
-    title: `Por dentro da ${business.shortName}`,
-    intro: "Um pouco da casa. Toque em uma foto para ampliar.",
+  reviews: {
+    title: "Boas experiências merecem ser compartilhadas.",
+    intro: `Um pouco do carinho de quem já viveu bons momentos na ${business.shortName}.`,
+    demoNotice: `Avaliações de exemplo, só para testar o layout. Serão trocadas pelos depoimentos reais enviados pela ${business.shortName}.`,
   },
   visit: {
     title: "Venha nos visitar",

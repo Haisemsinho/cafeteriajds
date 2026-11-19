@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { FeaturedProducts } from "@/components/home/FeaturedProducts";
 import { Hero } from "@/components/home/Hero";
-import { HomeGallery } from "@/components/home/HomeGallery";
 import { Intro } from "@/components/home/Intro";
+import { Reviews } from "@/components/home/Reviews";
 import { StoryTeaser } from "@/components/home/StoryTeaser";
 import { VisitInvite } from "@/components/home/VisitInvite";
 
@@ -17,7 +17,7 @@ export default function HomePage() {
       <Intro />
       <FeaturedProducts />
       <StoryTeaser />
-      <HomeGallery />
+      <Reviews />
       <VisitInvite />
     </>
   );

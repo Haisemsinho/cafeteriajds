@@ -221,3 +221,20 @@ export const storeUnitSchema = z.object({
     note: z.string(),
   }),
 });
+
+export const reviewSchema = z
+  .object({
+    id: z.string().min(1),
+    customerName: z.string().min(2).max(60),
+    customerPhoto: photoSchema.extend({ authorized: z.literal(true, "foto de cliente so com autorizacao") }).optional(),
+    reviewText: z.string().min(10).max(1200),
+    rating: z.number().int().min(1).max(5).optional(),
+    source: z.object({ label: z.string().min(2).max(40), url: httpsUrl.optional() }).optional(),
+    isFeatured: z.boolean(),
+    isPublished: z.boolean(),
+    displayOrder: z.number().int(),
+    createdAt: isoDate,
+    updatedAt: isoDate,
+    status: dataStatusSchema,
+  })
+  .refine((r) => r.updatedAt >= r.createdAt, "updatedAt precisa ser igual ou depois de createdAt");

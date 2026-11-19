@@ -19,6 +19,7 @@ import type {
   socialLinkSchema,
   storyBlockSchema,
   storeUnitSchema,
+  reviewSchema,
   unitIdSchema,
 } from "@/lib/schemas";
 
@@ -41,6 +42,7 @@ export type GalleryImage = z.infer<typeof galleryImageSchema>;
 export type Highlight = z.infer<typeof highlightSchema>;
 export type StoryBlock = z.infer<typeof storyBlockSchema>;
 
+export type CustomerReview = z.infer<typeof reviewSchema>;
 export type UnitId = z.infer<typeof unitIdSchema>;
 export type StoreUnit = z.infer<typeof storeUnitSchema>;
 

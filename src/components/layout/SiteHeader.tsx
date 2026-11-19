@@ -66,7 +66,7 @@ export function SiteHeader({ brand, instagram, ordering }: Props) {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "group/nav relative flex min-h-11 items-center rounded-md px-3 text-[0.9375rem] transition-colors duration-300 lg:px-4",
+                      "group/nav relative flex min-h-11 items-center rounded-md px-2.5 text-[0.9375rem] whitespace-nowrap transition-colors duration-300 lg:px-4",
                       active ? "font-semibold text-white" : "text-white/75 hover:text-white",
                     )}
                   >
@@ -74,7 +74,7 @@ export function SiteHeader({ brand, instagram, ordering }: Props) {
                     <span
                       aria-hidden
                       className={cn(
-                        "absolute inset-x-3 bottom-0.5 h-0.5 origin-left rounded-full bg-caramel transition-transform duration-500 ease-out-expo lg:inset-x-4",
+                        "absolute inset-x-2.5 bottom-0.5 h-0.5 origin-left rounded-full bg-caramel transition-transform duration-500 ease-out-expo lg:inset-x-4",
                         active ? "scale-x-100" : "scale-x-0 group-hover/nav:scale-x-100",
                       )}
                     />

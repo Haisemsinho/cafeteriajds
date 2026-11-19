@@ -2,6 +2,8 @@
 
 Site institucional com cardápio digital e página para cada produto. Na versão de apresentação existe um fluxo de compra demonstrativo (carrinho, checkout e acompanhamento), sem pagamento real e sem envio de pedido. Detalhes em `docs/COMPRA_DEMONSTRATIVA.md`.
 
+As avaliações de clientes da home ficam em `src/content/reviews.ts` (veja `docs/AVALIACOES.md`).
+
 O que já é real e o que ainda é exemplo está em [PENDENCIAS_COMERCIAIS.md](./PENDENCIAS_COMERCIAIS.md).
 
 ## Tecnologias

@@ -341,6 +341,12 @@ Macios e firmes: pílula, resposta curta ao toque.
 - **Mobile:** gaveta lateral escura com os itens em Instrument Serif 28px, entrando em cascata curta.
 - **Categorias do cardápio:** lista vertical na barra lateral (ativo em Torra Escura) e fita horizontal no celular.
 
+### Avaliações de clientes
+
+Seção da home depois de "Cada lugar tem uma história". No desktop, o depoimento em destaque fica no centro, em Torra Escura com a citação em Instrument Serif, e até cinco cartões menores ficam ao redor numa grade de 12 colunas, cada um com um deslocamento vertical próprio. A grade impede sobreposição. Atrás, um anel de xícara em caramelo a 15%. Cada cartão é um balão (cantos de 28px, canto inferior esquerdo de 6px apontando para o avatar), com aspas desenhadas, nome, estrelas só com nota real e "via" só com fonte informada. Sem foto autorizada, o avatar mostra as iniciais. No tablet, duas colunas em escada. No celular, destaque no topo e fileira com deslize, pontos de posição e contador para leitor de tela. Texto longo é cortado e abre em diálogo.
+
+Movimento: a entrada dos cartões ao rolar é um dos momentos ligados à rolagem da home (a partir de 768px). Flutuação de ±5px, de 7,4s a 9,8s por cartão, só a partir de 1024px; pausa com o mouse ou o foco, e o cartão sobe 2px. Com movimento reduzido, tudo fica parado. Exceção à Regra da Mesa Lisa: aqui os balões têm sombra difusa em repouso, porque a profundidade em camadas é o conceito da seção.
+
 ### Compra demonstrativa
 
 - **Seletores de opção:** cartões de 88px de altura em grade de 2 a 4 colunas, ícone desenhado de 32px (copos de três alturas, xícara com vapor, copo com gelo, grãos de intensidade, doses, caixinha de leite, açúcar), nome sempre escrito, preço ou acréscimo embaixo. Selecionado: fundo Torra Escura, texto branco e selo de check caramelo no canto, para não depender só da cor.
@@ -367,7 +373,7 @@ Selo pequeno em pílula escura translúcida com o texto "Foto ilustrativa", sobr
 ### Don't:
 - **Don't** colocar rótulos pequenos em caixa alta acima de títulos, nem numerar seções (01, 02, 03).
 - **Don't** usar objetos 3D, cenas WebGL ou inclinação de cards no hover.
-- **Don't** revelar cada seção ao rolar. O movimento ligado à rolagem fica só na saída do hero, na peça que atravessa a borda e na foto do convite.
+- **Don't** revelar cada seção ao rolar. O movimento ligado à rolagem fica só na saída do hero, na peça que atravessa a borda, na entrada das avaliações e na foto do convite.
 - **Don't** escurecer uma foto inteira com véu uniforme.
 - **Don't** usar travessão em nenhum texto do site.
 - **Don't** usar a Instrument Serif em negrito ou itálico.

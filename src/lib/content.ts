@@ -6,6 +6,7 @@ import { categories as rawCategories, products as rawProducts } from "@/content/
 import { philosophy, storyBlocks as rawStory, storyIntro } from "@/content/story";
 import { ambience, productPhotos } from "@/content/illustrative";
 import { photos } from "@/content/photos";
+import { reviews as rawReviews } from "@/content/reviews";
 import {
   announcementSchema,
   businessProfileSchema,
@@ -13,11 +14,21 @@ import {
   highlightSchema,
   menuCategorySchema,
   menuProductSchema,
+  reviewSchema,
   storyBlockSchema,
 } from "@/lib/schemas";
 import { showDrafts } from "@/lib/site";
 import { zonedNow } from "@/lib/hours";
-import type { ContactInformation, DataStatus, GalleryImage, Highlight, MenuProduct, Photo } from "@/types/content";
+import { selectHomeReviews } from "@/lib/reviews";
+import type {
+  ContactInformation,
+  CustomerReview,
+  DataStatus,
+  GalleryImage,
+  Highlight,
+  MenuProduct,
+  Photo,
+} from "@/types/content";
 
 function check<T>(schema: z.ZodType<T>, data: unknown, label: string): T {
   const result = schema.safeParse(data);
@@ -43,6 +54,9 @@ const products = check(z.array(menuProductSchema), rawProducts, "produtos do car
 const gallery = check(z.array(galleryImageSchema), rawGallery, "content/gallery.ts");
 const highlights = check(z.array(highlightSchema), rawHighlights, "content/highlights.ts");
 const story = check(z.array(storyBlockSchema), rawStory, "content/story.ts");
+const reviews = check(z.array(reviewSchema), rawReviews, "content/reviews.ts");
+
+unique(reviews, "avaliações");
 
 unique(categories, "categorias");
 unique(products, "produtos");
@@ -179,6 +193,10 @@ export function getStory() {
     pending: showDrafts ? story.filter((b) => b.status === "pending") : [],
     philosophy: isVisible(philosophy.status) ? philosophy : undefined,
   };
+}
+
+export function getHomeReviews(limit = 6): CustomerReview[] {
+  return selectHomeReviews(reviews, showDrafts, limit);
 }
 
 export function isDraft(status: DataStatus | "pending") {

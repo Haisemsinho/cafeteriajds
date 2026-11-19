@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
     "check": "npm run typecheck && npm run lint && npm run test:unit && npm run build",
-    "test:unit": "node --experimental-strip-types --no-warnings --test tests/pricing.test.ts"
+    "test:unit": "node --experimental-strip-types --no-warnings --test tests/pricing.test.ts tests/reviews.test.ts"
   },
   "dependencies": {
     "next": "^16.0.0",
