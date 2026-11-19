@@ -31,7 +31,8 @@ Sucesso agora: o dono aprova o site e envia os dados oficiais (cardápio, preço
 
 - Next.js 16 (App Router, páginas estáticas), React 19, TypeScript estrito, Tailwind CSS 4, Zod 4. Todo o conteúdo fica em `src/content/` e é validado no build.
 - Cardápio com busca, autocomplete, categorias, filtros, "minha seleção" no aparelho e página por produto com variações de tamanho. Consulta pelo WhatsApp só com número oficial.
-- Fora do escopo: carrinho, checkout, pagamento, pedido online e painel administrativo.
+- Compra demonstrativa (aprovada em 18/11/2026): unidade, personalização, carrinho, checkout em 4 etapas, pagamento simulado e "Minhas compras", só na versão de apresentação (`SHOW_DRAFT_CONTENT=true`). Nenhum pagamento real, nenhum pedido enviado à cafeteria. Em produção as rotas de compra ficam desligadas.
+- Fora do escopo: pagamento real, envio de pedido à cafeteria, emissão fiscal e painel administrativo.
 - Unidades (informadas pelo responsável do projeto em 18/11/2026):
   - Unidade da cidade: Avenida Jacob Dornelas Neto, São João do Manhuaçu, MG.
   - Unidade da rodovia: Rodovia Santos Dumont, BR 116 (Rio-Bahia), Córrego Caratinga, área rural, São João do Manhuaçu, MG, CEP 36918-000.
@@ -58,7 +59,7 @@ Sucesso agora: o dono aprova o site e envia os dados oficiais (cardápio, preço
 2. A casa real lidera: a identidade vem da JDS de verdade, não de uma cafeteria genérica.
 3. O cardápio é a ferramenta principal: achar um item, ver o preço e decidir ir precisa ser rápido no celular.
 4. Cada unidade é um lugar: endereço, cardápio e informações não podem se misturar entre as duas.
-5. Vitrine, não loja: nada de compra online; o caminho leva à visita ou à conversa no WhatsApp.
+5. Vitrine com demonstração de compra: a compra existe só como protótipo identificado; nada é cobrado nem enviado. O caminho real continua sendo a visita ou o WhatsApp até a JDS aprovar uma operação de pedidos.
 
 ## Accessibility & Inclusion
 

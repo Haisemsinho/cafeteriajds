@@ -16,6 +16,7 @@ export const categories: MenuCategory[] = [
 const sizes = (p: number, m: number) => [
   { id: "p", label: "Pequeno", priceCents: p },
   { id: "m", label: "Médio", priceCents: m },
+  { id: "g", label: "Grande", priceCents: m + 300 },
 ];
 
 const items: MenuProduct[] = [

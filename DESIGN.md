@@ -19,6 +19,10 @@ colors:
   areia: "#d6cec6"
   mocha: "#6b625b"
   latte: "#a39a92"
+  verde-confirmacao: "#234b3a"
+  verde-profundo: "#183528"
+  menta: "#cfe3d6"
+  alerta: "#a8321f"
 typography:
   display:
     fontFamily: "Instrument Serif, Iowan Old Style, Palatino Linotype, Georgia, serif"
@@ -222,6 +226,8 @@ Paleta de cafeteria: neutros mornos de porcelana e creme, escuro de torra como m
 
 ### Secondary
 - **Vinho da Xícara** (#7b2d26): a cor do logo na xícara real. Reservado para detalhes de marca. Hoje não aparece em nenhuma superfície.
+- **Verde Confirmação** (#234b3a), com **Verde Profundo** (#183528) no hover e **Menta** (#cfe3d6) como fundo suave: só para sucesso. Tela de pedido confirmado, botão "Simular pagamento", etapa atual e concluídas da linha do tempo do pedido. Nunca decoração.
+- **Alerta** (#a8321f): texto e borda de erro de formulário, sempre com ícone e frase que explica a correção.
 
 ### Neutral
 - **Torra Escura** (#14110f): header, rodapé, botões escuros, categoria ativa e fundo do hero.
@@ -334,6 +340,16 @@ Macios e firmes: pílula, resposta curta ao toque.
 - **Header:** Torra Escura com 72px no desktop e 64px no celular. Na home ele começa transparente sobre o hero e fica sólido ao rolar, só com CSS. Links em Inter 15px, branco a 75%, e o ativo em branco com sublinhado caramelo que cresce da esquerda.
 - **Mobile:** gaveta lateral escura com os itens em Instrument Serif 28px, entrando em cascata curta.
 - **Categorias do cardápio:** lista vertical na barra lateral (ativo em Torra Escura) e fita horizontal no celular.
+
+### Compra demonstrativa
+
+- **Seletores de opção:** cartões de 88px de altura em grade de 2 a 4 colunas, ícone desenhado de 32px (copos de três alturas, xícara com vapor, copo com gelo, grãos de intensidade, doses, caixinha de leite, açúcar), nome sempre escrito, preço ou acréscimo embaixo. Selecionado: fundo Torra Escura, texto branco e selo de check caramelo no canto, para não depender só da cor.
+- **Adicionais:** pílulas de 48px com caixa de seleção visível.
+- **Quantidade:** pílula com botões de 44 a 48px e o número no meio.
+- **Barra de compra no celular:** fixa no rodapé da coluna do produto e do carrinho, com quantidade e total no próprio botão. No checkout os botões ficam no fim do formulário, para o teclado nunca cobrir campo.
+- **Carrinho:** gaveta lateral de 448px no desktop, página própria no celular. Remover mostra aviso com "Desfazer".
+- **Checkout:** quatro etapas (Embalagem, Endereço, Revisão, Pagamento) com barra de progresso escrita, uma decisão por tela, campos de 52px e erro abaixo do campo.
+- **Aviso (toast):** faixa Torra Escura no topo, 260ms de entrada, some em 4 a 6 segundos e pausa com o mouse ou o foco.
 
 ### Photo Badge
 Selo pequeno em pílula escura translúcida com o texto "Foto ilustrativa", sobre toda foto de banco de imagens. Os créditos completos ficam numa seção do rodapé. Foto real da JDS nunca recebe esse selo.

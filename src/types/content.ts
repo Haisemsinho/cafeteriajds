@@ -18,6 +18,8 @@ import type {
   productVariantSchema,
   socialLinkSchema,
   storyBlockSchema,
+  storeUnitSchema,
+  unitIdSchema,
 } from "@/lib/schemas";
 
 export type DataStatus = z.infer<typeof dataStatusSchema>;
@@ -38,5 +40,8 @@ export type MenuProduct = z.infer<typeof menuProductSchema>;
 export type GalleryImage = z.infer<typeof galleryImageSchema>;
 export type Highlight = z.infer<typeof highlightSchema>;
 export type StoryBlock = z.infer<typeof storyBlockSchema>;
+
+export type UnitId = z.infer<typeof unitIdSchema>;
+export type StoreUnit = z.infer<typeof storeUnitSchema>;
 
 export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;

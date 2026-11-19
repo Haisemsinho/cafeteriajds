@@ -1,6 +1,6 @@
 # JDS Cafeteria
 
-Site institucional com cardápio digital e página para cada produto. É uma vitrine: não tem carrinho, pagamento, pedido online nem painel administrativo.
+Site institucional com cardápio digital e página para cada produto. Na versão de apresentação existe um fluxo de compra demonstrativo (carrinho, checkout e acompanhamento), sem pagamento real e sem envio de pedido. Detalhes em `docs/COMPRA_DEMONSTRATIVA.md`.
 
 O que já é real e o que ainda é exemplo está em [PENDENCIAS_COMERCIAIS.md](./PENDENCIAS_COMERCIAIS.md).
 

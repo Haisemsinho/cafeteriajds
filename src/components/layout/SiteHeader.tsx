@@ -7,6 +7,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { cn, stagger } from "@/lib/cn";
 import { isActive, mainNav } from "@/lib/navigation";
+import { CartButton } from "@/components/order/CartButton";
 import { Logo, type Brand } from "./Logo";
 
 function subscribeScroll(callback: () => void) {
@@ -14,9 +15,9 @@ function subscribeScroll(callback: () => void) {
   return () => window.removeEventListener("scroll", callback);
 }
 
-type Props = { brand: Brand; instagram?: { url: string; handle: string } };
+type Props = { brand: Brand; instagram?: { url: string; handle: string }; ordering?: boolean };
 
-export function SiteHeader({ brand, instagram }: Props) {
+export function SiteHeader({ brand, instagram, ordering }: Props) {
   const pathname = usePathname();
   const scrolled = useSyncExternalStore(
     subscribeScroll,
@@ -45,9 +46,14 @@ export function SiteHeader({ brand, instagram }: Props) {
         scrolled ? "border-line-dark shadow-[0_10px_30px_-14px_rgb(0_0_0/0.6)]" : "border-transparent",
       )}
     >
-      <div className={cn("page-x flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]", intro && "header-intro")}>
+      <div
+        className={cn(
+          "page-x flex h-16 items-center justify-between gap-3 sm:gap-6 lg:h-[4.5rem]",
+          intro && "header-intro",
+        )}
+      >
         <Link href="/" className="-my-2 py-2 text-white" aria-label={`${brand.name}, página inicial`}>
-          <Logo brand={brand} />
+          <Logo brand={brand} className={ordering ? "max-[359px]:[&>span+span]:hidden" : undefined} />
         </Link>
 
         <nav aria-label="Principal" className="hidden md:block">
@@ -79,17 +85,25 @@ export function SiteHeader({ brand, instagram }: Props) {
           </ul>
         </nav>
 
-        <button
-          type="button"
-          onClick={openMenu}
-          aria-haspopup="dialog"
-          aria-expanded={menuOpen}
-          aria-controls="menu-mobile"
-          className="-mr-2 inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-[0.9375rem] font-semibold text-white hover:bg-white/10 md:hidden"
-        >
-          <Icon name="menu" size={22} />
-          Menu
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          {ordering ? <CartButton compact /> : null}
+          <button
+            type="button"
+            onClick={openMenu}
+            aria-haspopup="dialog"
+            aria-expanded={menuOpen}
+            aria-controls="menu-mobile"
+            className="-mr-2 inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-[0.9375rem] font-semibold text-white hover:bg-white/10 md:hidden"
+          >
+            <Icon name="menu" size={22} />
+            Menu
+          </button>
+        </div>
+        {ordering ? (
+          <div className="hidden md:block">
+            <CartButton />
+          </div>
+        ) : null}
       </div>
 
       <dialog
@@ -135,6 +149,31 @@ export function SiteHeader({ brand, instagram }: Props) {
               })}
             </ul>
           </nav>
+
+          {ordering ? (
+            <ul className="sheet-item mt-6 grid grid-cols-2 gap-2" style={stagger(mainNav.length, 8)}>
+              <li>
+                <Link
+                  href="/carrinho"
+                  onClick={closeMenu}
+                  className="flex min-h-14 items-center gap-2 rounded-2xl border border-line-dark px-4 font-semibold text-white hover:bg-white/10"
+                >
+                  <Icon name="bag" size={20} className="text-caramel-light" />
+                  Carrinho
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/minhas-compras"
+                  onClick={closeMenu}
+                  className="flex min-h-14 items-center gap-2 rounded-2xl border border-line-dark px-4 font-semibold text-white hover:bg-white/10"
+                >
+                  <Icon name="receipt" size={20} className="text-caramel-light" />
+                  Minhas compras
+                </Link>
+              </li>
+            </ul>
+          ) : null}
 
           <div className="sheet-item mt-8 flex flex-col gap-3" style={stagger(mainNav.length, 8)}>
             <ButtonLink href="/cardapio" onClick={closeMenu} icon="arrowRight">

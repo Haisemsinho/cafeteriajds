@@ -13,7 +13,7 @@ export function ProductGallery({ images, name }: { images: Photo[]; name: string
 
   return (
     <div>
-      <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-oat md:aspect-[4/5]">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] bg-oat md:aspect-[4/5]">
         <Image
           key={current.alt}
           src={current.src}

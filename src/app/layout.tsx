@@ -5,6 +5,9 @@ import { BusinessJsonLd } from "@/components/layout/BusinessJsonLd";
 import { DraftNotice } from "@/components/layout/DraftNotice";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { OrderProvider } from "@/components/order/OrderContext";
+import { Toaster } from "@/components/order/Toaster";
+import { getOrderConfig } from "@/lib/order/catalog";
 import { getBrand, getBusiness, getInstagram } from "@/lib/content";
 import { isIndexable, showDrafts, siteUrl } from "@/lib/site";
 import "./globals.css";
@@ -48,6 +51,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   const instagram = getInstagram();
+  const order = getOrderConfig();
 
   return (
     <html lang="pt-BR" className={`${inter.variable} ${serif.variable}`}>
@@ -55,15 +59,19 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <a href="#conteudo" className="skip-link">
           Pular para o conteúdo
         </a>
-        {showDrafts ? <DraftNotice /> : null}
-        <SiteHeader
-          brand={getBrand()}
-          instagram={instagram ? { url: instagram.url, handle: instagram.handle } : undefined}
-        />
-        <main id="conteudo" tabIndex={-1} className="outline-none">
-          {children}
-        </main>
-        <SiteFooter />
+        <OrderProvider config={order}>
+          {showDrafts ? <DraftNotice /> : null}
+          <SiteHeader
+            brand={getBrand()}
+            instagram={instagram ? { url: instagram.url, handle: instagram.handle } : undefined}
+            ordering={order.enabled}
+          />
+          <main id="conteudo" tabIndex={-1} className="outline-none">
+            {children}
+          </main>
+          <SiteFooter />
+          {order.enabled ? <Toaster /> : null}
+        </OrderProvider>
         <BusinessJsonLd />
       </body>
     </html>

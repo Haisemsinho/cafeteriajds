@@ -4,6 +4,7 @@ import { getBrand, getBusiness, getInstagram, getPhotoCredits } from "@/lib/cont
 import { formatPeriods, weekdayNames } from "@/lib/hours";
 import { formatAddress, formatPhone, whatsappUrl } from "@/lib/links";
 import { footerNav } from "@/lib/navigation";
+import { showDrafts } from "@/lib/site";
 import type { Weekday } from "@/types/content";
 import { Logo } from "./Logo";
 
@@ -61,13 +62,18 @@ export function SiteFooter() {
         <nav aria-label="Rodapé">
           <p className="mb-3 text-sm font-semibold text-white">Navegação</p>
           <ul className="grid grid-cols-2 gap-x-6 sm:grid-cols-1">
-            {footerNav.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className="inline-flex min-h-11 items-center transition-colors hover:text-white">
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {(showDrafts ? [...footerNav, { href: "/minhas-compras", label: "Minhas compras" }] : footerNav).map(
+              (item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="inline-flex min-h-11 items-center transition-colors hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ),
+            )}
           </ul>
         </nav>
 

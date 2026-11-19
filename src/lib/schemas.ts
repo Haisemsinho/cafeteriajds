@@ -175,6 +175,7 @@ export const menuProductSchema = z.object({
   tags: z.array(productTagSchema).optional(),
   order: z.number(),
   dataStatus: dataStatusSchema,
+  units: z.array(z.enum(["centro", "br116"])).optional(),
 });
 
 export const galleryImageSchema = photoSchema.extend({
@@ -202,4 +203,21 @@ export const storyBlockSchema = z.object({
   hint: z.string(),
   image: photoSchema.optional(),
   status: z.enum(["verified", "draft", "pending"]),
+});
+
+export const unitIdSchema = z.enum(["centro", "br116"]);
+
+export const storeUnitSchema = z.object({
+  id: unitIdSchema,
+  name: z.string().min(2),
+  summary: z.string(),
+  address: addressSchema,
+  hours: openingHoursSchema.optional(),
+  contact: contactInformationSchema,
+  delivery: z.object({
+    status: dataStatusSchema,
+    feeCents: z.number().int().nonnegative(),
+    cities: z.array(z.string().min(2)).min(1),
+    note: z.string(),
+  }),
 });

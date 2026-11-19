@@ -7,11 +7,12 @@ import { BackToMenu } from "@/components/product/BackToMenu";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { JsonLd } from "@/components/layout/BusinessJsonLd";
 import { ProductOptions } from "@/components/product/ProductOptions";
+import { ProductConfigurator } from "@/components/order/ProductConfigurator";
 import { Notice } from "@/components/ui/Feedback";
 import { delay } from "@/lib/cn";
 import { Tag } from "@/components/ui/Tag";
 import { getBusiness, getMenu, getProduct, getRelatedProducts } from "@/lib/content";
-import { siteUrl } from "@/lib/site";
+import { showDrafts, siteUrl } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -97,7 +98,7 @@ export default async function ProductPage({ params }: Props) {
             {photos.length ? (
               <ProductGallery images={photos} name={product.name} />
             ) : (
-              <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-oat md:aspect-[4/5]">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] bg-oat md:aspect-[4/5]">
                 <ProductVisual product={product} sizes="(min-width: 768px) 45vw, 100vw" label />
               </div>
             )}
@@ -117,34 +118,67 @@ export default async function ProductPage({ params }: Props) {
             </div>
             <h1 className="mt-3 text-h1 break-words hyphens-auto text-espresso">{product.name}</h1>
 
-            <ProductOptions
-              product={product}
-              whatsapp={contact.whatsapp}
-              greeting={`Olá, ${getBusiness().shortName}!`}
-              intro={
-                <>
-                  <p className="mt-5 text-lede text-mocha">{product.description}</p>
-                  {product.dataStatus === "draft" ? (
-                    <Notice tone="setup" title="Produto de exemplo" className="mt-5">
-                      Nome, descrição, imagem e preço servem só para apresentação. O cardápio oficial será confirmado
-                      pela {getBusiness().shortName}.
-                    </Notice>
-                  ) : null}
-                </>
-              }
-              details={
-                <dl className="mt-10 divide-y divide-line border-y border-line">
-                  {details.map((d) => (
-                    <div key={d.label} className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr] sm:gap-6">
-                      <dt className="text-sm font-semibold text-espresso">{d.label}</dt>
-                      <dd className={unavailable && d.label === "Disponibilidade" ? "text-caramel-deep" : "text-mocha"}>
-                        {d.value}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              }
-            />
+            {showDrafts ? (
+              <ProductConfigurator
+                slug={product.slug}
+                intro={
+                  <>
+                    <p className="mt-5 text-lede text-mocha">{product.description}</p>
+                    {product.dataStatus === "draft" ? (
+                      <Notice tone="setup" title="Produto de exemplo" className="mt-5">
+                        Nome, descrição, imagem e preço servem só para apresentação. O cardápio oficial será confirmado
+                        pela {getBusiness().shortName}.
+                      </Notice>
+                    ) : null}
+                  </>
+                }
+                details={
+                  <dl className="mt-10 divide-y divide-line border-y border-line">
+                    {details.map((d) => (
+                      <div key={d.label} className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr] sm:gap-6">
+                        <dt className="text-sm font-semibold text-espresso">{d.label}</dt>
+                        <dd
+                          className={unavailable && d.label === "Disponibilidade" ? "text-caramel-deep" : "text-mocha"}
+                        >
+                          {d.value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                }
+              />
+            ) : (
+              <ProductOptions
+                product={product}
+                whatsapp={contact.whatsapp}
+                greeting={`Olá, ${getBusiness().shortName}!`}
+                intro={
+                  <>
+                    <p className="mt-5 text-lede text-mocha">{product.description}</p>
+                    {product.dataStatus === "draft" ? (
+                      <Notice tone="setup" title="Produto de exemplo" className="mt-5">
+                        Nome, descrição, imagem e preço servem só para apresentação. O cardápio oficial será confirmado
+                        pela {getBusiness().shortName}.
+                      </Notice>
+                    ) : null}
+                  </>
+                }
+                details={
+                  <dl className="mt-10 divide-y divide-line border-y border-line">
+                    {details.map((d) => (
+                      <div key={d.label} className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr] sm:gap-6">
+                        <dt className="text-sm font-semibold text-espresso">{d.label}</dt>
+                        <dd
+                          className={unavailable && d.label === "Disponibilidade" ? "text-caramel-deep" : "text-mocha"}
+                        >
+                          {d.value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                }
+              />
+            )}
           </div>
         </div>
       </div>

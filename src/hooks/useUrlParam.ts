@@ -23,6 +23,16 @@ export function setUrlParams(update: Record<string, string | null>) {
   listeners.forEach((l) => l());
 }
 
+export function pushUrlParams(update: Record<string, string | null>) {
+  const url = new URL(window.location.href);
+  for (const [key, value] of Object.entries(update)) {
+    if (value) url.searchParams.set(key, value);
+    else url.searchParams.delete(key);
+  }
+  window.history.pushState(window.history.state, "", url);
+  listeners.forEach((l) => l());
+}
+
 export function useUrlParam(key: string) {
   const value = useSyncExternalStore(
     subscribe,

@@ -3,6 +3,8 @@ import { MenuBrowser } from "@/components/menu/MenuBrowser";
 import { getInstagram, getMenu, getScenes } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
 import { business } from "@/content/business";
+import { MenuUnitBar } from "@/components/order/MenuUnitBar";
+import { showDrafts } from "@/lib/site";
 
 export const metadata = pageMetadata({
   title: "Cardápio",
@@ -26,6 +28,7 @@ export default function CardapioPage() {
             : undefined
         }
       />
+      {showDrafts ? <MenuUnitBar /> : null}
       <MenuBrowser
         categories={categories.map(({ id, name, description }) => ({ id, name, description }))}
         products={products}

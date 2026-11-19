@@ -25,6 +25,10 @@
   --color-mocha: #6b625b;
   --color-latte: #a39a92;
   --color-sand: #d6cec6;
+  --color-forest: #234b3a;
+  --color-forest-deep: #183528;
+  --color-mint: #cfe3d6;
+  --color-alert: #a8321f;
 
   --color-line: rgb(36 32 29 / 0.1);
   --color-line-strong: rgb(36 32 29 / 0.2);
@@ -304,6 +308,24 @@
     background: rgb(10 8 7 / 0.5);
   }
 
+  .cart-drawer {
+    margin: 0 0 0 auto;
+    padding: 0;
+    border: 0;
+    width: min(100%, 28rem);
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    color: var(--color-espresso);
+    background: var(--color-porcelain);
+    box-shadow: -24px 0 60px -30px rgb(14 11 9 / 0.5);
+    overscroll-behavior: contain;
+  }
+
+  .cart-drawer::backdrop {
+    background: rgb(10 8 7 / 0.5);
+  }
+
   .modal {
     margin: auto;
     padding: 0;
@@ -475,6 +497,82 @@
 
   .press:active {
     transform: scale(var(--press));
+  }
+
+  .cart-drawer {
+    transition:
+      transform var(--dur-sheet) var(--ease-drawer),
+      overlay var(--dur-sheet) allow-discrete,
+      display var(--dur-sheet) allow-discrete;
+    transform: translateX(100%);
+  }
+
+  .cart-drawer[open] {
+    transform: none;
+  }
+
+  .cart-drawer::backdrop {
+    transition:
+      opacity var(--dur-hover) var(--ease-hover),
+      overlay var(--dur-hover) allow-discrete,
+      display var(--dur-hover) allow-discrete;
+    opacity: 0;
+  }
+
+  .cart-drawer[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .cart-drawer[open] {
+      transform: translateX(100%);
+    }
+
+    .cart-drawer[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  .toast {
+    animation: toast-in var(--dur-ui) var(--ease-out) both;
+  }
+
+  .badge-bump {
+    animation: badge-bump 320ms var(--ease-out);
+  }
+
+  .check-ring {
+    stroke-dasharray: 160;
+    animation: check-draw 700ms var(--ease-out) both;
+  }
+
+  .check-mark {
+    --len: 40;
+    stroke-dasharray: 40;
+    animation: check-draw 420ms var(--ease-out) 380ms both;
+  }
+
+  .step-enter {
+    animation: results-enter var(--dur-ui) var(--ease-out) both;
+  }
+
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.98);
+    }
+  }
+
+  @keyframes badge-bump {
+    40% {
+      transform: scale(1.25);
+    }
+  }
+
+  @keyframes check-draw {
+    from {
+      stroke-dashoffset: var(--len, 160);
+    }
   }
 
   @supports (animation-timeline: view()) {
