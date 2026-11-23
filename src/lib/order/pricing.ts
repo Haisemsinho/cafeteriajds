@@ -64,7 +64,7 @@ export function defaultSelection(product: PricedProduct): Selection {
 
 export function unitPrice(product: PricedProduct, selection: Selection): UnitPrice {
   const size = product.groups.find((g) => g.id === "tamanho");
-  const sizeId = selection.choices.tamanho?.[0];
+  const sizeId = selection.choices.tamanho?.[0] ?? size?.defaultChoice;
   const variant = size ? product.variants?.find((v) => v.id === sizeId) : undefined;
   const baseCents = variant?.priceCents ?? product.priceCents;
   const base = {
@@ -165,4 +165,8 @@ export const MAX_QUANTITY = 20;
 export function clampQuantity(n: number) {
   if (!Number.isFinite(n)) return 1;
   return Math.min(MAX_QUANTITY, Math.max(1, Math.round(n)));
+}
+
+export function needsChoice(product: Pick<PricedProduct, "groups">) {
+  return product.groups.some((g) => g.required && !g.defaultChoice && !g.showWhen);
 }

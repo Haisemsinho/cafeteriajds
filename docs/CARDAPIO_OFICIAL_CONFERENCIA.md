@@ -4,6 +4,20 @@ Transcrição recebida em 23/11/2026 (`src/content/import/cardapio-transcrito-20
 
 Não recebi as fotos, só o arquivo transcrito. A comparação de nomes e preços com a foto precisa ser feita pela JDS ou por quem tem as fotos.
 
+## Processo de conferência com as fotos
+
+Os testes automáticos só garantem que o site mostra exatamente o que está no JSON. Eles não dizem se o JSON está igual ao cardápio impresso. Isso só se confere olhando as fotos.
+
+1. **Fotos originais:** pedir à JDS as fotos do cardápio no tamanho original (de preferência enviadas como documento no WhatsApp, para não perder nitidez). Uma foto por página ou quadro, com data e unidade.
+2. **Planilha:** abrir `docs/conferencia-cardapio-2026-11-23.csv` no Excel ou Google Planilhas. Ela já vem com os 46 itens transcritos e colunas vazias para marcar.
+3. **Conferência em dupla:** uma pessoa lê a foto em voz alta (nome, preço, descrição), a outra marca S ou N na planilha. Não corrigir de memória: se divergir, escrever o valor certo nas colunas "correto".
+4. **Itens não transcritos:** conferir também se algum produto da foto ficou fora da lista. Acrescentar no fim da planilha.
+5. **Unidade e disponibilidade:** a JDS preenche para cada item. Se as duas unidades tiverem preços diferentes, uma planilha por unidade.
+6. **Devolução:** com a planilha preenchida e assinada (coluna "conferido_por"), atualizar o JSON: corrigir valores, preencher `branchId`, `stockStatus` e `published: true` só nos itens com tudo S. Rodar `npm run check`.
+7. **Publicação:** só depois de todos os itens publicados conferidos, definir `MENU_SOURCE=oficial` na Vercel.
+
+Situação em 23/11/2026: as fotos não estão no projeto nem neste computador. A conferência com a foto ainda não foi feita.
+
 ## Categorias
 
 - Cafés: 5 itens

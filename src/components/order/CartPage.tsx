@@ -7,6 +7,7 @@ import { formatPrice, plural } from "@/lib/format";
 import { orderTotals } from "@/lib/order/pricing";
 import { CartLines, DemoBadge, EmptyCart, SummaryRows } from "./CartLines";
 import { useResolvedCart } from "./OrderContext";
+import { CheckoutLink } from "./CheckoutLink";
 import { UnitPicker } from "./UnitPicker";
 
 export function CartPage() {
@@ -75,14 +76,12 @@ export function CartPage() {
                     : "Remova os itens indisponíveis para continuar."}
                 </p>
               ) : null}
-              <Link
-                href="/finalizar"
-                onClick={(e) => {
-                  if (!canContinue) {
-                    e.preventDefault();
-                    setTried(true);
-                    document.getElementById("unidade")?.scrollIntoView({ block: "center", behavior: "smooth" });
-                  }
+              <CheckoutLink
+                guard={() => {
+                  if (canContinue) return true;
+                  setTried(true);
+                  document.getElementById("unidade")?.scrollIntoView({ block: "center", behavior: "smooth" });
+                  return false;
                 }}
                 className="press flex min-h-14 w-full items-center justify-between gap-3 rounded-full bg-caramel-deep px-6 text-base font-semibold text-white shadow-[0_10px_24px_-12px_rgb(156_95_34/0.8)] hover:bg-caramel-dark"
               >
@@ -91,7 +90,7 @@ export function CartPage() {
                   <Icon name="arrowRight" size={18} />
                 </span>
                 <span className="tabular-nums">{formatPrice(totals.subtotalCents)}</span>
-              </Link>
+              </CheckoutLink>
             </div>
           </aside>
         </div>

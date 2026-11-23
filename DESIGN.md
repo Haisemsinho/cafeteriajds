@@ -355,6 +355,7 @@ Movimento: a entrada dos cartões ao rolar é um dos momentos ligados à rolagem
 - **Barra de compra no celular:** fixa no rodapé da coluna do produto e do carrinho, com quantidade e total no próprio botão. No checkout os botões ficam no fim do formulário, para o teclado nunca cobrir campo.
 - **Carrinho:** gaveta lateral de 448px no desktop, página própria no celular. Remover mostra aviso com "Desfazer".
 - **Checkout:** quatro etapas (Embalagem, Endereço, Revisão, Pagamento) com barra de progresso escrita, uma decisão por tela, campos de 52px e erro abaixo do campo.
+- **Sugestão antes do checkout:** no desktop, modal de 736px com a foto do produto à esquerda em altura total e o texto à direita (título em Instrument Serif, produto em Inter 600, preço em caramelo). No celular, gaveta inferior com a foto no topo e botões de 52 a 56px. Entrada: 260ms com escala 0,97 no desktop, 420ms deslizando no celular; parado com movimento reduzido. Sem contador nem urgência.
 - **Aviso (toast):** faixa Torra Escura no topo, 260ms de entrada, some em 4 a 6 segundos e pausa com o mouse ou o foco.
 
 ### Photo Badge

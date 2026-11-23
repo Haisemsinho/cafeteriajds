@@ -326,6 +326,42 @@
     background: rgb(10 8 7 / 0.5);
   }
 
+  .crosssell {
+    margin: auto 0 0;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    max-width: none;
+    max-height: 92dvh;
+    overflow-y: auto;
+    border-radius: 1.75rem 1.75rem 0 0;
+    color: var(--color-espresso);
+    background: var(--color-porcelain);
+    box-shadow: 0 -24px 60px -30px rgb(14 11 9 / 0.5);
+    overscroll-behavior: contain;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .crosssell::backdrop {
+    background: rgb(10 8 7 / 0.55);
+  }
+
+  @media (min-width: 768px) {
+    .crosssell {
+      margin: auto;
+      width: min(100% - 3rem, 46rem);
+      max-height: min(100dvh - 3rem, 40rem);
+      border-radius: 1.75rem;
+      overflow: hidden;
+      box-shadow: 0 40px 80px -30px rgb(14 11 9 / 0.55);
+    }
+
+    .crosssell-body {
+      max-height: min(100dvh - 3rem, 40rem);
+      overflow-y: auto;
+    }
+  }
+
   .modal {
     margin: auto;
     padding: 0;
@@ -537,6 +573,65 @@
 
     .cart-drawer[open]::backdrop {
       opacity: 0;
+    }
+  }
+
+  .crosssell {
+    transition:
+      transform var(--dur-sheet) var(--ease-drawer),
+      opacity var(--dur-ui) var(--ease-out),
+      overlay var(--dur-sheet) allow-discrete,
+      display var(--dur-sheet) allow-discrete;
+    transform: translateY(100%);
+  }
+
+  .crosssell[open] {
+    transform: none;
+  }
+
+  .crosssell::backdrop {
+    transition:
+      opacity var(--dur-hover) var(--ease-hover),
+      overlay var(--dur-hover) allow-discrete,
+      display var(--dur-hover) allow-discrete;
+    opacity: 0;
+  }
+
+  .crosssell[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .crosssell[open] {
+      transform: translateY(100%);
+    }
+
+    .crosssell[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .crosssell {
+      transition:
+        transform var(--dur-ui) var(--ease-out),
+        opacity var(--dur-ui) var(--ease-out),
+        overlay var(--dur-ui) allow-discrete,
+        display var(--dur-ui) allow-discrete;
+      transform: scale(0.97);
+      opacity: 0;
+    }
+
+    .crosssell[open] {
+      transform: none;
+      opacity: 1;
+    }
+
+    @starting-style {
+      .crosssell[open] {
+        transform: scale(0.97);
+        opacity: 0;
+      }
     }
   }
 

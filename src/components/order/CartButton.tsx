@@ -8,6 +8,7 @@ import { cn } from "@/lib/cn";
 import { formatPrice } from "@/lib/format";
 import { orderTotals } from "@/lib/order/pricing";
 import { CartLines, DemoBadge, EmptyCart } from "./CartLines";
+import { CheckoutLink } from "./CheckoutLink";
 import { useResolvedCart } from "./OrderContext";
 
 export function CartButton({ className, compact }: { className?: string; compact?: boolean }) {
@@ -94,14 +95,13 @@ export function CartButton({ className, compact }: { className?: string; compact
                 </div>
                 <p className="text-sm text-mocha">Embalagem e entrega são calculadas na finalização.</p>
                 <div className="mt-4 grid gap-2">
-                  <Link
-                    href="/finalizar"
-                    onClick={close}
+                  <CheckoutLink
+                    onIntercept={close}
                     className="press inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-caramel-deep px-6 font-semibold text-white hover:bg-caramel-dark"
                   >
                     Finalizar pedido
                     <Icon name="arrowRight" size={18} />
-                  </Link>
+                  </CheckoutLink>
                   <Link
                     href="/carrinho"
                     onClick={close}

@@ -2,12 +2,30 @@ import type { MenuCategory, MenuProduct } from "@/types/content";
 import { productPhotos } from "./illustrative";
 
 export const categories: MenuCategory[] = [
-  { id: "cafes-tradicionais", name: "Cafés tradicionais", order: 1, status: "draft" },
-  { id: "cafes-especiais", name: "Cafés especiais", order: 2, status: "draft" },
-  { id: "bebidas-geladas", name: "Bebidas geladas", order: 3, status: "draft" },
-  { id: "chocolates", name: "Chocolates e outras bebidas", order: 4, status: "draft" },
-  { id: "salgados", name: "Salgados", order: 5, status: "draft" },
-  { id: "doces", name: "Doces e sobremesas", order: 6, status: "draft" },
+  {
+    id: "cafes-tradicionais",
+    name: "Cafés tradicionais",
+    order: 1,
+    status: "draft",
+    roles: ["bebida", "cafe", "bebida-quente"],
+  },
+  {
+    id: "cafes-especiais",
+    name: "Cafés especiais",
+    order: 2,
+    status: "draft",
+    roles: ["bebida", "cafe", "bebida-quente"],
+  },
+  { id: "bebidas-geladas", name: "Bebidas geladas", order: 3, status: "draft", roles: ["bebida", "bebida-gelada"] },
+  {
+    id: "chocolates",
+    name: "Chocolates e outras bebidas",
+    order: 4,
+    status: "draft",
+    roles: ["bebida", "bebida-quente"],
+  },
+  { id: "salgados", name: "Salgados", order: 5, status: "draft", roles: ["salgado"] },
+  { id: "doces", name: "Doces e sobremesas", order: 6, status: "draft", roles: ["doce", "sobremesa"] },
   { id: "cafe-da-manha", name: "Cafés da manhã", order: 7, status: "draft" },
   { id: "combos", name: "Combos", order: 8, status: "draft" },
   { id: "sazonais", name: "Produtos sazonais", order: 9, status: "draft" },

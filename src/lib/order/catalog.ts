@@ -3,7 +3,9 @@ import { packagingOptions, units as rawUnits } from "@/content/units";
 import { getBrand, getMenu } from "@/lib/content";
 import { storeUnitSchema } from "@/lib/schemas";
 import { showDrafts } from "@/lib/site";
-import type { MenuProduct, StoreUnit, UnitId } from "@/types/content";
+import type { CategoryRole, MenuProduct, StoreUnit, UnitId } from "@/types/content";
+import { pairingRules, productPairs } from "@/content/pairings";
+import type { RecommendConfig } from "@/lib/recommend/engine";
 import { z } from "zod";
 import type { OptionGroup } from "./pricing";
 
@@ -17,7 +19,12 @@ const allUnits = parsedUnits.data;
 
 const visible = (status: "verified" | "draft") => status === "verified" || (showDrafts && status === "draft");
 
-export type CatalogItem = MenuProduct & { categoryName: string; groups: OptionGroup[]; unitIds: UnitId[] };
+export type CatalogItem = MenuProduct & {
+  categoryName: string;
+  groups: OptionGroup[];
+  unitIds: UnitId[];
+  roles: CategoryRole[];
+};
 
 export type PublicUnit = Omit<StoreUnit, "delivery"> & { delivery?: StoreUnit["delivery"] };
 
@@ -27,6 +34,8 @@ export type OrderConfig = {
   units: PublicUnit[];
   packaging: { id: string; label: string; description: string; priceCents: number }[];
   catalog: CatalogItem[];
+  pairings: RecommendConfig;
+  requireConfirmedAvailability: boolean;
 };
 
 function groupsFor(product: MenuProduct): OptionGroup[] {
@@ -85,6 +94,7 @@ export function getUnits(): PublicUnit[] {
 export function getOrderConfig(): OrderConfig {
   const { categories, products } = getMenu();
   const names = new Map(categories.map((c) => [c.id, c.name]));
+  const roles = new Map(categories.map((c) => [c.id, c.roles ?? []]));
   const allIds = allUnits.map((u) => u.id);
   return {
     enabled: showDrafts,
@@ -96,6 +106,9 @@ export function getOrderConfig(): OrderConfig {
       categoryName: names.get(p.categoryId) ?? "",
       groups: groupsFor(p),
       unitIds: p.units?.length ? p.units : allIds,
+      roles: roles.get(p.categoryId) ?? [],
     })),
+    pairings: { rules: pairingRules, pairs: productPairs },
+    requireConfirmedAvailability: !showDrafts,
   };
 }

@@ -207,6 +207,25 @@ export function patchCheckout(patch: Partial<CheckoutDraft>) {
 
 export function resetCheckout() {
   checkout.write(emptyCheckout);
+  try {
+    window.sessionStorage.removeItem(SUGGESTION_KEY);
+  } catch {}
+}
+
+const SUGGESTION_KEY = "jds:sugestao-vista";
+
+export function readSuggestionSeen() {
+  try {
+    return window.sessionStorage.getItem(SUGGESTION_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function markSuggestionSeen() {
+  try {
+    window.sessionStorage.setItem(SUGGESTION_KEY, "1");
+  } catch {}
 }
 
 export type OrderLine = {

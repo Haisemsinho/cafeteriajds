@@ -6,6 +6,7 @@ import {
   defaultSelection,
   describeSelection,
   lineTotal,
+  needsChoice,
   orderTotals,
   sameSelection,
   unitPrice,
@@ -174,4 +175,15 @@ test("validação de presente e endereço", () => {
   assert.deepEqual(validateAddress(addr, ["São João do Manhuaçu"]), {});
   assert.ok(validateAddress({ ...addr, city: "Manhuaçu" }, ["São João do Manhuaçu"]).city);
   assert.ok(validateAddress({ ...addr, phone: "123" }, ["São João do Manhuaçu"]).phone);
+});
+
+test("item que pede escolha antes de ir ao carrinho", () => {
+  assert.equal(needsChoice(cafe), true);
+  assert.equal(needsChoice({ groups: cafe.groups.filter((g) => g.id !== "temperatura") }), false);
+});
+
+test("sem tamanho gravado, vale o tamanho padrão e nunca preço zero", () => {
+  const price = unitPrice(cafe, { choices: {}, note: "" });
+  assert.equal(price.unitCents, 1200);
+  assert.equal(price.known, true);
 });

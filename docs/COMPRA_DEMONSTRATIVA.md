@@ -47,3 +47,10 @@ Preços, adicionais, embalagens, taxas de entrega (R$ 5,00 Centro, R$ 8,00 BR 11
 - Gateway de pagamento (Pix e cartão em página segura do provedor, nunca campos de cartão no site), conciliação e estorno.
 - Área de entrega real (por bairro ou CEP), taxas e horários por unidade, e se haverá retirada no balcão.
 - Consulta de CEP, conta do cliente (opcional), LGPD (política de privacidade, consentimento, retenção), emissão fiscal e painel para a equipe receber os pedidos.
+
+## Regressão: duas falhas conhecidas (investigadas em 23/11/2026)
+
+A suíte extra de regressão tinha duas falhas desde a entrada da compra demonstrativa (commit `a56c356`):
+
+1. **"Primeiro card mais alto que antes"** (841px contra o limite de 806px): causa real. O seletor de unidade entrou entre o topo do cardápio e a busca e empurrou os produtos para baixo, desfazendo parte de uma correção da crítica de design. Corrigido: o seletor do cardápio ficou compacto (sem a linha de endereço), com menos espaço acima.
+2. **"Produto sem WhatsApp mostra Como visitar"**: teste desatualizado. Na versão de apresentação, o configurador de compra substitui os botões "Como visitar" e "Ver outros produtos" de propósito. Fora da versão de apresentação, o produto continua com "Como visitar". O teste passou a verificar "Adicionar ao carrinho" na apresentação.
