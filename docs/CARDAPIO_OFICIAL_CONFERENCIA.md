@@ -2,7 +2,113 @@
 
 Transcrição recebida em 23/11/2026 (`src/content/import/cardapio-transcrito-2026-11-23.json`), feita a partir de fotos do cardápio. 46 produtos em 7 categorias. **Nada aqui está publicado como oficial.**
 
-Não recebi as fotos, só o arquivo transcrito. A comparação de nomes e preços com a foto precisa ser feita pela JDS ou por quem tem as fotos.
+As fotos do cardápio foram recebidas depois e a conferência documental está na seção "Resultado da conferência com as fotos".
+
+## Resultado da conferência com as fotos (23/11/2026)
+
+Conferência documental feita com 4 fotos do cardápio impresso (uma da folha inteira, duas da metade direita e uma da metade esquerda), anexadas pelo responsável do projeto. Os arquivos HEIC e JPG originais não estavam no computador; foram usadas as cópias anexadas na conversa. Onde o reflexo do plástico cobre um trecho em uma foto, o trecho foi lido em outra.
+
+Nada foi alterado no JSON nem no site. Os 46 itens continuam não publicados.
+
+### Resumo
+
+- **Itens na foto:** 46, em 7 categorias (Cafés 5, Drinks Quentes 7, Bebidas 8, Sobremesas 6, Bebidas Geladas 6, Bolos 3, Salgados 11). Todos estão no JSON.
+- **Produtos não transcritos:** nenhum. A foto mostra um lado da folha; não há como saber se existe verso.
+- **Nomes:** 46 de 46 iguais à foto.
+- **Preços:** 46 de 46 iguais à foto.
+- **Categorias:** 46 de 46 iguais aos títulos impressos.
+- **Opções:** as 4 com escolha (borda, sucos, soda italiana, vitamina) iguais à foto.
+- **Descrições:** 39 iguais (com a ressalva de formato abaixo), 2 só com diferença de maiúscula, 4 com diferença de texto e 1 com grafia corrigida no JSON.
+- **Unidade:** o cardápio impresso não indica unidade. Continua pendente.
+- **Marca:** o cardápio impresso usa "CAFETERIA JDS" no selo; o site usa "JDS Cafeteria". Só registro, sem alteração.
+
+**Diferença de formato em todas as descrições:** na foto elas vêm entre parênteses e em minúscula; o JSON tirou os parênteses e pôs maiúscula na primeira letra (exceto "Expresso com borda", que manteve os parênteses). Não muda o conteúdo.
+
+### Divergências reais entre o JSON e a foto
+
+| Item | Na foto | No JSON | Tipo |
+| --- | --- | --- | --- |
+| Milk-shake | (chocolate, **browne**, natarango) | Chocolate, **brownie**, natarango | Grafia corrigida sem confirmação |
+| Petit Gateau | sorvete de creme **e** chantilly **e** calda de chocolate | sorvete de creme**,** chantilly e calda de chocolate | Texto |
+| Petit Gateau na Taça | chantilly**,** calda de chocolate | chantilly **e** calda de chocolate | Texto |
+| Taça Sensação | morango**,** calda de morango | morango **e** calda de morango | Texto |
+| Cativantt | chantilly**,** calda de chocolate | chantilly **e** calda de chocolate | Texto |
+| Açaí JDS | bis | Bis | Maiúscula |
+| Coffee Oreo | oreo | Oreo | Maiúscula |
+
+Nenhuma divergência de nome, preço, categoria ou opção.
+
+### Grafias impressas que precisam de confirmação da JDS
+
+Estão no cardápio exatamente como no JSON, mas podem ser erro de impressão. Não foram corrigidas.
+
+- "natarango" (Taça Sensação e Milk-shake).
+- "browne" (Milk-shake): no JSON está "brownie".
+- "Biscof" (nome e descrição da Delícia Biscof).
+- "Cativantt".
+- "Capuccino" (Tradicional e Cremoso).
+- "Expresso" (Café Expresso, Expresso com borda).
+- Mocha Tradicional com "calda de caramelo": impresso assim, confirmar se é intencional.
+
+### Conferência item a item
+
+| # | Nome | Preço | Nome confere | Preço confere | Categoria confere | Descrição confere | Opções conferem | Observação |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | Café Expresso | 8,90 | S | S | S | S (sem descrição impressa) | - |  |
+| 2 | Hario V60 300ml | 18,90 | S | S | S | S (sem descrição impressa) | - |  |
+| 3 | Hario V60 500ml | 23,90 | S | S | S | S (sem descrição impressa) | - |  |
+| 4 | Prensa Francesa 300ml | 21,90 | S | S | S | S (sem descrição impressa) | - |  |
+| 5 | Prensa Francesa 500ml | 25,90 | S | S | S | S (sem descrição impressa) | - |  |
+| 6 | Expresso com borda | 11,50 | S | S | S | S | S |  |
+| 7 | Capuccino Tradicional | 14,90 | S | S | S | S (sem descrição impressa) | - | "Capuccino" está impresso assim. |
+| 8 | Capuccino Cremoso | 22,50 | S | S | S | S (sem descrição impressa) | - | "Capuccino" está impresso assim. |
+| 9 | Mocha Paçoca | 19,90 | S | S | S | S | - |  |
+| 10 | Mocha Tradicional | 17,90 | S | S | S | S | - | Impresso "calda de caramelo": a transcrição está fiel. Confirmar com a JDS se é intencional. |
+| 11 | Chocolate Quente | 19,90 | S | S | S | S (sem descrição impressa) | - |  |
+| 12 | Coffee Nutella | 23,50 | S | S | S | S (sem descrição impressa) | - |  |
+| 13 | Suco | 9,90 | S | S | S | S | S | Na foto os sabores aparecem junto ao nome: "Suco (maracujá, morango, abacaxi com hortelã, detox)". |
+| 14 | Água Mineral | 3,50 | S | S | S | S (sem descrição impressa) | - |  |
+| 15 | Água com Gás | 4,50 | S | S | S | S (sem descrição impressa) | - | Reflexo cobre o nome na foto inteira; legível na foto da metade esquerda. |
+| 16 | H2O | 8,50 | S | S | S | S (sem descrição impressa) | - | Reflexo cobre o nome na foto inteira; legível na foto da metade esquerda. |
+| 17 | Red Bull | 16,90 | S | S | S | S (sem descrição impressa) | - | Reflexo cobre parte do nome na foto inteira; legível na foto da metade esquerda. |
+| 18 | Refrigerante Lata | 7,50 | S | S | S | S | - |  |
+| 19 | Long Neck | 14,00 | S | S | S | S | - |  |
+| 20 | Soda Italiana | 19,90 | S | S | S | S | S |  |
+| 21 | Petit Gateau | 22,50 | S | S | S | N | - | Na foto: "sorvete de creme e chantilly e calda". No JSON: "sorvete de creme, chantilly e calda". |
+| 22 | Petit Gateau na Taça | 25,90 | S | S | S | N | - | Na foto: "chantilly, calda de chocolate". No JSON: "chantilly e calda de chocolate". |
+| 23 | Brownie | 24,50 | S | S | S | S | - |  |
+| 24 | Taça Sensação | 28,50 | S | S | S | N | - | Na foto: "morango, calda de morango". No JSON: "morango e calda de morango". "natarango" está impresso assim. |
+| 25 | Delícia Biscof | 25,90 | S | S | S | S | - | "Biscof" está impresso assim (nome e descrição). |
+| 26 | Açaí JDS | 29,90 | S | S | S | S (só maiúscula/minúscula) | - | Na foto "bis" em minúscula; no JSON "Bis". |
+| 27 | Affogato | 21,90 | S | S | S | S | - | Reflexo cobre o primeiro dígito numa foto; 21,90 legível nas outras. |
+| 28 | Coffee Neve | 22,50 | S | S | S | S | - |  |
+| 29 | Coffee Oreo | 26,90 | S | S | S | S (só maiúscula/minúscula) | - | Na foto "oreo" em minúscula; no JSON "Oreo". |
+| 30 | Ice JDS | 19,50 | S | S | S | S | - |  |
+| 31 | Milk-shake | 21,90 | S | S | S | N | - | Na foto está impresso "browne"; o JSON corrigiu para "brownie" sem confirmação. "natarango" está impresso assim. |
+| 32 | Vitamina | 14,50 | S | S | S | S | S |  |
+| 33 | Bolo (fatia) | 9,90 | S | S | S | S (sem descrição impressa) | - |  |
+| 34 | Broa | 9,90 | S | S | S | S (sem descrição impressa) | - |  |
+| 35 | Cativantt | 17,90 | S | S | S | N | - | Na foto: "chantilly, calda de chocolate". No JSON: "chantilly e calda de chocolate". "Cativantt" está impresso assim. |
+| 36 | Misto Quente | 12,90 | S | S | S | S (sem descrição impressa) | - |  |
+| 37 | Empada Coquetel | 10,50 | S | S | S | S (sem descrição impressa) | - |  |
+| 38 | Tortinha de Frango com Catupiry | 13,90 | S | S | S | S (sem descrição impressa) | - |  |
+| 39 | Salgado Assado Presunto e Mussarela | 10,50 | S | S | S | S (sem descrição impressa) | - |  |
+| 40 | Croissant | 15,90 | S | S | S | S (sem descrição impressa) | - |  |
+| 41 | Pão de Queijo (coquetel com 5 und) | 10,90 | S | S | S | S (sem descrição impressa) | - |  |
+| 42 | Quiche de Alho Poró | 18,90 | S | S | S | S (sem descrição impressa) | - |  |
+| 43 | Pão com Ovo Tradicional | 6,50 | S | S | S | S (sem descrição impressa) | - |  |
+| 44 | Pão com Queijo Minas | 6,50 | S | S | S | S (sem descrição impressa) | - |  |
+| 45 | Cuscuz Mineirinho | 14,90 | S | S | S | S | - | Descrição coberta por reflexo numa foto; legível na outra. |
+| 46 | Mineirinho Gourmet | 12,90 | S | S | S | S | - | Descrição coberta por reflexo numa foto; legível na outra. |
+
+### O que ainda falta para publicar
+
+1. A JDS decidir as 7 divergências acima (manter como impresso ou corrigir).
+2. Confirmar as grafias impressas.
+3. Informar a unidade deste cardápio (Centro, BR 116 ou ambas) e enviar o cardápio da outra unidade, se for diferente.
+4. Informar disponibilidade, sabores de refrigerante e long neck, e se Milk-shake tem sabores à escolha.
+5. Confirmar se o cardápio tem verso.
+6. Assinar a planilha (coluna "conferido_por") e só então marcar `published: true` e `branchId` no JSON.
 
 ## Processo de conferência com as fotos
 
@@ -16,7 +122,7 @@ Os testes automáticos só garantem que o site mostra exatamente o que está no 
 6. **Devolução:** com a planilha preenchida e assinada (coluna "conferido_por"), atualizar o JSON: corrigir valores, preencher `branchId`, `stockStatus` e `published: true` só nos itens com tudo S. Rodar `npm run check`.
 7. **Publicação:** só depois de todos os itens publicados conferidos, definir `MENU_SOURCE=oficial` na Vercel.
 
-Situação em 23/11/2026: as fotos não estão no projeto nem neste computador. A conferência com a foto ainda não foi feita.
+Situação em 23/11/2026: conferência documental com as fotos feita (resultado abaixo). Falta a confirmação da JDS.
 
 ## Categorias
 
@@ -95,8 +201,8 @@ Situação em 23/11/2026: as fotos não estão no projeto nem neste computador. 
 1. Este cardápio é da unidade Centro, da BR 116 ou das duas? Os preços são iguais nas duas?
 2. "natarango" (Taça Sensação e Milk-shake): é assim mesmo?
 3. "Biscof" (Delícia Biscof) e "Cativantt": é essa a grafia?
-4. Mocha Tradicional leva calda de caramelo mesmo?
-5. Milk-shake: chocolate, brownie e natarango são sabores à escolha?
+4. Mocha Tradicional leva calda de caramelo mesmo? (Está impresso assim.)
+5. Milk-shake: chocolate, browne (impresso assim) e natarango são sabores à escolha?
 6. Quais sabores de refrigerante lata e long neck?
 7. Long Neck: confirma que fica fora do pedido pelo site (venda só no balcão, com confirmação de idade)?
 8. Quais itens estão disponíveis hoje e quais devem aparecer em destaque?
