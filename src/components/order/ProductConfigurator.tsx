@@ -20,6 +20,7 @@ import {
   type Selection,
 } from "@/lib/order/pricing";
 import { addToCart, setUnit, updateLine, useCart, useUnit } from "@/lib/order/store";
+import { orderBlock } from "@/lib/order/rules";
 import { showToast } from "@/lib/order/toast";
 import { OptionIcon, hasOptionIcon } from "./OptionIcon";
 import { useOrderConfig } from "./OrderContext";
@@ -81,7 +82,8 @@ export function ProductConfigurator({ slug, intro, details }: Props) {
 
   const unit = units.find((u) => u.id === unitId);
   const inUnit = !unitId || product.unitIds.includes(unitId);
-  const available = product.availability === "available";
+  const block = orderBlock(product);
+  const available = block === null;
   const otherUnit = units.find((u) => product.unitIds.includes(u.id));
 
   const pick = (group: OptionGroup, id: string) => {
@@ -130,9 +132,11 @@ export function ProductConfigurator({ slug, intro, details }: Props) {
     <>
       {blocked ? (
         <p className="mb-2 text-sm font-medium text-caramel-dark">
-          {!available
-            ? "Este item está indisponível no momento."
-            : `Este item não está disponível na unidade ${unit?.name}.`}
+          {block === "restricted"
+            ? "Venda somente na cafeteria, com confirmação de idade. Este item não pode ser pedido pelo site."
+            : !available
+              ? "Este item está indisponível no momento."
+              : `Este item não está disponível na unidade ${unit?.name}.`}
         </p>
       ) : null}
       <button
@@ -161,9 +165,9 @@ export function ProductConfigurator({ slug, intro, details }: Props) {
             {formatPrice(price.unitCents)}
           </span>
           <span className="text-sm text-mocha">por unidade, com as opções escolhidas</span>
-          {product.dataStatus === "draft" ? (
+          {product.dataStatus !== "verified" ? (
             <span className="rounded-full bg-cream-soft px-2.5 py-1 text-xs font-semibold text-caramel-deep">
-              preço de exemplo
+              {product.dataStatus === "review" ? "preço a conferir" : "preço de exemplo"}
             </span>
           ) : null}
         </p>

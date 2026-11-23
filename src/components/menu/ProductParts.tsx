@@ -52,8 +52,11 @@ export function ProductVisual({ product, sizes, className, idSuffix = "", label 
     );
   }
   return (
-    <span className="absolute inset-0 grid place-items-center text-latte">
+    <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-oat text-latte">
       <Icon name={product.temperature === "iced" ? "iced" : "cup"} size={40} strokeWidth={1.2} />
+      {label && product.dataStatus === "review" ? (
+        <span className="text-[0.6875rem] font-medium text-mocha">Foto a enviar</span>
+      ) : null}
     </span>
   );
 }
@@ -67,7 +70,7 @@ export function ProductTags({
   className?: string;
   draft?: boolean;
 }) {
-  const showDraft = draft && product.dataStatus === "draft";
+  const showDraft = draft && product.dataStatus !== "verified";
   if (!showDraft && !product.tags?.length) return null;
   return (
     <span className={cn("flex flex-wrap gap-1.5", className)}>
@@ -76,7 +79,7 @@ export function ProductTags({
           {tagLabels[tag]}
         </Tag>
       ))}
-      {showDraft ? <DraftTag /> : null}
+      {showDraft ? <DraftTag label={product.dataStatus === "review" ? "Em conferência" : "Exemplo"} /> : null}
     </span>
   );
 }
@@ -113,7 +116,11 @@ export function ProductPrice({
       >
         {formatPrice(price)}
       </span>
-      {product.dataStatus === "draft" ? <span className="mt-1 text-xs text-mocha">preço de exemplo</span> : null}
+      {product.dataStatus !== "verified" ? (
+        <span className="mt-1 text-xs text-mocha">
+          {product.dataStatus === "review" ? "preço a conferir" : "preço de exemplo"}
+        </span>
+      ) : null}
     </span>
   );
 }

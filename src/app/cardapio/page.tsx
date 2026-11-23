@@ -15,6 +15,8 @@ export const metadata = pageMetadata({
 export default function CardapioPage() {
   const { categories, products } = getMenu();
   const hasDrafts = products.some((p) => p.dataStatus === "draft");
+  const inReview = products.some((p) => p.dataStatus === "review");
+  const unitPending = products.some((p) => p.unitStatus === "pending");
 
   return (
     <>
@@ -22,13 +24,24 @@ export default function CardapioPage() {
         title="Cardápio"
         backdrop={getScenes().menu}
         compact
+        draftLabel={inReview ? "Em conferência" : undefined}
         draftNote={
-          hasDrafts
-            ? `Itens, fotos ilustrativas e preços de exemplo. O cardápio oficial entra quando a ${business.shortName} confirmar produtos e preços.`
-            : undefined
+          inReview
+            ? `Cardápio transcrito da foto enviada pela ${business.shortName}, em conferência. Preços, unidade e disponibilidade ainda não foram confirmados.`
+            : hasDrafts
+              ? `Itens, fotos ilustrativas e preços de exemplo. O cardápio oficial entra quando a ${business.shortName} confirmar produtos e preços.`
+              : undefined
         }
       />
-      {showDrafts ? <MenuUnitBar /> : null}
+      {showDrafts ? (
+        <MenuUnitBar
+          note={
+            unitPending
+              ? "Ainda não sabemos de qual unidade é este cardápio. Até a confirmação, ele aparece igual nas duas."
+              : "Na demonstração, as duas unidades usam o mesmo cardápio de exemplo."
+          }
+        />
+      ) : null}
       <MenuBrowser
         categories={categories.map(({ id, name, description }) => ({ id, name, description }))}
         products={products}

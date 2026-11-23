@@ -14,10 +14,21 @@ type Props = {
   backdrop?: Photo;
   compact?: boolean;
   draftNote?: string;
+  draftLabel?: string;
   children?: ReactNode;
 };
 
-export function PageHero({ title, intro, photo, photoRatio = "4/3", backdrop, compact, draftNote, children }: Props) {
+export function PageHero({
+  title,
+  intro,
+  photo,
+  photoRatio = "4/3",
+  backdrop,
+  compact,
+  draftNote,
+  draftLabel,
+  children,
+}: Props) {
   const dark = Boolean(backdrop);
   const text = (
     <div className="max-w-2xl">
@@ -34,7 +45,7 @@ export function PageHero({ title, intro, photo, photoRatio = "4/3", backdrop, co
           className={cn("hero-in mt-6 flex items-start gap-2.5 text-sm", dark ? "text-white/80" : "text-mocha")}
           style={delay(3)}
         >
-          <DraftTag className="mt-px shrink-0" />
+          <DraftTag className="mt-px shrink-0" label={draftLabel} />
           {draftNote}
         </p>
       ) : null}

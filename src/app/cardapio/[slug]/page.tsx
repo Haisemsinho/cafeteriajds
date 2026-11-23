@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return { title: "Produto não encontrado" };
   return {
     title: `${product.name} | Cardápio`,
-    description: product.description,
+    description: product.description || `${product.name} no cardápio.`,
     alternates: { canonical: `/cardapio/${product.slug}` },
     openGraph: {
       title: `${product.name} | ${getBusiness().name}`,
@@ -70,7 +70,13 @@ export default async function ProductPage({ params }: Props) {
         ? `Contém ${product.allergens.contains.join(", ")}. Informação revisada em ${formatDate(product.allergens.checkedAt)}.`
         : "Tem alguma alergia ou restrição? Fale com a equipe antes de pedir.",
     },
-    { label: "Disponibilidade", value: unavailable ?? "Disponível" },
+    product.unitStatus === "pending"
+      ? { label: "Unidade", value: "A confirmar. O cardápio fotografado não indica se é da unidade Centro ou BR 116." }
+      : null,
+    {
+      label: "Disponibilidade",
+      value: product.availability === "unconfirmed" ? "A confirmar com a unidade" : (unavailable ?? "Disponível"),
+    },
   ].filter((d): d is { label: string; value: string } => d !== null);
 
   const price = product.priceCents ?? product.variants?.find((v) => v.priceCents)?.priceCents;
@@ -123,11 +129,23 @@ export default async function ProductPage({ params }: Props) {
                 slug={product.slug}
                 intro={
                   <>
-                    <p className="mt-5 text-lede text-mocha">{product.description}</p>
+                    {product.description ? <p className="mt-5 text-lede text-mocha">{product.description}</p> : null}
                     {product.dataStatus === "draft" ? (
                       <Notice tone="setup" title="Produto de exemplo" className="mt-5">
                         Nome, descrição, imagem e preço servem só para apresentação. O cardápio oficial será confirmado
                         pela {getBusiness().shortName}.
+                      </Notice>
+                    ) : product.dataStatus === "review" ? (
+                      <Notice tone="setup" title="Em conferência" className="mt-5">
+                        Nome, descrição e preço transcritos da foto do cardápio da {getBusiness().shortName}, ainda não
+                        confirmados.
+                        {product.reviewFlags?.length ? (
+                          <ul className="mt-1 list-disc pl-4">
+                            {product.reviewFlags.map((f) => (
+                              <li key={f}>{f}</li>
+                            ))}
+                          </ul>
+                        ) : null}
                       </Notice>
                     ) : null}
                   </>
@@ -154,11 +172,23 @@ export default async function ProductPage({ params }: Props) {
                 greeting={`Olá, ${getBusiness().shortName}!`}
                 intro={
                   <>
-                    <p className="mt-5 text-lede text-mocha">{product.description}</p>
+                    {product.description ? <p className="mt-5 text-lede text-mocha">{product.description}</p> : null}
                     {product.dataStatus === "draft" ? (
                       <Notice tone="setup" title="Produto de exemplo" className="mt-5">
                         Nome, descrição, imagem e preço servem só para apresentação. O cardápio oficial será confirmado
                         pela {getBusiness().shortName}.
+                      </Notice>
+                    ) : product.dataStatus === "review" ? (
+                      <Notice tone="setup" title="Em conferência" className="mt-5">
+                        Nome, descrição e preço transcritos da foto do cardápio da {getBusiness().shortName}, ainda não
+                        confirmados.
+                        {product.reviewFlags?.length ? (
+                          <ul className="mt-1 list-disc pl-4">
+                            {product.reviewFlags.map((f) => (
+                              <li key={f}>{f}</li>
+                            ))}
+                          </ul>
+                        ) : null}
                       </Notice>
                     ) : null}
                   </>

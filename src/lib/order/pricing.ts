@@ -1,4 +1,5 @@
-export type GroupId = "tamanho" | "temperatura" | "intensidade" | "dose" | "leite" | "adocar" | "docura" | "adicionais";
+export type GroupId =
+  "tamanho" | "temperatura" | "sabor" | "borda" | "intensidade" | "dose" | "leite" | "adocar" | "docura" | "adicionais";
 
 export type OptionChoice = {
   id: string;

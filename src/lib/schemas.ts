@@ -7,6 +7,19 @@ const slug = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "slug invalido");
 
 export const dataStatusSchema = z.enum(["verified", "draft"]);
 
+export const menuStatusSchema = z.enum(["verified", "draft", "review"]);
+
+export const categoryRoleSchema = z.enum([
+  "bebida",
+  "cafe",
+  "bebida-quente",
+  "bebida-gelada",
+  "doce",
+  "sobremesa",
+  "bolo",
+  "salgado",
+]);
+
 const staticImage = z.custom<StaticImageData>(
   (value) => typeof value === "object" && value !== null && "src" in value && "width" in value,
   "imagem precisa ser importada estaticamente",
@@ -119,7 +132,8 @@ export const menuCategorySchema = z.object({
   name: z.string(),
   description: z.string().optional(),
   order: z.number(),
-  status: dataStatusSchema,
+  status: menuStatusSchema,
+  roles: z.array(categoryRoleSchema).optional(),
 });
 
 export const productVariantSchema = z.object({
@@ -129,7 +143,13 @@ export const productVariantSchema = z.object({
   priceCents: z.number().int().positive().optional(),
 });
 
-export const productAvailabilitySchema = z.enum(["available", "unavailable", "coming-soon"]);
+export const productAvailabilitySchema = z.enum(["available", "unavailable", "coming-soon", "unconfirmed"]);
+
+export const menuOptionSchema = z.object({
+  id: z.enum(["sabor", "borda"]),
+  label: z.string().min(2),
+  choices: z.array(z.object({ id: slug, label: z.string().min(1) })).min(2),
+});
 
 export const illustrationSchema = z.enum([
   "espresso",
@@ -174,8 +194,14 @@ export const menuProductSchema = z.object({
   featured: z.boolean().optional(),
   tags: z.array(productTagSchema).optional(),
   order: z.number(),
-  dataStatus: dataStatusSchema,
+  dataStatus: menuStatusSchema,
   units: z.array(z.enum(["centro", "br116"])).optional(),
+  unitStatus: z.enum(["confirmed", "pending"]).optional(),
+  options: z.array(menuOptionSchema).optional(),
+  ageRestricted: z.boolean().optional(),
+  onlinePurchasable: z.boolean().optional(),
+  source: z.string().optional(),
+  reviewFlags: z.array(z.string()).optional(),
 });
 
 export const galleryImageSchema = photoSchema.extend({

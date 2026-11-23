@@ -3,6 +3,7 @@
 import { createContext, useContext, useMemo, type ReactNode } from "react";
 import type { CatalogItem, OrderConfig } from "@/lib/order/catalog";
 import { unitPrice } from "@/lib/order/pricing";
+import { orderBlock } from "@/lib/order/rules";
 import { useCart, useUnit, type CartLine } from "@/lib/order/store";
 
 const OrderContext = createContext<OrderConfig | null>(null);
@@ -34,7 +35,7 @@ export function useResolvedCart() {
         ...line,
         product,
         unitCents: unitPrice(product, line.selection).unitCents,
-        available: product.availability === "available" && (!unitId || product.unitIds.includes(unitId)),
+        available: !orderBlock(product) && (!unitId || product.unitIds.includes(unitId)),
       });
     }
     return out;

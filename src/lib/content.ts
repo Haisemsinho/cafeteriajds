@@ -2,7 +2,8 @@ import { z } from "zod";
 import { announcements as rawAnnouncements, business as rawBusiness } from "@/content/business";
 import { gallery as rawGallery } from "@/content/gallery";
 import { highlights as rawHighlights } from "@/content/highlights";
-import { categories as rawCategories, products as rawProducts } from "@/content/menu";
+import { categories as demoCategories, products as demoProducts } from "@/content/menu";
+import { officialCategories, officialProducts } from "@/content/officialMenu";
 import { philosophy, storyBlocks as rawStory, storyIntro } from "@/content/story";
 import { ambience, productPhotos } from "@/content/illustrative";
 import { photos } from "@/content/photos";
@@ -17,7 +18,7 @@ import {
   reviewSchema,
   storyBlockSchema,
 } from "@/lib/schemas";
-import { showDrafts } from "@/lib/site";
+import { menuSource, showDrafts } from "@/lib/site";
 import { zonedNow } from "@/lib/hours";
 import { selectHomeReviews } from "@/lib/reviews";
 import type {
@@ -49,8 +50,13 @@ function unique(items: { id: string }[], label: string) {
 
 const business = check(businessProfileSchema, rawBusiness, "content/business.ts");
 const announcements = check(z.array(announcementSchema), rawAnnouncements, "avisos");
-const categories = check(z.array(menuCategorySchema), rawCategories, "categorias do cardápio");
-const products = check(z.array(menuProductSchema), rawProducts, "produtos do cardápio");
+const official = menuSource === "oficial";
+const categories = check(
+  z.array(menuCategorySchema),
+  official ? officialCategories : demoCategories,
+  "categorias do cardápio",
+);
+const products = check(z.array(menuProductSchema), official ? officialProducts : demoProducts, "produtos do cardápio");
 const gallery = check(z.array(galleryImageSchema), rawGallery, "content/gallery.ts");
 const highlights = check(z.array(highlightSchema), rawHighlights, "content/highlights.ts");
 const story = check(z.array(storyBlockSchema), rawStory, "content/story.ts");
@@ -71,7 +77,8 @@ for (const product of products) {
   }
 }
 
-const isVisible = (status: DataStatus | "pending") => status === "verified" || (showDrafts && status === "draft");
+const isVisible = (status: DataStatus | "pending" | "review") =>
+  status === "verified" || (showDrafts && (status === "draft" || (status === "review" && official)));
 
 const byOrder = <T extends { order: number }>(a: T, b: T) => a.order - b.order;
 
@@ -199,6 +206,6 @@ export function getHomeReviews(limit = 6): CustomerReview[] {
   return selectHomeReviews(reviews, showDrafts, limit);
 }
 
-export function isDraft(status: DataStatus | "pending") {
+export function isDraft(status: DataStatus | "pending" | "review") {
   return status !== "verified";
 }

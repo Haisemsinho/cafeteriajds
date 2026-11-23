@@ -5,6 +5,9 @@ import type {
   businessProfileSchema,
   contactInformationSchema,
   dataStatusSchema,
+  menuStatusSchema,
+  categoryRoleSchema,
+  menuOptionSchema,
   galleryImageSchema,
   highlightSchema,
   illustrationSchema,
@@ -24,6 +27,9 @@ import type {
 } from "@/lib/schemas";
 
 export type DataStatus = z.infer<typeof dataStatusSchema>;
+export type MenuStatus = z.infer<typeof menuStatusSchema>;
+export type CategoryRole = z.infer<typeof categoryRoleSchema>;
+export type MenuOption = z.infer<typeof menuOptionSchema>;
 export type Photo = z.infer<typeof photoSchema>;
 export type OpeningPeriod = z.infer<typeof openingPeriodSchema>;
 export type OpeningHours = z.infer<typeof openingHoursSchema>;

@@ -18,4 +18,6 @@ export const siteUrl = readSiteUrl();
 export const showDrafts =
   draftFlag === "true" || (draftFlag === undefined && process.env.NODE_ENV === "development");
 
+export const menuSource: "exemplo" | "oficial" = process.env.MENU_SOURCE === "oficial" ? "oficial" : "exemplo";
+
 export const isIndexable = !showDrafts && Boolean(process.env.NEXT_PUBLIC_SITE_URL);

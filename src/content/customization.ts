@@ -2,7 +2,7 @@ import type { GroupId, OptionGroup } from "@/lib/order/pricing";
 
 type GroupDef = Omit<OptionGroup, "id">;
 
-export const optionGroups: Record<Exclude<GroupId, "tamanho" | "temperatura">, GroupDef> = {
+export const optionGroups: Record<Exclude<GroupId, "tamanho" | "temperatura" | "sabor" | "borda">, GroupDef> = {
   intensidade: {
     label: "Intensidade do café",
     kind: "single",
@@ -78,7 +78,7 @@ export const optionGroups: Record<Exclude<GroupId, "tamanho" | "temperatura">, G
 };
 
 type Profile = {
-  groups: Exclude<GroupId, "tamanho" | "temperatura">[];
+  groups: Exclude<GroupId, "tamanho" | "temperatura" | "sabor" | "borda">[];
   addons?: string[];
 };
 

@@ -53,7 +53,16 @@ function groupsFor(product: MenuProduct): OptionGroup[] {
       ],
     });
   }
-  const profile = customizationProfiles[product.slug];
+  for (const option of product.options ?? []) {
+    groups.push({
+      id: option.id,
+      label: option.label,
+      kind: "single",
+      required: true,
+      choices: option.choices.map((c) => ({ id: c.id, label: c.label })),
+    });
+  }
+  const profile = product.dataStatus === "draft" ? customizationProfiles[product.slug] : undefined;
   if (!profile) return groups;
   for (const id of profile.groups) {
     const def = optionGroups[id];

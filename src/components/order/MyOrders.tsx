@@ -7,6 +7,7 @@ import { cn } from "@/lib/cn";
 import { formatPrice } from "@/lib/format";
 import { lastStep, orderSteps } from "@/lib/order/status";
 import { addToCart, advanceOrder, resetOrderStatus, setUnit, useOrders, type DemoOrder } from "@/lib/order/store";
+import { orderBlock } from "@/lib/order/rules";
 import { showToast } from "@/lib/order/toast";
 import { DemoBadge } from "./CartLines";
 import { useOrderConfig } from "./OrderContext";
@@ -29,7 +30,7 @@ export function MyOrders() {
   const repeat = (order: DemoOrder) => {
     let added = 0;
     for (const l of order.lines) {
-      const product = catalog.find((p) => p.id === l.productId && p.availability === "available");
+      const product = catalog.find((p) => p.id === l.productId && !orderBlock(p));
       if (!product) continue;
       addToCart(product.id, l.selection, l.quantity);
       added += l.quantity;
