@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 
-export function DraftNotice() {
+export function DraftNotice({ message }: { message: string }) {
   const [visible, setVisible] = useState(true);
   if (!visible) return null;
 
@@ -11,8 +11,7 @@ export function DraftNotice() {
     <div role="note" className="relative z-[60] border-b border-line-dark bg-roast text-sand">
       <div className="page-x flex min-h-9 items-center justify-between gap-3 text-xs">
         <p>
-          <strong className="font-semibold text-caramel-light">Versão de apresentação.</strong>{" "}
-          <span>Itens, preços e fotos de exemplo ainda não são oficiais.</span>
+          <strong className="font-semibold text-caramel-light">Versão de apresentação.</strong> <span>{message}</span>
         </p>
         <button
           type="button"

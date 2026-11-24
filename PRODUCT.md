@@ -8,18 +8,18 @@ web
 
 ## Users
 
-- Leitor principal hoje: o dono da JDS Cafeteria, avaliando o site como entrega de um projeto já contratado. Ele precisa ver a casa dele bem apresentada e entender o que ainda depende dos dados dele.
+- Leitor principal hoje: o dono da Cafeteria JDS, avaliando o site como entrega de um projeto já contratado. Ele precisa ver a casa dele bem apresentada e entender o que ainda depende dos dados dele.
 - Público depois da publicação oficial: clientes da cafeteria em São João do Manhuaçu (MG), que querem ver o cardápio e os preços, saber onde fica cada unidade e decidir ir até lá ou chamar no WhatsApp.
 
 ## Product Purpose
 
-Site institucional com cardápio digital da JDS Cafeteria. Mostra a casa, o cardápio com busca e filtros, uma página por produto, a história, o ambiente e o contato. Não vende online.
+Site institucional com cardápio digital da Cafeteria JDS. Mostra a casa, o cardápio com busca e filtros, uma página por produto, a história, o ambiente e o contato. Não vende online.
 
 Sucesso agora: o dono aprova o site e envia os dados oficiais (cardápio, preços, fotos, horários, contatos). Sucesso depois: clientes encontram a unidade certa, veem o cardápio dela e vão até a cafeteria.
 
 ## Positioning
 
-É o site de uma cafeteria real e específica: fachada de ripas de madeira avermelhada, letreiro "JDS Cafeteria", tijolo aparente, prateleiras de madeira, plantas e a xícara própria com o logo. Duas unidades na mesma cidade, uma no centro e outra na beira da BR 116, cada uma com o próprio cardápio.
+É o site de uma cafeteria real e específica: fachada de ripas de madeira avermelhada, letreiro "Cafeteria JDS", tijolo aparente, prateleiras de madeira, plantas e a xícara própria com o logo. Duas unidades na mesma cidade, uma no centro e outra na beira da BR 116, cada uma com o próprio cardápio.
 
 ## Operating Context
 
@@ -41,7 +41,7 @@ Sucesso agora: o dono aprova o site e envia os dados oficiais (cardápio, preço
 
 ## Brand Commitments
 
-- Nome: JDS Cafeteria (forma curta JDS). Instagram @cafeteriajds.
+- Nome: Cafeteria JDS (forma curta JDS). Instagram @cafeteriajds.
 - Tagline em uso: "Café, pausa e encontro".
 - Idioma: português do Brasil, tom acolhedor e direto.
 - Regras do projeto: nunca apresentar dado inventado como oficial (produto, preço, endereço, horário, avaliação, história); conteúdo de exemplo sempre identificado; nunca usar travessão nos textos.

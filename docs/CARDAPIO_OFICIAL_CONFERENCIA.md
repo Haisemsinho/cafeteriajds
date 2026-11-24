@@ -1,5 +1,27 @@
 # Cardápio oficial: conferência
 
+## Decisões e publicação (23/11/2026)
+
+Decidido pelo responsável do projeto e publicado no site:
+
+- **Nome da casa:** Cafeteria JDS (como no selo do cardápio). O site inteiro passou a usar esse nome.
+- **Unidade:** este cardápio é da unidade Centro. É o único cardápio (sem verso). A BR 116 ainda não tem cardápio no site.
+- **Erros de impressão corrigidos** (não ficam como impresso):
+  - Capuccino → Cappuccino (Tradicional e Cremoso; endereços `/cardapio/cappuccino-tradicional` e `/cardapio/cappuccino-cremoso`).
+  - Biscof → Biscoff (nome e descrição; `/cardapio/delicia-biscoff`).
+  - natarango → nata com morango (Taça Sensação e Milk-shake).
+  - browne → brownie (Milk-shake).
+- **Divergências de descrição:** ficou a versão em português correto (a do JSON), não o texto impresso.
+- **Mantidos:** Cativantt (nome do produto), Expresso (grafia correta em português), Mocha Tradicional com calda de caramelo (como no cardápio).
+- **Refrigerante Lata:** sabores de exemplo (Cola, Guaraná, Laranja), com aviso no produto: "Sabores de exemplo. Confirme os sabores do dia na cafeteria."
+- **Long Neck:** continua fora do pedido pelo site (venda só na cafeteria, com confirmação de idade).
+- **Disponibilidade:** todos os itens do cardápio como disponíveis na unidade Centro.
+
+Arquivo publicado: `src/content/import/cardapio-centro-conferido-2026-11-23.json` (gerado da transcrição, com a lista de correções). A transcrição original continua em `cardapio-transcrito-2026-11-23.json` como registro. O site usa o cardápio oficial com `MENU_SOURCE=oficial` na Vercel.
+
+Ainda em aberto: fotos dos produtos, destaques da home, sabores reais de refrigerante e long neck, se Milk-shake tem sabores à escolha, e o cardápio da BR 116.
+
+
 Transcrição recebida em 23/11/2026 (`src/content/import/cardapio-transcrito-2026-11-23.json`), feita a partir de fotos do cardápio. 46 produtos em 7 categorias. **Nada aqui está publicado como oficial.**
 
 As fotos do cardápio foram recebidas depois e a conferência documental está na seção "Resultado da conferência com as fotos".

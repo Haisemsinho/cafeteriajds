@@ -1,7 +1,7 @@
 import type { BusinessAnnouncement, BusinessProfile } from "@/types/content";
 
 export const business: BusinessProfile = {
-  name: "JDS Cafeteria",
+  name: "Cafeteria JDS",
   shortName: "JDS",
   tagline: "Café, pausa e encontro",
   logo: undefined,

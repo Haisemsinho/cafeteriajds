@@ -149,6 +149,7 @@ export const menuOptionSchema = z.object({
   id: z.enum(["sabor", "borda"]),
   label: z.string().min(2),
   choices: z.array(z.object({ id: slug, label: z.string().min(1) })).min(2),
+  example: z.boolean().optional(),
 });
 
 export const illustrationSchema = z.enum([

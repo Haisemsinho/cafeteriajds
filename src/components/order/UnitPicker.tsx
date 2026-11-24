@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { useUrlParam } from "@/hooks/useUrlParam";
 import { cn } from "@/lib/cn";
@@ -11,11 +11,13 @@ import { useOrderConfig } from "./OrderContext";
 export function useUnitFromUrl() {
   const [param, setParam] = useUrlParam("unidade");
   const unitId = useUnit();
+  const applied = useRef<string | null>(null);
   useEffect(() => {
-    if (param === "centro" || param === "br116") {
-      if (param !== unitId) setUnit(param);
+    if ((param === "centro" || param === "br116") && param !== applied.current) {
+      applied.current = param;
+      setUnit(param);
     }
-  }, [param, unitId]);
+  }, [param]);
   return { unitId, setParam };
 }
 

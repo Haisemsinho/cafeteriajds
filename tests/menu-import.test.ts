@@ -87,3 +87,36 @@ test("transcrição inválida é recusada", () => {
   assert.throws(() => importTranscript({ ...raw, products: [{ ...raw.products[0], priceCents: -1 }] }), /inválida/);
   assert.throws(() => importTranscript({ ...raw, products: [{ ...raw.products[0], priceCents: 8.9 }] }), /inválida/);
 });
+
+const reviewedRaw = JSON.parse(
+  readFileSync(new URL("../src/content/import/cardapio-centro-conferido-2026-11-23.json", import.meta.url), "utf8"),
+);
+const reviewed = importTranscript(reviewedRaw).products;
+
+test("cardápio conferido: 46 oficiais, só na unidade Centro, preços iguais à foto", () => {
+  assert.equal(reviewed.length, 46);
+  assert.ok(reviewed.every((p) => p.dataStatus === "verified" && p.unitStatus === "confirmed"));
+  assert.ok(reviewed.every((p) => p.units?.length === 1 && p.units[0] === "centro"));
+  assert.ok(reviewed.every((p) => p.availability === "available"));
+  for (const p of raw.products) assert.equal(reviewed.find((r) => r.id === p.id)?.priceCents, p.priceCents, p.id);
+});
+
+test("cardápio conferido: erros de impressão corrigidos", () => {
+  const text = JSON.stringify(reviewed.map((p) => [p.name, p.description]));
+  for (const wrong of ["natarango", "browne,", 'Biscof"', "Biscof ", "Capuccino"])
+    assert.ok(!text.includes(wrong), wrong);
+  assert.equal(reviewed.find((p) => p.id === "jds-007")?.name, "Cappuccino Tradicional");
+  assert.equal(reviewed.find((p) => p.id === "jds-025")?.name, "Delícia Biscoff");
+  assert.equal(reviewed.find((p) => p.id === "jds-035")?.name, "Cativantt");
+  assert.equal(reviewed.find((p) => p.id === "jds-031")?.description, "Chocolate, brownie, nata com morango");
+});
+
+test("cardápio conferido: sabores de refrigerante marcados como exemplo e long neck bloqueado", () => {
+  const refri = reviewed.find((p) => p.id === "jds-018")?.options?.[0];
+  assert.equal(refri?.example, true);
+  assert.deepEqual(
+    refri?.choices.map((c) => c.label),
+    ["Cola", "Guaraná", "Laranja"],
+  );
+  assert.equal(orderBlock(reviewed.find((p) => p.id === "jds-019")!), "restricted");
+});

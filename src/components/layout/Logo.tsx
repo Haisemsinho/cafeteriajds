@@ -17,7 +17,11 @@ export function Logo({ brand, className, large }: { brand: Brand; className?: st
     );
   }
 
-  const rest = brand.name.startsWith(brand.shortName) ? brand.name.slice(brand.shortName.length).trim() : "";
+  const rest = brand.name.startsWith(brand.shortName)
+    ? brand.name.slice(brand.shortName.length).trim()
+    : brand.name.endsWith(brand.shortName)
+      ? brand.name.slice(0, -brand.shortName.length).trim()
+      : "";
 
   return (
     <span className={cn("inline-flex items-baseline gap-2 leading-none", className)}>

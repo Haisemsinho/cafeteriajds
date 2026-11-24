@@ -1,8 +1,8 @@
 import { importTranscript } from "@/lib/menuImport";
-import transcript from "./import/cardapio-transcrito-2026-11-23.json";
+import transcript from "./import/cardapio-centro-conferido-2026-11-23.json";
 
 export const officialMenuSource = {
-  file: "src/content/import/cardapio-transcrito-2026-11-23.json",
+  file: "src/content/import/cardapio-centro-conferido-2026-11-23.json",
   date: transcript.sourceDate,
   branch: transcript.branch,
 };

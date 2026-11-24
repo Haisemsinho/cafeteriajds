@@ -5,10 +5,11 @@ import { EmptyState } from "@/components/ui/Feedback";
 import { Icon } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { home } from "@/content/home";
-import { getFeaturedProducts, getInstagram } from "@/lib/content";
+import { getFeaturedProducts, getInstagram, getMenu } from "@/lib/content";
 
 export function FeaturedProducts() {
   const featured = getFeaturedProducts(4);
+  const { categories } = getMenu();
   const [lead, ...rest] = featured;
   const instagram = getInstagram();
   const hasDrafts = featured.some((p) => p.dataStatus === "draft");
@@ -67,6 +68,15 @@ export function FeaturedProducts() {
               </ul>
             ) : null}
           </div>
+        ) : categories.length ? (
+          <EmptyState
+            className="mt-10"
+            icon="cup"
+            title="Conheça o cardápio da casa"
+            action={<ButtonLink href="/cardapio">Ver o cardápio</ButtonLink>}
+          >
+            {categories.map((c) => c.name).join(", ")}.
+          </EmptyState>
         ) : (
           <EmptyState
             className="mt-10"

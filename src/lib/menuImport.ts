@@ -15,6 +15,7 @@ export const transcriptSchema = z.object({
         priceCents: z.number().int().positive(),
         descriptionFromMenu: z.string().nullable(),
         optionsFromMenu: z.array(z.string().min(1)),
+        exampleOptions: z.array(z.string().min(1)).optional(),
         branchId: z.enum(["centro", "br116"]).nullable(),
         stockStatus: z.enum(["unconfirmed", "available", "unavailable"]),
         imageUrl: z.string().nullable(),
@@ -86,6 +87,14 @@ export function importTranscript(
     const order = (counters.get(categoryId) ?? 0) + 1;
     counters.set(categoryId, order);
     const options = parseOptions(item.optionsFromMenu);
+    if (!options.length && item.exampleOptions && item.exampleOptions.length > 1) {
+      options.push({
+        id: "sabor",
+        label: "Sabor",
+        example: true,
+        choices: item.exampleOptions.map((o) => ({ id: slugify(o), label: o })),
+      });
+    }
 
     products.push({
       id: item.id,

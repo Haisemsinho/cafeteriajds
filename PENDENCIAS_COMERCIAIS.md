@@ -1,6 +1,6 @@
 # Pendências comerciais
 
-Tudo que a JDS Cafeteria precisa fornecer ou aprovar antes de o site ir ao ar.
+Tudo que a Cafeteria JDS precisa fornecer ou aprovar antes de o site ir ao ar.
 
 ## 1. Autorização
 
@@ -15,7 +15,7 @@ Enquanto isso, o site não deve ser publicado em endereço público. A versão d
 
 - [ ] Logotipo oficial em SVG, ou PNG com fundo transparente de pelo menos 1000 px de largura
 - [ ] Versão do logo para fundo escuro (o header e o rodapé são pretos)
-- [ ] Confirmação do nome como deve aparecer: "JDS Cafeteria"
+- [ ] Confirmação do nome como deve aparecer: "Cafeteria JDS"
 - [ ] Significado de "JDS", se quiserem contar
 
 Hoje o site usa um logotipo só de texto.
@@ -107,7 +107,7 @@ Na versão de produção, sem `SHOW_DRAFT_CONTENT`, nada disso aparece. O cardá
 
 Estes textos são sugestões, aparecem também em produção e podem ser trocados em `src/content/home.ts`:
 
-- "Bem-vindo à JDS Cafeteria"
+- "Bem-vindo à Cafeteria JDS"
 - "Seu lugar para apreciar um bom café e viver bons momentos."
 - "Um café para tomar com calma"
 - "Nossos Destaques" e "Sabores especiais para acompanhar seus melhores momentos."

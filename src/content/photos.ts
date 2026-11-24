@@ -11,13 +11,13 @@ import xicara from "@/assets/photos/xicara.jpg";
 export const photos = {
   fachada: {
     src: fachada,
-    alt: "Fachada da JDS Cafeteria com ripas de madeira, letreiro e portas de vidro",
+    alt: "Fachada da Cafeteria JDS com ripas de madeira, letreiro e portas de vidro",
     caption: "A fachada de ripas",
     position: "50% 18%",
   },
   letreiro: {
     src: fachadaLetreiro,
-    alt: "Letreiro JDS Cafeteria sobre as ripas verticais de madeira da fachada",
+    alt: "Letreiro da Cafeteria JDS sobre as ripas verticais de madeira da fachada",
     caption: "Letreiro e ripas",
   },
   varanda: {

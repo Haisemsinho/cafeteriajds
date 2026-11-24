@@ -66,6 +66,7 @@ function groupsFor(product: MenuProduct): OptionGroup[] {
     groups.push({
       id: option.id,
       label: option.label,
+      hint: option.example ? "Sabores de exemplo. Confirme os sabores do dia na cafeteria." : undefined,
       kind: "single",
       required: true,
       choices: option.choices.map((c) => ({ id: c.id, label: c.label })),

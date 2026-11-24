@@ -1,10 +1,10 @@
-# JDS Cafeteria
+# Cafeteria JDS
 
 Site institucional com cardápio digital e página para cada produto. Na versão de apresentação existe um fluxo de compra demonstrativo (carrinho, checkout e acompanhamento), sem pagamento real e sem envio de pedido. Detalhes em `docs/COMPRA_DEMONSTRATIVA.md`.
 
 As avaliações de clientes da home ficam em `src/content/reviews.ts` (veja `docs/AVALIACOES.md`).
 
-O cardápio oficial transcrito (46 itens, em conferência) fica em `src/content/import/` e só aparece com `MENU_SOURCE=oficial` e `SHOW_DRAFT_CONTENT=true`. Sem a variável, o site usa o cardápio de exemplo. Pendências e passos para publicar em `docs/CARDAPIO_OFICIAL_CONFERENCIA.md`.
+O cardápio oficial da unidade Centro (46 itens, conferido e publicado em 23/11/2026) fica em `src/content/import/cardapio-centro-conferido-2026-11-23.json` e aparece com `MENU_SOURCE=oficial` (configurado na Vercel). Sem a variável, o site usa o cardápio de exemplo de `src/content/menu.ts`. Detalhes em `docs/CARDAPIO_OFICIAL_CONFERENCIA.md`.
 
 O que já é real e o que ainda é exemplo está em [PENDENCIAS_COMERCIAIS.md](./PENDENCIAS_COMERCIAIS.md).
 
@@ -96,7 +96,7 @@ As páginas leem o conteúdo só por funções como `getMenu()`, `getProduct()` 
 Em `src/content/business.ts`:
 
 ```ts
-name: "JDS Cafeteria",
+name: "Cafeteria JDS",
 shortName: "JDS",
 tagline: "Café, pausa e encontro",
 description: "Texto curto usado no rodapé e no Google.",
@@ -110,7 +110,7 @@ Sem logo, o site mostra o nome em texto. Para usar o logo oficial, coloque o arq
 ```ts
 import logo from "@/assets/brand/logo.png";
 
-logo: { src: logo, alt: "JDS Cafeteria" },
+logo: { src: logo, alt: "Cafeteria JDS" },
 ```
 
 Os textos da página inicial ficam em `src/content/home.ts`. A história fica em `src/content/story.ts`, incluindo o topo e a descrição da página Nossa História. Os textos curtos das outras páginas ficam no próprio arquivo da página, em `src/app/`.

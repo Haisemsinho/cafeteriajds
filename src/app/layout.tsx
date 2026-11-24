@@ -8,7 +8,7 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { OrderProvider } from "@/components/order/OrderContext";
 import { Toaster } from "@/components/order/Toaster";
 import { getOrderConfig } from "@/lib/order/catalog";
-import { getBrand, getBusiness, getInstagram } from "@/lib/content";
+import { getBrand, getBusiness, getInstagram, getMenu } from "@/lib/content";
 import { isIndexable, showDrafts, siteUrl } from "@/lib/site";
 import "./globals.css";
 
@@ -52,6 +52,8 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   const instagram = getInstagram();
   const order = getOrderConfig();
+  const menu = getMenu().products;
+  const menuOfficial = menu.length > 0 && menu.every((p) => p.dataStatus === "verified");
 
   return (
     <html lang="pt-BR" className={`${inter.variable} ${serif.variable}`}>
@@ -60,7 +62,15 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           Pular para o conteúdo
         </a>
         <OrderProvider config={order}>
-          {showDrafts ? <DraftNotice /> : null}
+          {showDrafts ? (
+            <DraftNotice
+              message={
+                menuOfficial
+                  ? "Fotos ilustrativas, avaliações e pedidos pelo site são de demonstração."
+                  : "Itens, preços e fotos de exemplo ainda não são oficiais."
+              }
+            />
+          ) : null}
           <SiteHeader
             brand={getBrand()}
             instagram={instagram ? { url: instagram.url, handle: instagram.handle } : undefined}

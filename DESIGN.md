@@ -1,5 +1,5 @@
 ---
-name: JDS Cafeteria
+name: Cafeteria JDS
 description: Site institucional com cardápio digital de uma cafeteria real de São João do Manhuaçu
 colors:
   caramelo-tostado: "#b97735"
@@ -195,7 +195,7 @@ components:
     padding: "4px 10px"
 ---
 
-# Design System: JDS Cafeteria
+# Design System: Cafeteria JDS
 
 ## Overview
 

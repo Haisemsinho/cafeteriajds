@@ -5,6 +5,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { business } from "@/content/business";
 import { MenuUnitBar } from "@/components/order/MenuUnitBar";
 import { showDrafts } from "@/lib/site";
+import { getUnits } from "@/lib/order/catalog";
 
 export const metadata = pageMetadata({
   title: "Cardápio",
@@ -17,6 +18,9 @@ export default function CardapioPage() {
   const hasDrafts = products.some((p) => p.dataStatus === "draft");
   const inReview = products.some((p) => p.dataStatus === "review");
   const unitPending = products.some((p) => p.unitStatus === "pending");
+  const units = getUnits();
+  const served = units.filter((u) => products.some((p) => !p.units?.length || p.units.includes(u.id)));
+  const missing = units.filter((u) => !served.includes(u));
 
   return (
     <>
@@ -38,7 +42,9 @@ export default function CardapioPage() {
           note={
             unitPending
               ? "Ainda não sabemos de qual unidade é este cardápio. Até a confirmação, ele aparece igual nas duas."
-              : "Na demonstração, as duas unidades usam o mesmo cardápio de exemplo."
+              : missing.length && served.length
+                ? `Este é o cardápio da unidade ${served.map((u) => u.name).join(" e ")}. O da ${missing.map((u) => u.name).join(" e ")} ainda não está no site.`
+                : "Na demonstração, as duas unidades usam o mesmo cardápio de exemplo."
           }
         />
       ) : null}
