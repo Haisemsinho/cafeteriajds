@@ -5,7 +5,6 @@ import { highlights as rawHighlights } from "@/content/highlights";
 import { categories as demoCategories, products as demoProducts } from "@/content/menu";
 import { officialCategories, officialProducts } from "@/content/officialMenu";
 import { philosophy, storyBlocks as rawStory, storyIntro } from "@/content/story";
-import { productPhotos } from "@/content/illustrative";
 import { casa } from "@/content/photos";
 import { reviews as rawReviews } from "@/content/reviews";
 import {
@@ -122,7 +121,8 @@ const withAllowedPhotos = (p: MenuProduct): MenuProduct => ({
 export function getPhotoCredits() {
   if (!showDrafts) return [];
   const seen = new Map<string, NonNullable<Photo["credit"]>>();
-  for (const photo of Object.values(productPhotos)) {
+  for (const photo of getMenu().products.flatMap((p) => [p.image, ...(p.images ?? [])])) {
+    if (!photo) continue;
     if (photo.credit && !seen.has(photo.credit.url)) seen.set(photo.credit.url, photo.credit);
   }
   return [...seen.values()];

@@ -31,3 +31,12 @@ Em 24/11/2026 a JDS autorizou o uso de todas as fotos enviadas, incluindo a func
 
 - Decoração de Natal em `maquina-espresso.jpg` e `salao-luzes.jpg`: trocar depois de dezembro.
 - 1600 px de largura: em telas acima de 1600 px o hero fica levemente ampliado. Fotos em resolução maior resolvem.
+
+## Fotos ilustrativas dos produtos
+
+Em 24/11/2026 os 46 itens do cardápio oficial ganharam fotos ilustrativas para a apresentação à dona da JDS, até chegarem as fotos reais. Todas mostram o selo "Foto ilustrativa" e o crédito no rodapé.
+
+- 17 itens usam as fotos que já existiam (Unsplash e Wikimedia).
+- 28 fotos novas do Wikimedia Commons, só com licença que permite uso comercial (CC BY, CC BY-SA, CC0 ou domínio público), em `src/assets/photos/ilustrativas/`. Autor, licença e página de origem ficam em `src/content/illustrative.ts`.
+- A ligação item e foto fica em `src/content/officialMenu.ts` (`photoBySlug`). Para trocar por foto real, basta apontar o item para a foto nova.
+- Red Bull ficou sem foto: não há foto da lata com licença livre, e foto de outra marca confundiria.
