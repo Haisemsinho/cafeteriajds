@@ -11,7 +11,8 @@ Painel: **JDS Gestão Comercial**. Base comercial: núcleo do Matas ERP. Fora do
 | M0 | Concluído (este documento) |
 | P13 do Matas | Commitado como estava (`5a38443`), autorizado pelo responsável, depois de `npm run check` 80 + 37 |
 | M1 | Código na branch `jds-gestao` do Matas (`9b35f3f`): migração 0009 (papéis `cashier`, `attendant`, `stockkeeper` e cargo), permissões `fs.*`, membros com cargo. `npm run check` 83 + 40. Teste de banco escrito, **não executado** (aguarda A1). Migração não aplicada em nenhum banco |
-| M2 a M9 | Não iniciados |
+| Prévia visual | Commit `737b840` na branch `jds-gestao`: `npm run jds:preview` no Matas, abre em http://127.0.0.1:5174. Sete telas com dados de demonstração, sem banco e fora do build de produção |
+| M2 a M9 | Planejamento aprovado; execução com banco depende da A1 e dos testes do M1 |
 
 Decisões de 23/11/2026: o painel reaproveita a SPA do Matas com tema e nome JDS Gestão Comercial; papéis novos no núcleo; hospedagem decidida depois, tudo local até lá; o site continua com pedido demonstrativo.
 
