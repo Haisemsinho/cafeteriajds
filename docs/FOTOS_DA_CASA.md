@@ -23,11 +23,11 @@ A xícara antiga (`photos.xicara`) continua no cartão do início e na galeria. 
 
 Repetições da máquina de espresso, fotos com porta-retratos em destaque, reflexo forte no vidro, fotos tremidas, quase iguais a outra já escolhida, e a fachada vista da rua com clientes pelo vidro.
 
-## Antes de publicar
+## Autorização
 
-- Confirmar com a JDS a autorização de uso de todas as fotos.
-- Funcionária aparece de lado na borda direita de `salao-luzes.jpg` e `salao-balcao.jpg`. No hero ela fica fora do corte, mas a galeria abre a foto inteira (`salao-luzes`). Precisa de consentimento ou troca.
-- Pessoa no fundo, atrás do vidro, em `fachada-toldo.jpg` (pouco visível).
-- Porta-retratos com fotos pessoais na estante: `salao-luzes`, `salao-balcao`, `estante-letreiro`, `mesas-janela`, `balcao-bolo`. Aparecem pequenos, mas são fotos de família. Confirmar se podem aparecer.
-- Decoração de Natal em `maquina-espresso.jpg` e `salao-luzes.jpg`: a foto fica datada depois de dezembro.
+Em 24/11/2026 a JDS autorizou o uso de todas as fotos enviadas, incluindo a funcionária, a pessoa atrás do vidro da fachada e os porta-retratos da estante. Publicação liberada pelo responsável no mesmo dia.
+
+## Observações
+
+- Decoração de Natal em `maquina-espresso.jpg` e `salao-luzes.jpg`: trocar depois de dezembro.
 - 1600 px de largura: em telas acima de 1600 px o hero fica levemente ampliado. Fotos em resolução maior resolvem.
