@@ -4,6 +4,19 @@ Auditoria feita em 23/11/2026, somente leitura. Nada foi alterado no Matas ERP.
 
 Painel: **JDS Gestão Comercial**. Base comercial: núcleo do Matas ERP. Fora do escopo: todo o módulo agrícola (`coffee`).
 
+## Andamento
+
+| Checkpoint | Situação |
+| --- | --- |
+| M0 | Concluído (este documento) |
+| P13 do Matas | Commitado como estava (`5a38443`), autorizado pelo responsável, depois de `npm run check` 80 + 37 |
+| M1 | Código na branch `jds-gestao` do Matas (`9b35f3f`): migração 0009 (papéis `cashier`, `attendant`, `stockkeeper` e cargo), permissões `fs.*`, membros com cargo. `npm run check` 83 + 40. Teste de banco escrito, **não executado** (aguarda A1). Migração não aplicada em nenhum banco |
+| M2 a M9 | Não iniciados |
+
+Decisões de 23/11/2026: o painel reaproveita a SPA do Matas com tema e nome JDS Gestão Comercial; papéis novos no núcleo; hospedagem decidida depois, tudo local até lá; o site continua com pedido demonstrativo.
+
+Para continuar com testes de banco: rodar a etapa A1 do Matas (`docs/matas/11-ambientes.md`), que exige a senha do `postgres` digitada no PowerShell.
+
 ## 1. Onde está cada código
 
 | Projeto | Caminho | Estado |
