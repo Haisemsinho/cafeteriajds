@@ -2,7 +2,7 @@ import { Gallery } from "@/components/gallery/Gallery";
 import { CtaBand } from "@/components/ui/CtaBand";
 import { PhotoFrame } from "@/components/ui/PhotoFrame";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { photos } from "@/content/photos";
+import { casa } from "@/content/photos";
 import { cn, delay } from "@/lib/cn";
 import { getGallery } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
@@ -10,7 +10,7 @@ import { business } from "@/content/business";
 
 export const metadata = pageMetadata({
   title: "Experiência",
-  description: `A fachada de ripas, a varanda, o salão e os detalhes da ${business.name} em fotos.`,
+  description: `A fachada de ripas, as mesas, o salão e os detalhes da ${business.name} em fotos.`,
   path: "/experiencia",
 });
 
@@ -18,28 +18,28 @@ const spaces = [
   {
     title: "A fachada",
     text: "Ripas verticais em madeira avermelhada dão ritmo à fachada e emolduram o letreiro da casa. Portas de vidro deixam ver o salão desde a calçada.",
-    photo: photos.letreiro,
+    photo: casa.fachada,
     ratio: "4/3",
     span: "lg:col-span-5",
   },
   {
-    title: "A varanda",
-    text: "Um deck de madeira com mesa alta e banquetas, encostado no vidro. Um cantinho para ver a rua passar.",
-    photo: photos.varanda,
+    title: "As mesas",
+    text: "Mesas de madeira junto à vitrine, de frente para a rua. Um cantinho para ver o movimento passar.",
+    photo: casa.mesas,
     ratio: "3/4",
     span: "lg:col-span-3",
   },
   {
     title: "O salão",
     text: "Prateleiras em madeira clara junto ao tijolo aparente, plantas pendentes e o balcão em pedra.",
-    photo: photos.prateleiras,
+    photo: casa.estante,
     ratio: "3/4",
     span: "lg:col-span-4",
   },
 ];
 
 export default function ExperienciaPage() {
-  const order = ["xicara", "fachada", "dia-do-cafe", "balcao"];
+  const order = ["salao", "maquina", "letreiro-parede", "xicara"];
   const details = getGallery()
     .filter((g) => order.includes(g.id))
     .sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
@@ -51,11 +51,11 @@ export default function ExperienciaPage() {
           <div className="lg:col-span-7">
             <h1 className="hero-in text-display text-espresso">Entre a madeira e a luz</h1>
             <p className="hero-in mt-6 max-w-md text-lede text-mocha" style={delay(1)}>
-              A fachada de ripas, a varanda de entrada, o salão e os detalhes do balcão, nas fotos da casa.
+              A fachada de ripas, as mesas junto à vitrine, o salão e os detalhes do balcão, nas fotos da casa.
             </p>
           </div>
           <PhotoFrame
-            photo={photos.interior}
+            photo={casa.balcaoBolo}
             ratio="9/14"
             rounded="rounded-[1.75rem]"
             priority

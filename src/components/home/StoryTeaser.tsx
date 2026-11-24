@@ -2,7 +2,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { PhotoFrame } from "@/components/ui/PhotoFrame";
 import { DraftTag } from "@/components/ui/Tag";
 import { home } from "@/content/home";
-import { photos } from "@/content/photos";
+import { casa } from "@/content/photos";
 import { getStory } from "@/lib/content";
 
 export function StoryTeaser() {
@@ -33,7 +33,7 @@ export function StoryTeaser() {
 
         <div className="flex gap-3 sm:gap-4 lg:col-span-6 lg:col-start-7">
           <PhotoFrame
-            photo={photos.interior}
+            photo={casa.maquina}
             ratio="5/9"
             rounded="rounded-[1.5rem]"
             sizes="(min-width: 1024px) 15rem, 42vw"
@@ -41,13 +41,13 @@ export function StoryTeaser() {
           />
           <div className="flex flex-1 flex-col gap-3 sm:gap-4">
             <PhotoFrame
-              photo={photos.letreiro}
+              photo={casa.estante}
               ratio="4/3"
               rounded="rounded-[1.5rem]"
               sizes="(min-width: 1024px) 20rem, 52vw"
             />
             <PhotoFrame
-              photo={photos.varanda}
+              photo={casa.salao}
               ratio="4/3"
               rounded="rounded-[1.5rem]"
               sizes="(min-width: 1024px) 20rem, 52vw"

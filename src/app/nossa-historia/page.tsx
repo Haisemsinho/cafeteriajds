@@ -3,7 +3,7 @@ import { CtaBand } from "@/components/ui/CtaBand";
 import { PhotoFrame } from "@/components/ui/PhotoFrame";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { DraftTag } from "@/components/ui/Tag";
-import { photos } from "@/content/photos";
+import { casa } from "@/content/photos";
 import { storyPage } from "@/content/story";
 import { getStory } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
@@ -19,7 +19,7 @@ export default function NossaHistoriaPage() {
 
   return (
     <>
-      <PageHero title={storyPage.hero.title} intro={storyPage.hero.intro} photo={photos.letreiro} />
+      <PageHero title={storyPage.hero.title} intro={storyPage.hero.intro} photo={casa.paredeLetreiro} />
 
       <section aria-labelledby="marca-title" className="page-x py-24 lg:py-32">
         <div className="grid gap-8 md:grid-cols-[1fr_1.4fr] lg:gap-16">
@@ -95,10 +95,10 @@ export default function NossaHistoriaPage() {
         <div className="page-x">
           <SectionHeading id="casa-fotos-title" title="O que as fotos já contam" />
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            <PhotoFrame photo={photos.fachada} ratio="4/5" sizes="(min-width: 1024px) 24rem, 50vw" caption />
-            <PhotoFrame photo={photos.prateleiras} ratio="4/5" sizes="(min-width: 1024px) 24rem, 50vw" caption />
+            <PhotoFrame photo={casa.fachada} ratio="4/5" sizes="(min-width: 1024px) 24rem, 50vw" caption />
+            <PhotoFrame photo={casa.salaoBalcao} ratio="4/5" sizes="(min-width: 1024px) 24rem, 50vw" caption />
             <PhotoFrame
-              photo={photos.diaDoCafe}
+              photo={casa.maquina}
               ratio="4/5"
               sizes="(min-width: 1024px) 24rem, 100vw"
               caption

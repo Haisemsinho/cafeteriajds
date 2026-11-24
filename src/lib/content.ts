@@ -5,8 +5,8 @@ import { highlights as rawHighlights } from "@/content/highlights";
 import { categories as demoCategories, products as demoProducts } from "@/content/menu";
 import { officialCategories, officialProducts } from "@/content/officialMenu";
 import { philosophy, storyBlocks as rawStory, storyIntro } from "@/content/story";
-import { ambience, productPhotos } from "@/content/illustrative";
-import { photos } from "@/content/photos";
+import { productPhotos } from "@/content/illustrative";
+import { casa } from "@/content/photos";
 import { reviews as rawReviews } from "@/content/reviews";
 import {
   announcementSchema,
@@ -122,19 +122,18 @@ const withAllowedPhotos = (p: MenuProduct): MenuProduct => ({
 export function getPhotoCredits() {
   if (!showDrafts) return [];
   const seen = new Map<string, NonNullable<Photo["credit"]>>();
-  for (const photo of [...Object.values(ambience), ...Object.values(productPhotos)]) {
+  for (const photo of Object.values(productPhotos)) {
     if (photo.credit && !seen.has(photo.credit.url)) seen.set(photo.credit.url, photo.credit);
   }
   return [...seen.values()];
 }
 
 export function getScenes() {
-  const pick = (demo: Photo, real: Photo) => (showDrafts ? demo : real);
   return {
-    hero: { desktop: pick(ambience.janela, photos.xicara), mobile: pick(ambience.janela, photos.fachada) },
-    intro: pick(ambience.lattes, photos.interior),
-    invite: showDrafts ? ambience.brinde : undefined,
-    menu: showDrafts ? ambience.lattes : undefined,
+    hero: { desktop: casa.salaoBalcao, mobile: casa.balcaoBolo },
+    intro: casa.paredeLetreiro,
+    invite: casa.mesas,
+    menu: casa.mesas,
   };
 }
 

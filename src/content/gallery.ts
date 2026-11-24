@@ -1,7 +1,10 @@
 import type { GalleryImage } from "@/types/content";
-import { photos } from "./photos";
+import { casa, photos } from "./photos";
 
 export const gallery: GalleryImage[] = [
+  { id: "salao", area: "salao", status: "verified", ...casa.salao },
+  { id: "maquina", area: "balcao", status: "verified", ...casa.maquina },
+  { id: "letreiro-parede", area: "detalhes", status: "verified", ...casa.paredeLetreiro },
   { id: "fachada", area: "fachada", status: "verified", ...photos.fachada },
   { id: "interior", area: "salao", status: "verified", ...photos.interior },
   { id: "xicara", area: "cafe", status: "verified", ...photos.xicara },
