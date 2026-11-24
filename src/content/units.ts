@@ -8,11 +8,26 @@ export const units: StoreUnit[] = [
     address: {
       status: "verified",
       street: "Avenida Jacob Dornelas Neto",
+      district: "Centro",
       city: "São João do Manhuaçu",
       state: "MG",
+      postalCode: "36918-000",
     },
-    hours: undefined,
-    contact: { status: "draft" },
+    hours: {
+      status: "verified",
+      timezone: "America/Sao_Paulo",
+      week: {
+        0: [],
+        1: [{ opens: "07:00", closes: "19:00" }],
+        2: [{ opens: "07:00", closes: "19:00" }],
+        3: [{ opens: "07:00", closes: "19:00" }],
+        4: [{ opens: "07:00", closes: "19:00" }],
+        5: [{ opens: "07:00", closes: "19:00" }],
+        6: [],
+      },
+      exceptions: [],
+    },
+    contact: { status: "verified", phone: "5533984224482", whatsapp: "5533984224482" },
     delivery: {
       status: "draft",
       feeCents: 500,
