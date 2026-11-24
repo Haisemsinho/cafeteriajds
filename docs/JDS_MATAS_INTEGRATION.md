@@ -225,3 +225,16 @@ Regras para o domínio (`packages/domain`, com testes):
 - Expor a API na internet aumenta a superfície de ataque: limite de taxa, desafio contra robôs, rotas públicas mínimas e só leitura, exceto a criação de pedido.
 - Pedido online sem pagamento real pode gerar pedidos falsos: até haver pagamento, pedido online precisa de confirmação da unidade antes de ir para o preparo.
 - Dados pessoais de clientes (nome, telefone, endereço): guardar só o necessário, prazo de retenção definido na revisão jurídica.
+
+## 14. Prévia local do painel (24/11/2026)
+
+Branch `jds-gestao` do Matas, commit `0ce048d`. Só no computador, sem banco e sem pagamento:
+
+```
+cd C:\Users\Desktop\Documents\GitHub\matas-erp
+npm run jds:preview
+```
+
+Abre em http://127.0.0.1:5174. Menu em Geral, Operação, Gestão, Website e Sistema; o que ainda não existe aparece como "em breve" e não clica. Telas prontas: Visão geral, Pedidos, Nova venda, Caixa, Produtos, Estoque, Financeiro e Funcionários. O seletor "Ver o painel como" mostra o que cada papel do M1 enxerga. Detalhes no diário do Matas (`docs/matas/diario-engenharia.md`, entrada de 24/11/2026).
+
+Próximo passo técnico: o responsável roda a etapa A1 (`tools\windows\separar-ambientes.ps1`) no PowerShell, depois rodam os testes de banco do M1 (`test:db`), e só então começa o M2 (catálogo, pedidos e caixa gravados no banco).
